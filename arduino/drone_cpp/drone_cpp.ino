@@ -1,3 +1,4 @@
+#include "LibrePilotSerial.h"
 #include "include/flightstatus.h"
 
 void setup() {
