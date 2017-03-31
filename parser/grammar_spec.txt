@@ -1,0 +1,25 @@
+- dynamic typing
+- types: int, float, bool, coord (float, float)
+- functions: def ___ { }
+- whiles, fors, if, else, else if: while ___ { }
+- built-in functions:
+	- get_gps()
+	- move(pos)
+	- move(pos, vel)
+	- forward(meters)
+	- forward(meters, vel)
+	- rotate(degrees)
+	- take_off()
+	- land()
+	- sleep(mili)
+	- up(meters) / down(meters) (or negative value)
+	- right(meters)
+	- left(meters)
+	- backward(meters)
+	- ^ (with vel)
+- others:
+	- p = get_gps()
+	- a = p.lat
+	- b = p.lng
+	- (lat, lng) = get_gps()
+	- (lat, lng) = p
