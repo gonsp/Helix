@@ -30,3 +30,5 @@
 
 
 .DS_Store
+/parser/bin
+/parser/src/generated
