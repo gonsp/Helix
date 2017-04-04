@@ -41,5 +41,10 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 	printf 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
 	chmod a+x $(EXEC)
 
+test:
+	$(EXEC) -dot asd
+	dot -Tpdf -O asd.dot
+	display asd.dot.pdf
+
 clean:
 	rm -rf $(BINDIR) $(PARSERDIR)
