@@ -10,9 +10,8 @@ BINDIR 		= $(ROOT)/bin
 LIBDIR		= $(ROOT)/lib
 CLASSDIR 	= $(BINDIR)/classes
 LIB_ANTLR	= $(LIBDIR)/antlr-3.4-complete.jar
-LIB_CLI		= $(LIBDIR)/commons-cli-1.2.jar
-JARPATH 	= "$(LIB_ANTLR) $(LIB_CLI)"
-CLASSPATH 	= $(LIB_ANTLR):$(LIB_CLI)
+JARPATH 	= "$(LIB_ANTLR)"
+CLASSPATH 	= $(LIB_ANTLR)
 
 EXEC		= $(BINDIR)/helix_parser
 MANIFEST 	= $(BINDIR)/Manifest.txt
