@@ -1,4 +1,4 @@
-grammar Drone;
+grammar Helix;
 
 options {
     output = AST;

@@ -1,4 +1,4 @@
-package Drone;
+package Helix;
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
@@ -39,12 +39,12 @@ public class Main {
         }
 
         // Creates the lexer
-        DroneLexer lex = new DroneLexer(input);
+        HelixLexer lex = new HelixLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lex);
 
         // Creates and runs the parser. As a result, an AST is created
-        DroneParser parser = new DroneParser(tokens);
-        DroneParser.prog_return result = null;
+        HelixParser parser = new HelixParser(tokens);
+        HelixParser.prog_return result = null;
         try {
             result = parser.prog();
         } catch (Exception e) {} // Just catch the exception (nothing to do)
@@ -105,7 +105,7 @@ public class Main {
         CommandLineParser clp = new GnuParser();
         CommandLine line = null;
 
-        String cmdline = "Drone [options] file";
+        String cmdline = "Helix [options] file";
         
         
         // Parse the options

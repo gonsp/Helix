@@ -127,7 +127,7 @@ boolean LibrePilotSerial::receive(unsigned long objId, byte *ret, unsigned int t
             byte crc = serial->read();
 
             byte ccrc = _crc(len);
-             
+
             return crc == ccrc;
             
           }        

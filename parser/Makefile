@@ -1,11 +1,11 @@
 
 ROOT 		= $(PWD)
 SRCDIR		= $(ROOT)/src
-GRAMMAR 	= $(SRCDIR)/Drone.g
+GRAMMAR 	= $(SRCDIR)/Helix.g
 PARSERDIR	= $(SRCDIR)/generated
 MAIN_SRC	= $(SRCDIR)/Main.java
-PARSER_SRC 	= $(PARSERDIR)/DroneLexer.java \
-			  $(PARSERDIR)/DroneParser.java
+PARSER_SRC 	= $(PARSERDIR)/HelixLexer.java \
+			  $(PARSERDIR)/HelixParser.java
 BINDIR 		= $(ROOT)/bin
 LIBDIR		= $(ROOT)/lib
 CLASSDIR 	= $(BINDIR)/classes
@@ -14,9 +14,9 @@ LIB_CLI		= $(LIBDIR)/commons-cli-1.2.jar
 JARPATH 	= "$(LIB_ANTLR) $(LIB_CLI)"
 CLASSPATH 	= $(LIB_ANTLR):$(LIB_CLI)
 
-EXEC		= $(BINDIR)/drone_parser
+EXEC		= $(BINDIR)/helix_parser
 MANIFEST 	= $(BINDIR)/Manifest.txt
-JARFILE 	= $(BINDIR)/drone_parser.jar
+JARFILE 	= $(BINDIR)/helix_parser.jar
 
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
@@ -34,7 +34,7 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 	fi
 	javac $(JFLAGS) $(MAIN_SRC) $(PARSER_SRC)
 
-	echo "Main-Class: Drone.Main" > $(MANIFEST)
+	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
 	printf "#!/bin/sh\n\n" > $(EXEC)
