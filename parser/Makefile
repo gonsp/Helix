@@ -36,8 +36,8 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
-	printf "#!/bin/sh\n\n" > $(EXEC)
-	printf 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
+	echo "#!/bin/sh\n\n" > $(EXEC)
+	echo 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
 	chmod a+x $(EXEC)
 
 clean:
