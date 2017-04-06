@@ -17,6 +17,8 @@ EXEC		= $(BINDIR)/helix_parser
 MANIFEST 	= $(BINDIR)/Manifest.txt
 JARFILE 	= $(BINDIR)/helix_parser.jar
 
+EXAMPLESDIR	= $(ROOT)/examples
+
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
 
@@ -36,14 +38,17 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
-	echo "#!/bin/sh\n\n" > $(EXEC)
+	echo "#!/bin/bash" > $(EXEC)
 	echo 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
 	chmod a+x $(EXEC)
 
-test:
-	$(EXEC) -dot asd.hx
-	dot -Tpdf -O asd.dot
-	display asd.dot.pdf
+# example call: make test filename=hello_helix
+test: $(EXEC) $(EXAMPLESDIR)/$(filename).hx
+	$(EXEC) -dot $(EXAMPLESDIR)/$(filename).hx
+	dot -Tpdf -O $(EXAMPLESDIR)/$(filename).hx.dot
+	rm $(EXAMPLESDIR)/$(filename).hx.dot
+	mv $(EXAMPLESDIR)/$(filename).hx.dot.pdf $(EXAMPLESDIR)/$(filename).pdf
+	display $(EXAMPLESDIR)/$(filename).pdf
 
 clean:
 	rm -rf $(BINDIR) $(PARSERDIR)
