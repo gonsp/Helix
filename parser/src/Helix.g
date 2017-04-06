@@ -6,9 +6,10 @@ options {
 
 tokens {
     LIST_FUNCTIONS; // List of functions (the root of the tree)
+    DEFFUNC;
     ASSIGN;     // Assignment instruction
-    ACCESSVEC;
-    SIZEVEC;
+    COORD;
+    ACCESS;
     PARAMS;     // List of parameters in the declaration of a function
     FUNCALL;    // Function call
     ARGLIST;    // List of arguments passed in a function call
@@ -50,32 +51,32 @@ param   :   '&' id=ID -> ^(PREF[$id,$id.text])
 
 // A list of instructions, all of them gouped in a subtree
 block_instructions
-        :	 '{' instruction (EOLS instruction)* '}' EOLS
+        :	 '{' instruction (instruction)* '}' NL
             -> ^(LIST_INSTR instruction+)
         ;
 
-// The different types of instructions
 instruction
+        : line_instruction NL!
+        | block_instruction
+        ;
+
+// The different types of instructions
+line_instruction
         :	assign          // Assignment
-        |	ite_stmt        // if-then-else
-        |	while_stmt      // while statement
         |   funcall         // Call to a procedure (no result produced)
         |	return_stmt     // Return statement
-        |	read            // Read a variable
-        | 	write           // Write a string or an expression
         |                   // Nothing
+        ;
+
+block_instruction
+        :   ite_stmt
+        |   while_stmt
         ;
 
 // Assignment
 assign	:	accessor eq=EQUAL expr -> ^(ASSIGN[$eq,":="] accessor expr)
         ;
 
-accessor :	(id=ID -> $id) (( '[' e=expr ']') -> ^(ACCESSVEC $id $e))?
-	 ;
-
-//
-//vecindex : 	'[' e=expr ']' -> (ACCESSVEC^ e)
-//	 ;
 
 // if-then-else (else is optional)
 ite_stmt	:	IF^ expr block_instructions (ELSE! block_instructions)?
@@ -87,14 +88,6 @@ while_stmt	:	WHILE^ expr block_instructions
 
 // Return statement with an expression
 return_stmt	:	RETURN^ expr?
-        ;
-
-// Read a variable
-read	:	READ^ ID
-        ;
-
-// Write an expression or a string
-write	:   WRITE^ (expr | STRING )
         ;
 
 // Grammar for expressions with boolean, relational and aritmetic operators
@@ -119,23 +112,65 @@ factor  :   (NOT^ | PLUS^ | MINUS^)? atom
 // Atom of the expressions (variables, integer and boolean literals).
 // An atom can also be a function call or another expression
 // in parenthesis
-atom    :   accessor
-        |   INT
+atom    :   NUM
+        |   coord
+        |   accessor
         |   (b=TRUE | b=FALSE)  -> ^(BOOLEAN[$b,$b.text])
         |   funcall
         |   '('! expr ')'!
         ;
 
+coord   : '(' n1=NUM ',' n2=NUM ')' -> ^(COORD $n1 $n2)
+        ;
+
+accessor    :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
+	        ;
+
+id_atr  :   LAT
+        |   LNG
+        ;
+
 // A function call has a lits of arguments in parenthesis (possibly empty)
-funcall :   ID '(' expr_list? ')' -> ^(FUNCALL ID ^(ARGLIST expr_list?))
+funcall :   builtin '(' expr_list? ')' -> ^(DEFFUNC builtin ^(ARGLIST expr_list?))
+        |   ID '(' expr_list? ')' -> ^(FUNCALL ID ^(ARGLIST expr_list?))
+        ;
+
+builtin :   GET_GPS
+        |   MOVE
+        |   FORWARD
+        |   ROTATE
+        |   TAKEOFF
+        |   LAND
+        |   SLEEP
+        |   UPF
+        |   DOWNF
+        |   RIGHT
+        |   LEFT
+        |   BACKWARDS
+        |   LOOKAT
         ;
 
 // A list of expressions separated by commas
 expr_list:  expr (','! expr)*
         ;
 
-// Basic tokens
-EOLS    : '\n' '\n'* ;
+// Built-in function tokens
+GET_GPS :   'get_gps';
+MOVE    :   'move';
+FORWARD :   'forward';
+ROTATE  :   'rotate';
+TAKEOFF :   'take_off';
+LAND    :   'land';
+SLEEP   :   'sleep';
+UPF      :   'up';
+DOWNF    :   'down';
+RIGHT   :   'right';
+LEFT    :   'left';
+BACKWARDS : 'backwards';
+LOOKAT  :   'look_at';
+
+// Default tokens
+NL  : '\n' '\n'*;
 EQUAL	: '=' ;
 NOT_EQUAL: '!=' ;
 LT	    : '<' ;
@@ -153,19 +188,16 @@ OR	    : 'or' ;
 IF  	: 'if' ;
 THEN	: 'then' ;
 ELSE	: 'else' ;
-ENDIF	: 'endif' ;
 WHILE	: 'while' ;
 DO	    : 'do' ;
-ENDWHILE: 'endwhile' ;
 DEF	    : 'def' ;
-ENDFUNC	: 'endfunc' ;
 RETURN	: 'return' ;
-READ	: 'read' ;
-WRITE	: 'write' ;
 TRUE    : 'true' ;
 FALSE   : 'false';
+LAT     : 'lat';
+LNG     : 'lng';
 ID  	:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
-INT 	:	'0'..'9'+ ;
+NUM     :	'0'..'9'+ ('.' '0'..'9'+|);
 
 // C-style comments
 COMMENT	: '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
@@ -185,8 +217,8 @@ ESC_SEQ
 WS  	: ( ' '
         | '\t'
         | '\r'
-//        | '\n'
         ) {$channel=HIDDEN;}
     	;
+//        | '\n'
 
 
