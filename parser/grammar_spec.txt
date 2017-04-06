@@ -17,6 +17,7 @@
 	- left(meters)
 	- backward(meters)
 	- ^ (with vel)
+	- look_at(degrees)
 - others:
 	- p = get_gps()
 	- a = p.lat
