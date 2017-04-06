@@ -1,8 +1,5 @@
 def main() {
-    if (not take_off()) {
-        return
-    }
-
+    take_off()
     up(1)
     zig_zag_to(get_gps() + (20, 20), 10)
     land()

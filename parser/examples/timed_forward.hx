@@ -1,8 +1,7 @@
 def main() {
-    if (not take_off()) {
-        return
-    }
+    take_off()
     timed_forward(10, 5)
+    land()
 }
 
 def timed_forward(distance, time) {

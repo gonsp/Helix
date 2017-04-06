@@ -1,8 +1,5 @@
 def main() {
-    if (not take_off()) {
-        return
-    }
-    
+    take_off()
     sleep(5)
     land()
 }
