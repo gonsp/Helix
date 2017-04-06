@@ -41,7 +41,7 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 	chmod a+x $(EXEC)
 
 test:
-	$(EXEC) -dot asd
+	$(EXEC) -dot asd.hx
 	dot -Tpdf -O asd.dot
 	display asd.dot.pdf
 
