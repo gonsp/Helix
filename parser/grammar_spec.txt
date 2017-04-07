@@ -22,5 +22,5 @@
 	- p = get_gps()
 	- a = p.lat
 	- b = p.lng
-	- (lat, lng) = get_gps()
-	- (lat, lng) = p
+	- [lat, lng] = get_gps()
+	- [lat, lng] = p
