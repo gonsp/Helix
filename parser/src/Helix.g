@@ -10,6 +10,7 @@ tokens {
     ASSIGN;     // Assignment instruction
     COORD;
     ACCESS;
+    PAIRACCESS;
     PARAMS;     // List of parameters in the declaration of a function
     FUNCALL;    // Function call
     ARGLIST;    // List of arguments passed in a function call
@@ -124,6 +125,7 @@ coord   : '(' n1=NUM ',' n2=NUM ')' -> ^(COORD $n1 $n2)
         ;
 
 accessor    :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
+            |   '(' id1=ID ',' id2=ID ')' -> ^(PAIRACCESS $id1 $id2)
 	        ;
 
 id_atr  :   LAT
