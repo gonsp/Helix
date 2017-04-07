@@ -1,7 +1,7 @@
 def main() {
     take_off()
     up(1)
-    zig_zag_to(get_gps() + (20, 20), 10)
+    zig_zag_to(get_gps() + [20, 20], 10)
     land()
 }
 
