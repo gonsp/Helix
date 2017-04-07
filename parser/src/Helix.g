@@ -115,18 +115,24 @@ factor  :   (NOT^ | PLUS^ | MINUS^)? atom
 // in parenthesis
 atom    :   NUM
         |   coord
-        |   accessor
+        |   id_access
         |   (b=TRUE | b=FALSE)  -> ^(BOOLEAN[$b,$b.text])
         |   funcall
         |   '('! expr ')'!
         ;
 
-coord   : '(' n1=NUM ',' n2=NUM ')' -> ^(COORD $n1 $n2)
+coord   : '[' n1=expr',' n2=expr']' -> ^(COORD $n1 $n2)
         ;
 
-accessor    :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
-            |   '(' id1=ID ',' id2=ID ')' -> ^(PAIRACCESS $id1 $id2)
+accessor    :	id_access
+            |   pair_access
 	        ;
+
+pair_access :   '[' id1=ID ',' id2=ID ']' -> ^(PAIRACCESS $id1 $id2)
+            ;
+
+id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
+            ;
 
 id_atr  :   LAT
         |   LNG
