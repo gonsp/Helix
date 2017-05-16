@@ -30,7 +30,8 @@
 
 
 .DS_Store
-/parser/bin
-/parser/src/generated
+bin/
+src/parser/HelixLexer.java
+src/parser/HelixParser.java
 *.dot
 *.pdf

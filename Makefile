@@ -1,9 +1,9 @@
 
 ROOT 		= $(PWD)
 SRCDIR		= $(ROOT)/src
-GRAMMAR 	= $(SRCDIR)/Helix.g
-PARSERDIR	= $(SRCDIR)/generated
 MAIN_SRC	= $(SRCDIR)/Main.java
+PARSERDIR	= $(SRCDIR)/parser
+GRAMMAR 	= $(PARSERDIR)/Helix.g
 PARSER_SRC 	= $(PARSERDIR)/HelixLexer.java \
 			  $(PARSERDIR)/HelixParser.java
 BINDIR 		= $(ROOT)/bin
