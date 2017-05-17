@@ -6,7 +6,8 @@ import org.antlr.stringtemplate.*;
 
 import java.io.*;
 
-import parser.*;
+import Helix.parser.*;
+import Helix.interpreter.*;
 
 public class Main {
 
@@ -59,6 +60,8 @@ public class Main {
 
         // Get the AST
         CommonTree t = (CommonTree)result.getTree();
+
+        Interpreter interpreter = new Interpreter();
 
         // Generate a file for the AST (option -ast file)
         if(printAST) {
