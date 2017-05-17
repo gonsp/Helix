@@ -1,13 +1,18 @@
 package Helix;
 
-import org.antlr.runtime.*;
-import org.antlr.runtime.tree.*;
-import org.antlr.stringtemplate.*;
+import Helix.interpreter.Interpreter;
+import Helix.parser.HelixLexer;
+import Helix.parser.HelixParser;
+import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.DOTTreeGenerator;
 
-import java.io.*;
-
-import Helix.parser.*;
-import Helix.interpreter.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
 
@@ -18,7 +23,7 @@ public class Main {
     /** Flag indicating that the AST must be written in dot format. */
     private static boolean dotformat = false;
       
-    /** Main program that invokes the parser and the interpreter. */
+    /** Main program that invokes the Helix.parser and the interpreter. */
     
     public static void main(String[] args) throws Exception {
 
@@ -42,7 +47,7 @@ public class Main {
         HelixLexer lex = new HelixLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lex);
 
-        // Creates and runs the parser. As a result, an AST is created
+        // Creates and runs the Helix.parser. As a result, an AST is created
         HelixParser parser = new HelixParser(tokens);
         HelixParser.prog_return result = null;
         try {
