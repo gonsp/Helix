@@ -2,6 +2,7 @@
 ROOT 		= $(PWD)
 SRCDIR		= $(ROOT)/src
 MAIN_SRC	= $(SRCDIR)/Main.java
+INTERPDIR	= $(SRCDIR)/interpreter
 PARSERDIR	= $(SRCDIR)/parser
 GRAMMAR 	= $(PARSERDIR)/Helix.g
 PARSER_SRC 	= $(PARSERDIR)/HelixLexer.java \
@@ -33,7 +34,8 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 		mkdir $(BINDIR);\
 		mkdir $(CLASSDIR);\
 	fi
-	javac $(JFLAGS) $(MAIN_SRC) $(PARSER_SRC)
+
+	javac $(JFLAGS) $(MAIN_SRC) $(shell find $(PARSERDIR)/* $(INTERPDIR)/* | grep .java)
 
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
@@ -51,4 +53,4 @@ test: $(EXEC) $(EXAMPLESDIR)/$(filename).hx
 	display $(EXAMPLESDIR)/$(filename).pdf
 
 clean:
-	rm -rf $(BINDIR) $(PARSERDIR)
+	rm -rf $(BINDIR) $(PARSER_SRC)
