@@ -1,6 +1,6 @@
 
 ROOT 		= $(PWD)
-SRCDIR		= $(ROOT)/src
+SRCDIR		= $(ROOT)/src/Helix
 MAIN_SRC	= $(SRCDIR)/Main.java
 INTERPDIR	= $(SRCDIR)/interpreter
 PARSERDIR	= $(SRCDIR)/parser
@@ -23,9 +23,9 @@ EXAMPLESDIR	= $(ROOT)/examples
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
 
-all: parser
+all: helix
 
-parser: $(GRAMMAR) $(MAIN_SRC)
+helix: $(GRAMMAR) $(MAIN_SRC)
 
 	java -jar $(LIB_ANTLR) -o $(PARSERDIR) $(GRAMMAR)
 	rm $(PARSERDIR)/*.tokens
@@ -35,7 +35,7 @@ parser: $(GRAMMAR) $(MAIN_SRC)
 		mkdir $(CLASSDIR);\
 	fi
 
-	javac $(JFLAGS) $(MAIN_SRC) $(shell find $(PARSERDIR)/* $(INTERPDIR)/* | grep .java)
+	javac $(JFLAGS) $(MAIN_SRC) $(PARSER_SRC) $(shell find $(INTERPDIR)/* | grep .java)
 
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
