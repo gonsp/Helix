@@ -1,12 +1,200 @@
-package Helix.interpreter;
+package interp;
 
-import Helix.interpreter.librepilot.LibrePilotController;
+import parser.*;
 
-public class Interpreter {
+import java.util.HashMap;
+import java.io.*;
 
+public class Interp {
+    
     private DroneController droneController;
 
-    public Interpreter() {
-        droneController = new LibrePilotController();
+    private int indents = 0;
+
+    /* Line of the current statement. */
+    private int linenumber = -1;
+
+    /* Stores the root of declared functions */
+    private HashMap<String, HelixTree> functionTrees;
+
+    /* File to write the execution trace. */
+    private PrintWriter trace = null;
+
+
+    public Interp(HelixTree T, String tracefile) {
+        assert T != null;
+        droneController = new LibrePilotDroneController();
+        mapFunctions(T);
+        if (tracefile != null) {
+            try {
+                trace = new PrintWriter(new FileWriter(tracefile));
+            } catch (IOException e) {
+                System.err.println(e);
+                System.exit(1);
+            }
+        }
+    }
+
+
+    private void mapFunctions(HelixTree T) {
+        assert T != null && T.getType() == HelixLexer.LIST_FUNCTIONS;
+        functionTrees = new HashMap<String, HelixTree>();
+        for (HelixTree def : T) {
+            assert def.getType() == HelixLexer.DEF;
+            String func_name = def.getChild(0).getText();
+            if (functionTrees.containsKey(func_name)) {
+                throw new RuntimeException("Multiple definitions of function " + func_name);
+            }
+            System.out.println("DEFINED FUNCTION " + func_name);
+            functionTrees.put(func_name, def);
+        }
+    }
+
+
+    public int getLinenumber() {
+        return linenumber;
+    }
+
+
+    public void Run() {
+        wrttrace("Running");
+        executeFunction("main", null);
+    }
+
+
+    public String getStackTrace() {
+        return "STACK TRACE";
+    }
+
+
+    public String getStackTrace(int i) {
+        return "STACK TRACE " + (new Integer(i)).toString();
+    }
+
+
+    private void wrttrace(String msg) {
+        for (int i = 0; i < indents; ++i) {
+            System.out.print("   |");
+        }
+        System.out.println(msg);
+    }
+
+
+    private void executeFunction(String func_name, HelixTree args) {
+        ++indents;
+        HelixTree f = functionTrees.get(func_name);
+        if (f == null) {
+            throw new RuntimeException("function " + func_name + " was not declared");
+        }
+        wrttrace("Executing function: " + func_name);
+
+        executeListInstructions(f.getChild(2));
+        
+        --indents;
+    }
+
+
+    private void executeListInstructions(HelixTree list_instr) {
+        ++indents;
+        wrttrace("Executing list of instructions");
+        assert list_instr.getType() == HelixLexer.LIST_INSTR;
+        for (HelixTree instr : list_instr) {
+            executeInstruction(instr);
+        }
+        --indents;
+    }
+
+
+    private void executeInstruction(HelixTree instr) {
+        ++indents;
+        switch (instr.getType()) {
+            case HelixLexer.ASSIGN:
+                executeAssign(instr);
+                break;
+            case HelixLexer.DEFFUNC:
+                executeDefaultFunction(instr);
+                break;
+            case HelixLexer.FUNCALL:
+                executeFunctionCall(instr);
+                break;
+            case HelixLexer.RETURN:
+                executeReturn(instr);
+                break;
+            case HelixLexer.IF:
+                executeIf(instr);
+                break;
+            case HelixLexer.WHILE:
+                executeWhile(instr);
+                break;
+        }
+        --indents;
+    }
+
+
+    private void executeAssign(HelixTree assign) {
+        assert assign.getType() == HelixLexer.ASSIGN;
+        wrttrace("Executing assign");
+    }
+
+
+    private void executeDefaultFunction(HelixTree deffunc) {
+        assert deffunc.getType() == HelixLexer.DEFFUNC;
+        HelixTree f = deffunc.getChild(0);
+        wrttrace("Executing default function: " + f.getText());
+        switch (f.getType()) {
+            case HelixLexer.GET_GPS:
+                break;
+            case HelixLexer.MOVE:
+                break;
+            case HelixLexer.FORWARD:
+                break;
+            case HelixLexer.ROTATE:
+                break;
+            case HelixLexer.TAKEOFF:
+                break;
+            case HelixLexer.LAND:
+                break;
+            case HelixLexer.SLEEP:
+                break;
+            case HelixLexer.UPF:
+                break;
+            case HelixLexer.DOWNF:
+                break;
+            case HelixLexer.RIGHT:
+                break;
+            case HelixLexer.LEFT:
+                break;
+            case HelixLexer.BACKWARDS:
+                break;
+            case HelixLexer.LOOKAT:
+                break;
+            default:
+                throw new RuntimeException("What did you do to trigger this????");
+        }
+    }
+
+
+    private void executeFunctionCall(HelixTree funcall) {
+        assert funcall.getType() == HelixLexer.FUNCALL;
+        wrttrace("Executing function call");
+        executeFunction(funcall.getChild(0).getText(), funcall.getChild(1));
+    }
+
+
+    private void executeReturn(HelixTree ret) {
+        assert ret.getType() == HelixLexer.RETURN;
+        wrttrace("Executing return");
+    }
+
+
+    private void executeIf(HelixTree iftree) {
+        assert iftree.getType() == HelixLexer.IF;
+        wrttrace("Executing if");
+    }
+
+
+    private void executeWhile(HelixTree whiletree) {
+        assert whiletree.getType() == HelixLexer.WHILE;
+        wrttrace("Executing while");
     }
 }

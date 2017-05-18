@@ -1,18 +1,13 @@
 package Helix;
 
-import Helix.interpreter.Interpreter;
-import Helix.parser.HelixLexer;
-import Helix.parser.HelixParser;
-import org.antlr.runtime.ANTLRFileStream;
-import org.antlr.runtime.CharStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.DOTTreeGenerator;
+import org.antlr.runtime.*;
+import org.antlr.runtime.tree.*;
+import org.antlr.stringtemplate.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+
+import parser.*;
+import interp.*;
 
 public class Main {
 
@@ -22,9 +17,12 @@ public class Main {
     private static boolean printAST = false;
     /** Flag indicating that the AST must be written in dot format. */
     private static boolean dotformat = false;
-      
-    /** Main program that invokes the Helix.parser and the interpreter. */
-    
+    /** Flag to indicate wether the program must be executed after parsing. */
+    private static boolean execute = true;
+    /** Name of the file storing the trace of the program*/
+    private static String tracefile = "trace32741329";
+
+    /** Main program that invokes the parser and the interpreter. */
     public static void main(String[] args) throws Exception {
 
         // Parser for command line options
@@ -47,13 +45,14 @@ public class Main {
         HelixLexer lex = new HelixLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lex);
 
-        // Creates and runs the Helix.parser. As a result, an AST is created
+        // Creates and runs the parser. As a result, an AST is created
         HelixParser parser = new HelixParser(tokens);
+        HelixTreeAdaptor adaptor = new HelixTreeAdaptor();
+        parser.setTreeAdaptor(adaptor);
         HelixParser.prog_return result = null;
         try {
             result = parser.prog();
         } catch (Exception e) {} // Just catch the exception (nothing to do)
-        
         
         // Check for parsing errors
         int nerrors = parser.getNumberOfSyntaxErrors();
@@ -64,9 +63,7 @@ public class Main {
         }
 
         // Get the AST
-        CommonTree t = (CommonTree)result.getTree();
-
-        Interpreter interpreter = new Interpreter();
+        HelixTree t = (HelixTree)result.getTree();
 
         // Generate a file for the AST (option -ast file)
         if(printAST) {
@@ -79,6 +76,33 @@ public class Main {
             output.write(gen.toDOT(t).toString());
             output.close();
         }
+
+        if (execute) {
+            Interpreter I = null;
+            int linenumber = -1;
+            try {
+                I = new Interpreter(t, tracefile);
+                I.Run();
+            } catch(RuntimeException e) {
+                if (I != null) {
+                    linenumber = I.getLinenumber();
+                }
+                System.err.print("runtime error");
+                if (linenumber < 0) System.err.print(".");
+                else System.err.print(" (" + infile + ", line " + linenumber + "): ");
+                System.err.println(e.getMessage() + ".");
+                System.err.format(I.getStackTrace());
+            } catch (StackOverflowError e) {
+                if (I != null) {
+                    linenumber = I.getLinenumber();
+                }
+                System.err.print("stack overflow error");
+                if (linenumber < 0) System.err.print(".");
+                else System.err.print(" (" + infile + ", line " + linenumber + "): ");
+                System.err.format(I.getStackTrace(5));
+            }
+        }
+
     }
 
     private static boolean readOptions(String[] args) {
@@ -89,6 +113,8 @@ public class Main {
                 dotformat = true;
             } else if(infile == null) {
                 infile = arg;
+            } else if(arg.equals("-noexec")) {
+                execute = false;
             } else {
                 System.out.println("Invalid argument: " + arg);
                 return false;

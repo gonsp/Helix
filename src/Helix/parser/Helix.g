@@ -2,6 +2,7 @@ grammar Helix;
 
 options {
     output = AST;
+    ASTLabelType = HelixTree;
 }
 
 tokens {
@@ -21,11 +22,12 @@ tokens {
 }
 
 @header {
-package Helix.parser;
+    package Helix.parser;
+    import interp.HelixTree;
 }
 
 @lexer::header {
-package Helix.parser;
+    package Helix.parser;
 }
 
 // A program is a list of functions
@@ -128,7 +130,7 @@ accessor    :	id_access
             |   pair_access
 	        ;
 
-pair_access :   '[' id1=ID ',' id2=ID ']' -> ^(PAIRACCESS $id1 $id2)
+pair_access :   '[' id1=id_access ',' id2=id_access ']' -> ^(PAIRACCESS $id1 $id2)
             ;
 
 id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
