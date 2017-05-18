@@ -1,9 +1,12 @@
-package interp;
+package Helix.interpreter;
 
-import parser.*;
+import Helix.interpreter.librepilot.LibrePilotController;
+import Helix.parser.HelixLexer;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.io.*;
 
 public class Interp {
     
@@ -23,7 +26,7 @@ public class Interp {
 
     public Interp(HelixTree T, String tracefile) {
         assert T != null;
-        droneController = new LibrePilotDroneController();
+        droneController = new LibrePilotController();
         mapFunctions(T);
         if (tracefile != null) {
             try {
