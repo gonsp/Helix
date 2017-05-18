@@ -5,15 +5,13 @@ MAIN_SRC	= $(SRCDIR)/Main.java
 INTERPDIR	= $(SRCDIR)/interpreter
 PARSERDIR	= $(SRCDIR)/parser
 GRAMMAR 	= $(PARSERDIR)/Helix.g
-PARSER_SRC 	= $(PARSERDIR)/HelixLexer.java \
-			  $(PARSERDIR)/HelixParser.java
+PARSER_SRC 	= $(shell find $(PARSERDIR)/* | grep .java)
 BINDIR 		= $(ROOT)/bin
 LIBDIR		= $(ROOT)/lib
 CLASSDIR 	= $(BINDIR)/classes
 LIB_ANTLR	= $(LIBDIR)/antlr-3.4-complete.jar
-JARPATH 	= "$(LIB_ANTLR)"
-CLASSPATH 	= $(LIB_ANTLR)
-
+CLASSPATH 	= $(shell find $(LIBDIR)/* | grep .jar | tr -s '\n' ':')
+	
 EXEC		= $(BINDIR)/helix_parser
 MANIFEST 	= $(BINDIR)/Manifest.txt
 JARFILE 	= $(BINDIR)/helix_parser.jar
@@ -21,6 +19,7 @@ JARFILE 	= $(BINDIR)/helix_parser.jar
 EXAMPLESDIR	= $(ROOT)/examples
 
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
+
 
 
 all: helix
@@ -38,7 +37,9 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 	javac $(JFLAGS) $(MAIN_SRC) $(PARSER_SRC) $(shell find $(INTERPDIR)/* | grep .java)
 
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
-	echo "Class-Path: $(JARPATH)" >> $(MANIFEST)
+	printf "Class-Path: \n " >> $(MANIFEST)
+	find $(LIBDIR)/* | grep .jar | tr '\n' '?' | sed 's/?/!?!/g' | tr '?' '\n' | tr '!' ' ' >> $(MANIFEST)
+	cp javax.usb.properties $(CLASSDIR)/javax.usb.properties
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
 	echo "#!/bin/bash" > $(EXEC)
 	echo 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
