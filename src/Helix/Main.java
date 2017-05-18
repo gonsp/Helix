@@ -1,13 +1,21 @@
 package Helix;
 
-import org.antlr.runtime.*;
-import org.antlr.runtime.tree.*;
-import org.antlr.stringtemplate.*;
+import Helix.interpreter.HelixTree;
+import Helix.interpreter.HelixTreeAdaptor;
+import Helix.interpreter.Interpreter;
+import Helix.parser.HelixLexer;
+import Helix.parser.HelixParser;
+import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.tree.DOTTreeGenerator;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import parser.*;
-import interp.*;
+
 
 public class Main {
 

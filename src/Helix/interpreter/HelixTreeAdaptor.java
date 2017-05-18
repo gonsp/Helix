@@ -1,9 +1,7 @@
-package interp;
+package Helix.interpreter;
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
-
-import parser.*;
 
 public class HelixTreeAdaptor extends CommonTreeAdaptor {
     public Object create(Token t) {

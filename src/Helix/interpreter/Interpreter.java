@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class Interp {
+public class Interpreter {
     
     private DroneController droneController;
 
@@ -24,7 +24,7 @@ public class Interp {
     private PrintWriter trace = null;
 
 
-    public Interp(HelixTree T, String tracefile) {
+    public Interpreter(HelixTree T, String tracefile) {
         assert T != null;
         droneController = new LibrePilotController();
         mapFunctions(T);

@@ -23,7 +23,7 @@ tokens {
 
 @header {
     package Helix.parser;
-    import interp.HelixTree;
+    import Helix.interpreter.HelixTree;
 }
 
 @lexer::header {

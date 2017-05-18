@@ -3,6 +3,8 @@ package Helix.interpreter.librepilot;
 import Helix.interpreter.DroneController;
 import Helix.interpreter.librepilot.uavtalk.H;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkXMLObject;
+import Helix.interpreter.librepilot.uavtalk.device.FcDevice;
+import Helix.interpreter.librepilot.uavtalk.device.FcUsbDevice;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -13,19 +15,20 @@ import java.util.TreeMap;
 
 public class LibrePilotController extends DroneController {
 
-    private Map<String, UAVTalkXMLObject> mXmlObjects;
 
     public LibrePilotController() {
         try {
-            loadUAVODefinitions("src/Helix/interpreter/librepilot/uavtalk/definitions");
+            Map<String, UAVTalkXMLObject> xmlObjects = loadUAVODefinitions("src/Helix/interpreter/librepilot/uavtalk/definitions");
+            FcDevice device = new FcUsbDevice(xmlObjects);
+            device.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void loadUAVODefinitions(String path) throws Exception {
+    private Map<String, UAVTalkXMLObject> loadUAVODefinitions(String path) throws Exception {
         System.out.println("Starting to load XML definitions");
-        mXmlObjects = new TreeMap<>();
+        Map<String, UAVTalkXMLObject> xmlObjects = new TreeMap<>();
 
 
         MessageDigest crypt = MessageDigest.getInstance("SHA-1");     //single files hash
@@ -43,11 +46,12 @@ public class LibrePilotController extends DroneController {
 
             if (content.length() > 0) {
                 UAVTalkXMLObject obj = new UAVTalkXMLObject(content);
-                mXmlObjects.put(obj.getName(), obj);
+                xmlObjects.put(obj.getName(), obj);
             }
         }
 
         System.out.println("SHA1: " + H.bytesToHex(cumucrypt.digest()).toLowerCase());
+        return xmlObjects;
     }
 
     @Override

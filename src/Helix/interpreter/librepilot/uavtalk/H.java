@@ -254,13 +254,11 @@ public class H {
 
     public static float stringToFloat(String s) {
         if (s == null || s.equals("")) {
-            VisualLog.d("H", "Empty string instead of float");
             return .0f;
         }
         try {
             return Float.parseFloat(s);
         } catch (NumberFormatException e) {
-            VisualLog.d("stringToFloat", "Fallback to Numberformat");
             try {
                 return NumberFormat.getInstance().parse(s).floatValue();
             } catch (ParseException e1) {

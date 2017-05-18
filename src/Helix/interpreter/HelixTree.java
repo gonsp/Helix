@@ -1,7 +1,6 @@
-package interp;
+package Helix.interpreter;
 
-import parser.*;
-
+import Helix.parser.HelixLexer;
 import org.antlr.runtime.tree.*;
 import org.antlr.runtime.Token;
 

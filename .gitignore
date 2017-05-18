@@ -36,3 +36,4 @@ src/Helix.parser/HelixLexer.java
 src/Helix.parser/HelixParser.java
 *.dot
 *.pdf
+trace*
