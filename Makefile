@@ -23,6 +23,11 @@ EXAMPLESDIR	= $(ROOT)/examples
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
 
+UNAME 		:= $(shell uname)
+
+ifeq ($(UNAME), Darwin)
+	#FREE_DRIVERS = sudo kextunload -b com.apple.driver.usb.IOUSBHostHIDDevice
+endif
 
 all: helix
 
@@ -47,6 +52,10 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 	echo "#!/bin/bash" > $(EXEC)
 	echo 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)
 	chmod a+x $(EXEC)
+
+	$(FREE_DRIVERS)
+
+	  
 
 # example call: make test filename=hello_helix
 test: $(EXEC) $(EXAMPLESDIR)/$(filename).hx
