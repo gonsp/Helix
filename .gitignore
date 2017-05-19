@@ -32,8 +32,8 @@
 .DS_Store
 .idea/
 bin/
-src/Helix.parser/HelixLexer.java
-src/Helix.parser/HelixParser.java
+src/Helix/parser/HelixLexer.java
+src/Helix/parser/HelixParser.java
 *.dot
 *.pdf
 trace*
