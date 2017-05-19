@@ -1,11 +1,13 @@
 
 ROOT 		= $(PWD)
 SRCDIR		= $(ROOT)/src/Helix
+RESDIR		= $(ROOT)/resources
 MAIN_SRC	= $(SRCDIR)/Main.java
 INTERPDIR	= $(SRCDIR)/interpreter
 PARSERDIR	= $(SRCDIR)/parser
 GRAMMAR 	= $(PARSERDIR)/Helix.g
-PARSER_SRC 	= $(shell find $(PARSERDIR)/* | grep .java)
+PARSER_SRC 	= $(PARSERDIR)/HelixLexer.java \
+			  $(PARSERDIR)/HelixParser.java
 BINDIR 		= $(ROOT)/bin
 LIBDIR		= $(ROOT)/lib
 CLASSDIR 	= $(BINDIR)/classes
@@ -40,6 +42,7 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 	printf "Class-Path: " >> $(MANIFEST)
 	cd $(BINDIR); find ../lib | grep .jar | tr '\n' ' ' | sed '$ s/.$$//' >> $(MANIFEST)
 	cp javax.usb.properties $(CLASSDIR)/javax.usb.properties
+	cp -r $(RESDIR) $(CLASSDIR)
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
 	echo "#!/bin/bash" > $(EXEC)
 	echo 'exec java -enableassertions -jar $(JARFILE) "$$@"' >> $(EXEC)

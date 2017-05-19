@@ -22,12 +22,12 @@ tokens {
 }
 
 @header {
-    package Helix.parser;
-    import Helix.interpreter.HelixTree;
+package Helix.parser;
+import Helix.interpreter.HelixTree;
 }
 
 @lexer::header {
-    package Helix.parser;
+package Helix.parser;
 }
 
 // A program is a list of functions
