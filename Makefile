@@ -36,9 +36,9 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 
 	javac $(JFLAGS) $(MAIN_SRC) $(PARSER_SRC) $(shell find $(INTERPDIR)/* | grep .java)
 
-	# echo "Main-Class: Helix.Main" > $(MANIFEST)
-	# printf "Class-Path: \n " >> $(MANIFEST)
-	# cd $(BINDIR); find ../lib | grep .jar | tr '\n' '?' | sed 's/?/!?!/g' | tr '?' '\n' | tr '!' ' ' >> $(MANIFEST)
+	echo "Main-Class: Helix.Main" > $(MANIFEST)
+	printf "Class-Path: " >> $(MANIFEST)
+	cd $(BINDIR); find ../lib | grep .jar | tr '\n' ' ' | sed '$ s/.$$//' >> $(MANIFEST)
 	cp javax.usb.properties $(CLASSDIR)/javax.usb.properties
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
 	echo "#!/bin/bash" > $(EXEC)
