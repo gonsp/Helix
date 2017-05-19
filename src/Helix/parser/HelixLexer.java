@@ -1,4 +1,4 @@
-// $ANTLR 3.4 /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g 2017-05-19 17:39:28
+// $ANTLR 3.4 /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g 2017-05-19 17:47:39
 
     package Helix.parser;
 
@@ -92,15 +92,15 @@ public class HelixLexer extends Lexer {
     public HelixLexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
     }
-    public String getGrammarFileName() { return "/Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g"; }
+    public String getGrammarFileName() { return "/home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g"; }
 
     // $ANTLR start "T__62"
     public final void mT__62() throws RecognitionException {
         try {
             int _type = T__62;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:6:7: ( '&' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:6:9: '&'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:6:7: ( '&' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:6:9: '&'
             {
             match('&'); 
 
@@ -120,8 +120,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__63;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:7:7: ( '(' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:7:9: '('
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:7:7: ( '(' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:7:9: '('
             {
             match('('); 
 
@@ -141,8 +141,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__64;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:8:7: ( ')' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:8:9: ')'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:8:7: ( ')' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:8:9: ')'
             {
             match(')'); 
 
@@ -162,8 +162,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__65;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:9:7: ( ',' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:9:9: ','
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:9:7: ( ',' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:9:9: ','
             {
             match(','); 
 
@@ -183,8 +183,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__66;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:10:7: ( '.' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:10:9: '.'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:10:7: ( '.' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:10:9: '.'
             {
             match('.'); 
 
@@ -204,8 +204,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__67;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:11:7: ( '[' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:11:9: '['
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:11:7: ( '[' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:11:9: '['
             {
             match('['); 
 
@@ -225,8 +225,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__68;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:12:7: ( ']' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:12:9: ']'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:12:7: ( ']' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:12:9: ']'
             {
             match(']'); 
 
@@ -246,8 +246,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__69;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:13:7: ( '{' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:13:9: '{'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:13:7: ( '{' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:13:9: '{'
             {
             match('{'); 
 
@@ -267,8 +267,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = T__70;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:14:7: ( '}' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:14:9: '}'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:14:7: ( '}' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:14:9: '}'
             {
             match('}'); 
 
@@ -288,8 +288,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = GET_GPS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:168:9: ( 'get_gps' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:168:13: 'get_gps'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:168:9: ( 'get_gps' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:168:13: 'get_gps'
             {
             match("get_gps"); 
 
@@ -311,8 +311,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = MOVE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:169:9: ( 'move' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:169:13: 'move'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:169:9: ( 'move' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:169:13: 'move'
             {
             match("move"); 
 
@@ -334,8 +334,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = FORWARD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:170:9: ( 'forward' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:170:13: 'forward'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:170:9: ( 'forward' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:170:13: 'forward'
             {
             match("forward"); 
 
@@ -357,8 +357,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = ROTATE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:171:9: ( 'rotate' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:171:13: 'rotate'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:171:9: ( 'rotate' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:171:13: 'rotate'
             {
             match("rotate"); 
 
@@ -380,8 +380,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = TAKEOFF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:172:9: ( 'take_off' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:172:13: 'take_off'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:172:9: ( 'take_off' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:172:13: 'take_off'
             {
             match("take_off"); 
 
@@ -403,8 +403,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LAND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:173:9: ( 'land' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:173:13: 'land'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:173:9: ( 'land' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:173:13: 'land'
             {
             match("land"); 
 
@@ -426,8 +426,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = SLEEP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:174:9: ( 'sleep' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:174:13: 'sleep'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:174:9: ( 'sleep' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:174:13: 'sleep'
             {
             match("sleep"); 
 
@@ -449,8 +449,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = UPF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:175:10: ( 'up' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:175:14: 'up'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:175:10: ( 'up' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:175:14: 'up'
             {
             match("up"); 
 
@@ -472,8 +472,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = DOWNF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:176:10: ( 'down' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:176:14: 'down'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:176:10: ( 'down' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:176:14: 'down'
             {
             match("down"); 
 
@@ -495,8 +495,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = RIGHT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:177:9: ( 'right' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:177:13: 'right'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:177:9: ( 'right' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:177:13: 'right'
             {
             match("right"); 
 
@@ -518,8 +518,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LEFT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:178:9: ( 'left' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:178:13: 'left'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:178:9: ( 'left' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:178:13: 'left'
             {
             match("left"); 
 
@@ -541,8 +541,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = BACKWARDS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:179:11: ( 'backwards' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:179:13: 'backwards'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:179:11: ( 'backwards' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:179:13: 'backwards'
             {
             match("backwards"); 
 
@@ -564,8 +564,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LOOKAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:180:9: ( 'look_at' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:180:13: 'look_at'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:180:9: ( 'look_at' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:180:13: 'look_at'
             {
             match("look_at"); 
 
@@ -587,12 +587,12 @@ public class HelixLexer extends Lexer {
         try {
             int _type = NL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:183:5: ( '\\n' ( '\\n' )* )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:183:7: '\\n' ( '\\n' )*
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:183:5: ( '\\n' ( '\\n' )* )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:183:7: '\\n' ( '\\n' )*
             {
             match('\n'); 
 
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:183:12: ( '\\n' )*
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:183:12: ( '\\n' )*
             loop1:
             do {
                 int alt1=2;
@@ -605,7 +605,7 @@ public class HelixLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:183:12: '\\n'
+            	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:183:12: '\\n'
             	    {
             	    match('\n'); 
 
@@ -634,8 +634,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:184:7: ( '=' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:184:9: '='
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:184:7: ( '=' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:184:9: '='
             {
             match('='); 
 
@@ -655,8 +655,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = NOT_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:185:10: ( '!=' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:185:12: '!='
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:185:10: ( '!=' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:185:12: '!='
             {
             match("!="); 
 
@@ -678,8 +678,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:186:8: ( '<' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:186:10: '<'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:186:8: ( '<' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:186:10: '<'
             {
             match('<'); 
 
@@ -699,8 +699,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:187:8: ( '<=' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:187:10: '<='
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:187:8: ( '<=' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:187:10: '<='
             {
             match("<="); 
 
@@ -722,8 +722,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = GT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:188:8: ( '>' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:188:10: '>'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:188:8: ( '>' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:188:10: '>'
             {
             match('>'); 
 
@@ -743,8 +743,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = GE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:189:8: ( '>=' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:189:10: '>='
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:189:8: ( '>=' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:189:10: '>='
             {
             match(">="); 
 
@@ -766,8 +766,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = PLUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:190:6: ( '+' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:190:8: '+'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:190:6: ( '+' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:190:8: '+'
             {
             match('+'); 
 
@@ -787,8 +787,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = MINUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:191:7: ( '-' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:191:9: '-'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:191:7: ( '-' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:191:9: '-'
             {
             match('-'); 
 
@@ -808,8 +808,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = MUL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:192:9: ( '*' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:192:11: '*'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:192:9: ( '*' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:192:11: '*'
             {
             match('*'); 
 
@@ -829,8 +829,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = DIV;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:193:9: ( '/' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:193:11: '/'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:193:9: ( '/' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:193:11: '/'
             {
             match('/'); 
 
@@ -850,8 +850,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = MOD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:194:9: ( '%' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:194:11: '%'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:194:9: ( '%' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:194:11: '%'
             {
             match('%'); 
 
@@ -871,8 +871,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:195:9: ( 'not' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:195:11: 'not'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:195:9: ( 'not' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:195:11: 'not'
             {
             match("not"); 
 
@@ -894,8 +894,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:196:9: ( 'and' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:196:11: 'and'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:196:9: ( 'and' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:196:11: 'and'
             {
             match("and"); 
 
@@ -917,8 +917,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:197:8: ( 'or' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:197:10: 'or'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:197:8: ( 'or' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:197:10: 'or'
             {
             match("or"); 
 
@@ -940,8 +940,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = IF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:198:6: ( 'if' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:198:8: 'if'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:198:6: ( 'if' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:198:8: 'if'
             {
             match("if"); 
 
@@ -963,8 +963,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = THEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:199:6: ( 'then' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:199:8: 'then'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:199:6: ( 'then' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:199:8: 'then'
             {
             match("then"); 
 
@@ -986,8 +986,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = ELSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:200:6: ( 'else' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:200:8: 'else'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:200:6: ( 'else' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:200:8: 'else'
             {
             match("else"); 
 
@@ -1009,8 +1009,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = WHILE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:201:7: ( 'while' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:201:9: 'while'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:201:7: ( 'while' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:201:9: 'while'
             {
             match("while"); 
 
@@ -1032,8 +1032,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = DO;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:202:8: ( 'do' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:202:10: 'do'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:202:8: ( 'do' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:202:10: 'do'
             {
             match("do"); 
 
@@ -1055,8 +1055,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = DEF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:203:9: ( 'def' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:203:11: 'def'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:203:9: ( 'def' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:203:11: 'def'
             {
             match("def"); 
 
@@ -1078,8 +1078,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = RETURN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:204:8: ( 'return' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:204:10: 'return'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:204:8: ( 'return' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:204:10: 'return'
             {
             match("return"); 
 
@@ -1101,8 +1101,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = TRUE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:205:9: ( 'true' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:205:11: 'true'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:205:9: ( 'true' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:205:11: 'true'
             {
             match("true"); 
 
@@ -1124,8 +1124,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = FALSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:206:9: ( 'false' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:206:11: 'false'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:206:9: ( 'false' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:206:11: 'false'
             {
             match("false"); 
 
@@ -1147,8 +1147,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:207:9: ( 'lat' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:207:11: 'lat'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:207:9: ( 'lat' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:207:11: 'lat'
             {
             match("lat"); 
 
@@ -1170,8 +1170,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = LNG;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:208:9: ( 'lng' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:208:11: 'lng'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:208:9: ( 'lng' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:208:11: 'lng'
             {
             match("lng"); 
 
@@ -1193,8 +1193,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:209:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:209:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:209:6: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:209:8: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
                 input.consume();
@@ -1206,7 +1206,7 @@ public class HelixLexer extends Lexer {
             }
 
 
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:209:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:209:32: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop2:
             do {
                 int alt2=2;
@@ -1219,7 +1219,7 @@ public class HelixLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:
+            	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:
             	    {
             	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
             	        input.consume();
@@ -1256,10 +1256,10 @@ public class HelixLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ |) )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ |)
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ |) )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ |)
             {
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:11: ( '0' .. '9' )+
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:11: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -1273,7 +1273,7 @@ public class HelixLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:
+            	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:
             	    {
             	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
             	        input.consume();
@@ -1298,7 +1298,7 @@ public class HelixLexer extends Lexer {
             } while (true);
 
 
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:21: ( '.' ( '0' .. '9' )+ |)
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:21: ( '.' ( '0' .. '9' )+ |)
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -1310,11 +1310,11 @@ public class HelixLexer extends Lexer {
             }
             switch (alt5) {
                 case 1 :
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:22: '.' ( '0' .. '9' )+
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:22: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
 
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:26: ( '0' .. '9' )+
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:26: ( '0' .. '9' )+
                     int cnt4=0;
                     loop4:
                     do {
@@ -1328,7 +1328,7 @@ public class HelixLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:
+                    	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:
                     	    {
                     	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
                     	        input.consume();
@@ -1356,7 +1356,7 @@ public class HelixLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:210:36: 
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:210:36: 
                     {
                     }
                     break;
@@ -1380,7 +1380,7 @@ public class HelixLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:213:9: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:213:9: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -1410,13 +1410,13 @@ public class HelixLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:213:11: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:213:11: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
                     {
                     match("//"); 
 
 
 
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:213:16: (~ ( '\\n' | '\\r' ) )*
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:213:16: (~ ( '\\n' | '\\r' ) )*
                     loop6:
                     do {
                         int alt6=2;
@@ -1429,7 +1429,7 @@ public class HelixLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:
+                    	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:
                     	    {
                     	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) {
                     	        input.consume();
@@ -1450,7 +1450,7 @@ public class HelixLexer extends Lexer {
                     } while (true);
 
 
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:213:30: ( '\\r' )?
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:213:30: ( '\\r' )?
                     int alt7=2;
                     int LA7_0 = input.LA(1);
 
@@ -1459,7 +1459,7 @@ public class HelixLexer extends Lexer {
                     }
                     switch (alt7) {
                         case 1 :
-                            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:213:30: '\\r'
+                            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:213:30: '\\r'
                             {
                             match('\r'); 
 
@@ -1476,13 +1476,13 @@ public class HelixLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:214:8: '/*' ( options {greedy=false; } : . )* '*/'
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:214:8: '/*' ( options {greedy=false; } : . )* '*/'
                     {
                     match("/*"); 
 
 
 
-                    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:214:13: ( options {greedy=false; } : . )*
+                    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:214:13: ( options {greedy=false; } : . )*
                     loop8:
                     do {
                         int alt8=2;
@@ -1507,7 +1507,7 @@ public class HelixLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:214:41: .
+                    	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:214:41: .
                     	    {
                     	    matchAny(); 
 
@@ -1544,12 +1544,12 @@ public class HelixLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:218:9: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:218:12: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:218:9: ( '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:218:12: '\"' ( ESC_SEQ |~ ( '\\\\' | '\"' ) )* '\"'
             {
             match('\"'); 
 
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:218:16: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:218:16: ( ESC_SEQ |~ ( '\\\\' | '\"' ) )*
             loop10:
             do {
                 int alt10=3;
@@ -1565,7 +1565,7 @@ public class HelixLexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:218:18: ESC_SEQ
+            	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:218:18: ESC_SEQ
             	    {
             	    mESC_SEQ(); 
 
@@ -1573,7 +1573,7 @@ public class HelixLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:218:28: ~ ( '\\\\' | '\"' )
+            	    // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:218:28: ~ ( '\\\\' | '\"' )
             	    {
             	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '[')||(input.LA(1) >= ']' && input.LA(1) <= '\uFFFF') ) {
             	        input.consume();
@@ -1610,8 +1610,8 @@ public class HelixLexer extends Lexer {
     // $ANTLR start "ESC_SEQ"
     public final void mESC_SEQ() throws RecognitionException {
         try {
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:224:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:224:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:224:5: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' ) )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:224:9: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\\\"' | '\\'' | '\\\\' )
             {
             match('\\'); 
 
@@ -1640,8 +1640,8 @@ public class HelixLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:227:6: ( ( ' ' | '\\t' | '\\r' ) )
-            // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:227:8: ( ' ' | '\\t' | '\\r' )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:227:6: ( ( ' ' | '\\t' | '\\r' ) )
+            // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:227:8: ( ' ' | '\\t' | '\\r' )
             {
             if ( input.LA(1)=='\t'||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -1667,12 +1667,12 @@ public class HelixLexer extends Lexer {
     // $ANTLR end "WS"
 
     public void mTokens() throws RecognitionException {
-        // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:8: ( T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | GET_GPS | MOVE | FORWARD | ROTATE | TAKEOFF | LAND | SLEEP | UPF | DOWNF | RIGHT | LEFT | BACKWARDS | LOOKAT | NL | EQUAL | NOT_EQUAL | LT | LE | GT | GE | PLUS | MINUS | MUL | DIV | MOD | NOT | AND | OR | IF | THEN | ELSE | WHILE | DO | DEF | RETURN | TRUE | FALSE | LAT | LNG | ID | NUM | COMMENT | STRING | WS )
+        // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:8: ( T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | GET_GPS | MOVE | FORWARD | ROTATE | TAKEOFF | LAND | SLEEP | UPF | DOWNF | RIGHT | LEFT | BACKWARDS | LOOKAT | NL | EQUAL | NOT_EQUAL | LT | LE | GT | GE | PLUS | MINUS | MUL | DIV | MOD | NOT | AND | OR | IF | THEN | ELSE | WHILE | DO | DEF | RETURN | TRUE | FALSE | LAT | LNG | ID | NUM | COMMENT | STRING | WS )
         int alt11=53;
         alt11 = dfa11.predict(input);
         switch (alt11) {
             case 1 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:10: T__62
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:10: T__62
                 {
                 mT__62(); 
 
@@ -1680,7 +1680,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 2 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:16: T__63
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:16: T__63
                 {
                 mT__63(); 
 
@@ -1688,7 +1688,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 3 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:22: T__64
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:22: T__64
                 {
                 mT__64(); 
 
@@ -1696,7 +1696,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 4 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:28: T__65
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:28: T__65
                 {
                 mT__65(); 
 
@@ -1704,7 +1704,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 5 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:34: T__66
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:34: T__66
                 {
                 mT__66(); 
 
@@ -1712,7 +1712,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 6 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:40: T__67
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:40: T__67
                 {
                 mT__67(); 
 
@@ -1720,7 +1720,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 7 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:46: T__68
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:46: T__68
                 {
                 mT__68(); 
 
@@ -1728,7 +1728,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 8 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:52: T__69
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:52: T__69
                 {
                 mT__69(); 
 
@@ -1736,7 +1736,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 9 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:58: T__70
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:58: T__70
                 {
                 mT__70(); 
 
@@ -1744,7 +1744,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 10 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:64: GET_GPS
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:64: GET_GPS
                 {
                 mGET_GPS(); 
 
@@ -1752,7 +1752,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 11 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:72: MOVE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:72: MOVE
                 {
                 mMOVE(); 
 
@@ -1760,7 +1760,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 12 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:77: FORWARD
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:77: FORWARD
                 {
                 mFORWARD(); 
 
@@ -1768,7 +1768,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 13 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:85: ROTATE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:85: ROTATE
                 {
                 mROTATE(); 
 
@@ -1776,7 +1776,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 14 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:92: TAKEOFF
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:92: TAKEOFF
                 {
                 mTAKEOFF(); 
 
@@ -1784,7 +1784,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 15 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:100: LAND
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:100: LAND
                 {
                 mLAND(); 
 
@@ -1792,7 +1792,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 16 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:105: SLEEP
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:105: SLEEP
                 {
                 mSLEEP(); 
 
@@ -1800,7 +1800,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 17 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:111: UPF
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:111: UPF
                 {
                 mUPF(); 
 
@@ -1808,7 +1808,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 18 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:115: DOWNF
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:115: DOWNF
                 {
                 mDOWNF(); 
 
@@ -1816,7 +1816,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 19 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:121: RIGHT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:121: RIGHT
                 {
                 mRIGHT(); 
 
@@ -1824,7 +1824,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 20 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:127: LEFT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:127: LEFT
                 {
                 mLEFT(); 
 
@@ -1832,7 +1832,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 21 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:132: BACKWARDS
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:132: BACKWARDS
                 {
                 mBACKWARDS(); 
 
@@ -1840,7 +1840,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 22 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:142: LOOKAT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:142: LOOKAT
                 {
                 mLOOKAT(); 
 
@@ -1848,7 +1848,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 23 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:149: NL
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:149: NL
                 {
                 mNL(); 
 
@@ -1856,7 +1856,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 24 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:152: EQUAL
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:152: EQUAL
                 {
                 mEQUAL(); 
 
@@ -1864,7 +1864,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 25 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:158: NOT_EQUAL
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:158: NOT_EQUAL
                 {
                 mNOT_EQUAL(); 
 
@@ -1872,7 +1872,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 26 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:168: LT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:168: LT
                 {
                 mLT(); 
 
@@ -1880,7 +1880,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 27 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:171: LE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:171: LE
                 {
                 mLE(); 
 
@@ -1888,7 +1888,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 28 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:174: GT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:174: GT
                 {
                 mGT(); 
 
@@ -1896,7 +1896,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 29 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:177: GE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:177: GE
                 {
                 mGE(); 
 
@@ -1904,7 +1904,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 30 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:180: PLUS
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:180: PLUS
                 {
                 mPLUS(); 
 
@@ -1912,7 +1912,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 31 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:185: MINUS
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:185: MINUS
                 {
                 mMINUS(); 
 
@@ -1920,7 +1920,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 32 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:191: MUL
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:191: MUL
                 {
                 mMUL(); 
 
@@ -1928,7 +1928,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 33 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:195: DIV
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:195: DIV
                 {
                 mDIV(); 
 
@@ -1936,7 +1936,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 34 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:199: MOD
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:199: MOD
                 {
                 mMOD(); 
 
@@ -1944,7 +1944,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 35 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:203: NOT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:203: NOT
                 {
                 mNOT(); 
 
@@ -1952,7 +1952,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 36 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:207: AND
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:207: AND
                 {
                 mAND(); 
 
@@ -1960,7 +1960,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 37 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:211: OR
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:211: OR
                 {
                 mOR(); 
 
@@ -1968,7 +1968,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 38 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:214: IF
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:214: IF
                 {
                 mIF(); 
 
@@ -1976,7 +1976,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 39 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:217: THEN
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:217: THEN
                 {
                 mTHEN(); 
 
@@ -1984,7 +1984,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 40 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:222: ELSE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:222: ELSE
                 {
                 mELSE(); 
 
@@ -1992,7 +1992,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 41 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:227: WHILE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:227: WHILE
                 {
                 mWHILE(); 
 
@@ -2000,7 +2000,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 42 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:233: DO
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:233: DO
                 {
                 mDO(); 
 
@@ -2008,7 +2008,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 43 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:236: DEF
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:236: DEF
                 {
                 mDEF(); 
 
@@ -2016,7 +2016,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 44 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:240: RETURN
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:240: RETURN
                 {
                 mRETURN(); 
 
@@ -2024,7 +2024,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 45 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:247: TRUE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:247: TRUE
                 {
                 mTRUE(); 
 
@@ -2032,7 +2032,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 46 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:252: FALSE
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:252: FALSE
                 {
                 mFALSE(); 
 
@@ -2040,7 +2040,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 47 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:258: LAT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:258: LAT
                 {
                 mLAT(); 
 
@@ -2048,7 +2048,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 48 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:262: LNG
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:262: LNG
                 {
                 mLNG(); 
 
@@ -2056,7 +2056,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 49 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:266: ID
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:266: ID
                 {
                 mID(); 
 
@@ -2064,7 +2064,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 50 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:269: NUM
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:269: NUM
                 {
                 mNUM(); 
 
@@ -2072,7 +2072,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 51 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:273: COMMENT
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:273: COMMENT
                 {
                 mCOMMENT(); 
 
@@ -2080,7 +2080,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 52 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:281: STRING
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:281: STRING
                 {
                 mSTRING(); 
 
@@ -2088,7 +2088,7 @@ public class HelixLexer extends Lexer {
                 }
                 break;
             case 53 :
-                // /Users/gonmolon/Documents/Universidad/3/CL/Helix/src/Helix/parser/Helix.g:1:288: WS
+                // /home2/users/alumnes/1191701/dades/linux/Documents/helix/src/Helix/parser/Helix.g:1:288: WS
                 {
                 mWS(); 
 
