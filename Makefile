@@ -40,7 +40,7 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 
 	echo "Main-Class: Helix.Main" > $(MANIFEST)
 	printf "Class-Path: " >> $(MANIFEST)
-	cd $(BINDIR); find ../lib | grep .jar | tr '\n' ' ' | sed '$ s/.$$//' >> $(MANIFEST)
+	cd $(BINDIR); find ../lib | grep .jar | tr '\n' ' ' | sed '$ s/.$$/?/' | tr '?' '\n' >> $(MANIFEST)
 	cp javax.usb.properties $(CLASSDIR)/javax.usb.properties
 	cp -r $(RESDIR) $(CLASSDIR)
 	cd $(CLASSDIR); jar -cmf $(MANIFEST) $(JARFILE) *
