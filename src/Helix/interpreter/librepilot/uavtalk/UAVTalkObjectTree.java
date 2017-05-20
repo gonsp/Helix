@@ -41,11 +41,17 @@ public class UAVTalkObjectTree {
 
     public UAVTalkObjectTree() {
         objects = new ConcurrentHashMap<>();
+        xmlObjects = new TreeMap<>();
+
         try {
             loadUAVODefinitions();
         } catch (Exception e) {
             System.out.println("ERROR READING UAVO DEFINITIONS");
             e.printStackTrace();
+        }
+
+        for(UAVTalkXMLObject obj : xmlObjects.values()) {
+            objects.put(obj.getId(), new UAVTalkObject(obj.getId()));
         }
     }
 
@@ -271,12 +277,10 @@ public class UAVTalkObjectTree {
 
     private Map<String, UAVTalkXMLObject> loadUAVODefinitions() throws Exception {
         System.out.println("Starting to load XML definitions");
-        xmlObjects = new TreeMap<>();
 
         MessageDigest crypt = MessageDigest.getInstance("SHA-1");     //single files hash
         MessageDigest cumucrypt = MessageDigest.getInstance("SHA-1"); //cumulative hash
         cumucrypt.reset();
-
 
         CodeSource src = LibrePilotController.class.getProtectionDomain().getCodeSource();
         if(src != null) {
