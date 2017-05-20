@@ -16,30 +16,47 @@
 
 package Helix.interpreter.librepilot.uavtalk;
 
+import Helix.interpreter.librepilot.LibrePilotController;
+
+import java.io.File;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.CodeSource;
+import java.security.MessageDigest;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class UAVTalkObjectTree {
+
+    private static final String XML_PATH = "resources/definitions/";
 
     private final ConcurrentHashMap<String, UAVTalkObject> objects;
     private Map<String, UAVTalkXMLObject> xmlObjects;
 
     public UAVTalkObjectTree() {
         objects = new ConcurrentHashMap<>();
+        try {
+            loadUAVODefinitions();
+        } catch (Exception e) {
+            System.out.println("ERROR READING UAVO DEFINITIONS");
+            e.printStackTrace();
+        }
     }
 
     public Map<String, UAVTalkXMLObject> getXmlObjects() {
         return xmlObjects;
     }
 
-    public void setXmlObjects(Map<String, UAVTalkXMLObject> xmlObjects) {
-        this.xmlObjects = xmlObjects;
-    }
-
     public void setListener(String objName, UAVTalkObjectListener listener) {
-        objects.get(xmlObjects.get(objName).getId()).setListener(listener);
+        String id = xmlObjects.get(objName).getId();
+        System.out.println("HELLOOOOOOOOOOOO = " + id);
+        objects.get(id).setListener(listener);
     }
 
     public UAVTalkObjectListener getListener(String objName) {
@@ -175,10 +192,10 @@ public class UAVTalkObjectTree {
                     byte b = data[pos + element];
                     fielddata[0] = b;
                     try {
-                        retval = xmlfield.mOptions[H.toInt(b)];
+                        retval = xmlfield.mOptions[Utils.toInt(b)];
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("AIOOBE: " + H.toInt(b) + " " + data.length + " " + b + " " +
-                                H.bytesToHex(fielddata) + " " + H.bytesToHex(data) + " " + pos +
+                        System.out.println("AIOOBE: " + Utils.toInt(b) + " " + data.length + " " + b + " " +
+                                Utils.bytesToHex(fielddata) + " " + Utils.bytesToHex(data) + " " + pos +
                                 " " + element);
                     }
                     break;
@@ -250,5 +267,43 @@ public class UAVTalkObjectTree {
             }
         }
         return retval;
+    }
+
+    private Map<String, UAVTalkXMLObject> loadUAVODefinitions() throws Exception {
+        System.out.println("Starting to load XML definitions");
+        xmlObjects = new TreeMap<>();
+
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");     //single files hash
+        MessageDigest cumucrypt = MessageDigest.getInstance("SHA-1"); //cumulative hash
+        cumucrypt.reset();
+
+
+        CodeSource src = LibrePilotController.class.getProtectionDomain().getCodeSource();
+        if(src != null) {
+            URL jar = src.getLocation();
+            ZipInputStream zip = new ZipInputStream(jar.openStream());
+            ZipEntry e = zip.getNextEntry();
+            while(e != null) {
+                String name = e.getName();
+                if(name.startsWith(XML_PATH) && !name.equals(XML_PATH)) {
+                    File file = new File(name);
+                    byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+                    String content = new String(encoded);
+
+                    crypt.reset();
+                    crypt.update(content.getBytes());
+                    cumucrypt.update(Utils.bytesToHex(crypt.digest()).toLowerCase().getBytes());
+
+                    if (content.length() > 0) {
+                        UAVTalkXMLObject obj = new UAVTalkXMLObject(content);
+                        xmlObjects.put(obj.getName(), obj);
+                    }
+                }
+                e = zip.getNextEntry();
+            }
+        }
+
+        System.out.println("SHA1: " + Utils.bytesToHex(cumucrypt.digest()).toLowerCase());
+        return xmlObjects;
     }
 }

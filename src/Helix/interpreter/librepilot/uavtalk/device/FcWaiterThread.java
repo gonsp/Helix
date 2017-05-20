@@ -17,7 +17,7 @@
 package Helix.interpreter.librepilot.uavtalk.device;
 
 
-import Helix.interpreter.librepilot.uavtalk.H;
+import Helix.interpreter.librepilot.uavtalk.Utils;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkObject;
 
 public abstract class FcWaiterThread extends Thread {
@@ -63,7 +63,7 @@ public abstract class FcWaiterThread extends Thread {
                 //mDevice.mActivity.incRxObjectsBad();
                 byte[] b = new byte[1];
                 b[0] = msgType;
-                System.out.println("UAVTalk: " + "Received bad Object Type " + H.bytesToHex(b));
+                System.out.println("UAVTalk: " + "Received bad Object Type " + Utils.bytesToHex(b));
                 return false;
         }
         return true;

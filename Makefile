@@ -25,9 +25,9 @@ JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
 UNAME 		:= $(shell uname)
 
-ifeq ($(UNAME), Darwin)
-	#FREE_DRIVERS = sudo kextunload -b com.apple.driver.usb.IOUSBHostHIDDevice
-endif
+
+# To unload drivers in MAC which gives problems claiming the USB, use this command
+# sudo kextunload -b com.apple.driver.usb.IOUSBHostHIDDevice
 
 all: helix
 

@@ -155,7 +155,7 @@ public class UAVTalkMetaData {
     }
 
     public String toString() {
-        return H.bytesToHex(getData()) + " # " + getAccess() + " " + getGcsAccess() + " " + getTelemetryAcked() + " " +
+        return Utils.bytesToHex(getData()) + " # " + getAccess() + " " + getGcsAccess() + " " + getTelemetryAcked() + " " +
                 getGcsTelementryAcked() + " " + getTelemetryUpdateMode() + " " +
                 getGcsTelemetryUpdateMode() + " " + getLoggingUpdateMode() + " " +
                 getLoggingUpdatePeriod() + " " + getGcsTelemetryUpdatePeriod() + " " +
@@ -210,23 +210,23 @@ public class UAVTalkMetaData {
         retval[0] = 0x3c;
         retval[1] = type;
 
-        byte[] len = H.toBytes(instData.length + 10);
+        byte[] len = Utils.toBytes(instData.length + 10);
         retval[2] = len[3];
         retval[3] = len[2];
 
-        byte[] objId = H.hexStringToByteArray(this.mMetaId);
+        byte[] objId = Utils.hexStringToByteArray(this.mMetaId);
 
         retval[4] = objId[3];
         retval[5] = objId[2];
         retval[6] = objId[1];
         retval[7] = objId[0];
 
-        byte[] iid = H.toBytes(0);
+        byte[] iid = Utils.toBytes(0);
 
         retval[8] = iid[3];
         retval[9] = iid[2];
 
-        retval[retval.length - 1] = (byte) (H.crc8(retval, 0, retval.length - 1) & 0xff);
+        retval[retval.length - 1] = (byte) (Utils.crc8(retval, 0, retval.length - 1) & 0xff);
 
         return retval;
     }

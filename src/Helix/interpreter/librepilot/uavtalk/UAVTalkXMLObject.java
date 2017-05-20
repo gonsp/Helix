@@ -235,7 +235,7 @@ public class UAVTalkXMLObject {
     }
 
     public String getId() {
-        return H.bytesToHex(H.toBytes(mId));
+        return Utils.bytesToHex(Utils.toBytes(mId));
     }
 
     public int getLength() {

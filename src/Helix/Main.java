@@ -99,7 +99,7 @@ public class Main {
                 if (linenumber < 0) System.err.print(".");
                 else System.err.print(" (" + infile + ", line " + linenumber + "): ");
                 System.err.println(e.getMessage() + ".");
-                System.err.format(I.getStackTrace());
+                e.printStackTrace();
             } catch (StackOverflowError e) {
                 if (I != null) {
                     linenumber = I.getLinenumber();
@@ -107,7 +107,7 @@ public class Main {
                 System.err.print("stack overflow error");
                 if (linenumber < 0) System.err.print(".");
                 else System.err.print(" (" + infile + ", line " + linenumber + "): ");
-                System.err.format(I.getStackTrace(5));
+                e.printStackTrace();
             }
         }
 

@@ -42,7 +42,6 @@ import Helix.interpreter.librepilot.uavtalk.*;
 import javax.usb.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class FcUsbDevice extends FcDevice {
 
@@ -68,15 +67,10 @@ public class FcUsbDevice extends FcDevice {
     public static final int USB_ENDPOINT_XFER_INT = 3;
     public static final int USB_DIR_OUT = 0;
 
-    public FcUsbDevice(Map<String, UAVTalkXMLObject> xmlObjects) {
+    public FcUsbDevice() {
         super();
 
-        //mActivity = activity;
-        //mDeviceConnection = connection;
         mObjectTree = new UAVTalkObjectTree();
-        mObjectTree.setXmlObjects(xmlObjects);
-        //mActivity.setPollThreadObjectTree(mObjectTree);
-
 
         UsbEndpoint epOut = null;
         UsbEndpoint epIn = null;
@@ -226,7 +220,7 @@ public class FcUsbDevice extends FcDevice {
     @Override
     public boolean sendAck(String objectId, int instance) {
         byte[] send = mObjectTree.getObjectFromID(objectId).toMessage((byte) 0x23, instance, true);
-        System.out.println("SEND_ACK_USB: " + H.bytesToHex(send));
+        System.out.println("SEND_ACK_USB: " + Utils.bytesToHex(send));
         if (send != null) {
             //mActivity.incTxObjects();
 

@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class H {
+public class Utils {
 
     public final static String NS = ","; //not seperatoir
     public final static String RS = "\\."; //regex reperator
@@ -156,7 +156,7 @@ public class H {
         if (ms == null || ms.equals("")) {
             return "";
         }
-        long millis = Math.round(H.stringToFloat(ms));
+        long millis = Math.round(Utils.stringToFloat(ms));
         return String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) -
@@ -169,7 +169,7 @@ public class H {
         if (seconds == null || seconds.equals("")) {
             return "";
         }
-        long millis = Math.round(H.stringToFloat(seconds) * 1000);
+        long millis = Math.round(Utils.stringToFloat(seconds) * 1000);
         return String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(millis),
                 TimeUnit.MILLISECONDS.toMinutes(millis) -
@@ -193,7 +193,7 @@ public class H {
     public static int crc8(byte[] b, int start, int len) {
         int crc = 0;
         for (int i = start; i < start + len; i++) {
-            crc = (byte) H.CRC_TABLE[((byte) (crc) ^ b[i]) & 0xFF];
+            crc = (byte) Utils.CRC_TABLE[((byte) (crc) ^ b[i]) & 0xFF];
         }
         return (crc & 0xFF);
     }
@@ -245,7 +245,7 @@ public class H {
     }
 
     public static byte[] floatToByteArrayRev(float value) {
-        return H.reverse4bytes(floatToByteArray(value));
+        return Utils.reverse4bytes(floatToByteArray(value));
     }
 
     public static byte[] floatToByteArray(float value) {

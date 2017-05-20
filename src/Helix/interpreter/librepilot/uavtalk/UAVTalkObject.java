@@ -42,19 +42,19 @@ public class UAVTalkObject {
         retval[2] = 0x0a;
         retval[3] = 0x00;
 
-        byte[] objId = H.hexStringToByteArray(objectId);
+        byte[] objId = Utils.hexStringToByteArray(objectId);
 
         retval[4] = objId[3];
         retval[5] = objId[2];
         retval[6] = objId[1];
         retval[7] = objId[0];
 
-        byte[] iid = H.toBytes(instance);
+        byte[] iid = Utils.toBytes(instance);
 
         retval[8] = iid[3];
         retval[9] = iid[2];
 
-        retval[10] = (byte) (H.crc8(retval, 0, 10) & 0xff);
+        retval[10] = (byte) (Utils.crc8(retval, 0, 10) & 0xff);
 
         return retval;
     }
@@ -99,7 +99,7 @@ public class UAVTalkObject {
     }
 
     public String toString() {
-        return mId + " " + H.bytesToHex(getInstance(0).getData());
+        return mId + " " + Utils.bytesToHex(getInstance(0).getData());
     }
 
     public UAVTalkObjectInstance getInstance(int id) {
@@ -131,23 +131,23 @@ public class UAVTalkObject {
         retval[0] = 0x3c;
         retval[1] = type;
 
-        byte[] len = H.toBytes(instData.length + 10);
+        byte[] len = Utils.toBytes(instData.length + 10);
         retval[2] = len[3];
         retval[3] = len[2];
 
-        byte[] objId = H.hexStringToByteArray(this.mId);
+        byte[] objId = Utils.hexStringToByteArray(this.mId);
 
         retval[4] = objId[3];
         retval[5] = objId[2];
         retval[6] = objId[1];
         retval[7] = objId[0];
 
-        byte[] iid = H.toBytes(instance);
+        byte[] iid = Utils.toBytes(instance);
 
         retval[8] = iid[3];
         retval[9] = iid[2];
 
-        retval[retval.length - 1] = (byte) (H.crc8(retval, 0, retval.length - 1) & 0xff);
+        retval[retval.length - 1] = (byte) (Utils.crc8(retval, 0, retval.length - 1) & 0xff);
 
         return retval;
     }

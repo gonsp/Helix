@@ -45,6 +45,10 @@ public abstract class FcDevice {
         nackedObjects = new HashSet<>();
     }
 
+    public void setListener(String objName, UAVTalkObjectListener listener) {
+        mObjectTree.setListener(objName, listener);
+    }
+
     public long getLogBytesLoggedOPL() {
         return mLogBytesLoggedOPL;
     }
@@ -92,7 +96,7 @@ public abstract class FcDevice {
 
         if (mIsLogging) {  //if logging should start, create new stream
             //mActivity.deleteFile(mLogFileName); //delete old log
-            mLogFileName = H.getLogFilename();
+            mLogFileName = Utils.getLogFilename();
 
             try {
                 //mLogOutputStream = mActivity.openFileOutput(mLogFileName, Context.MODE_PRIVATE);
@@ -111,7 +115,7 @@ public abstract class FcDevice {
     public void log(UAVTalkMessage m) {
         // byte[] type = new byte[1];
         //type[0] = m.getType();
-        //VisualLog.d("DGB", "Logging object 0x"+ H.intToHex(m.getObjectId()) +" with messagetype " + H.bytesToHex(type) + " and timestamp " + m.getTimestamp());
+        //VisualLog.d("DGB", "Logging object 0x"+ Utils.intToHex(m.getObjectId()) +" with messagetype " + Utils.bytesToHex(type) + " and timestamp " + m.getTimestamp());
         log(m.getRaw(), m.getTimestamp());
     }
 
@@ -137,11 +141,11 @@ public abstract class FcDevice {
                 //time is long, so reverse8bytes is just fine.
 
                 @SuppressWarnings("ConstantConditions")
-                byte[] btime = Arrays.copyOfRange(H.reverse8bytes(H.toBytes(time)), 0, 4);
-                byte[] blen = H.reverse8bytes(H.toBytes(len));
+                byte[] btime = Arrays.copyOfRange(Utils.reverse8bytes(Utils.toBytes(time)), 0, 4);
+                byte[] blen = Utils.reverse8bytes(Utils.toBytes(len));
 
-                msg = H.concatArray(btime, blen);
-                msg = H.concatArray(msg, b);
+                msg = Utils.concatArray(btime, blen);
+                msg = Utils.concatArray(msg, b);
             //}
             mLogOutputStream.write(msg);
             mLogBytesLoggedUAV += b.length;
@@ -207,7 +211,7 @@ public abstract class FcDevice {
             }
 
             //metadataid is id +1... yes, this is hacky.
-            String metaId = H.intToHex((int) (Long.decode("0x" + xmlObj.getId()) + 1));
+            String metaId = Utils.intToHex((int) (Long.decode("0x" + xmlObj.getId()) + 1));
             //FIXME:Too hacky....
 
             byte[] send = UAVTalkObject.getReqMsg((byte) 0x21, metaId, 0);
@@ -236,7 +240,7 @@ public abstract class FcDevice {
                 .updateSettingsObject(mObjectTree, "ObjectPersistence", 0, "Selection", 0, sel);
         String sid = mObjectTree.getXmlObjects().get(saveObjectName).getId();
 
-        byte[] oid = H.reverse4bytes(H.hexStringToByteArray(sid));
+        byte[] oid = Utils.reverse4bytes(Utils.hexStringToByteArray(sid));
 
         UAVTalkDeviceHelper
                 .updateSettingsObject(mObjectTree, "ObjectPersistence", 0, "ObjectID", 0, oid);

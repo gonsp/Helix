@@ -17,7 +17,7 @@
 package Helix.interpreter.librepilot.uavtalk.device;
 
 
-import Helix.interpreter.librepilot.uavtalk.H;
+import Helix.interpreter.librepilot.uavtalk.Utils;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkMessage;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkObject;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkObjectInstance;
@@ -146,16 +146,16 @@ class FcUsbWaiterThread extends FcWaiterThread {
             databuffer = bufferRead(len - (10 + tsoffset));
             crcbuffer = bufferRead(crcbuffer.length);
 
-            byte[] bmsg = H.concatArray(syncbuffer, msgtypebuffer);
-            bmsg = H.concatArray(bmsg, lenbuffer);
-            bmsg = H.concatArray(bmsg, oidbuffer);
-            bmsg = H.concatArray(bmsg, iidbuffer);
+            byte[] bmsg = Utils.concatArray(syncbuffer, msgtypebuffer);
+            bmsg = Utils.concatArray(bmsg, lenbuffer);
+            bmsg = Utils.concatArray(bmsg, oidbuffer);
+            bmsg = Utils.concatArray(bmsg, iidbuffer);
             if ((MASK_TIMESTAMP & msgtypebuffer[0]) == MASK_TIMESTAMP) {
-                bmsg = H.concatArray(bmsg, timestampbuffer);
+                bmsg = Utils.concatArray(bmsg, timestampbuffer);
             }
-            bmsg = H.concatArray(bmsg, databuffer);
-            int crc = H.crc8(bmsg, 0, bmsg.length);
-            bmsg = H.concatArray(bmsg, crcbuffer);
+            bmsg = Utils.concatArray(bmsg, databuffer);
+            int crc = Utils.crc8(bmsg, 0, bmsg.length);
+            bmsg = Utils.concatArray(bmsg, crcbuffer);
 
             if ((((int) crcbuffer[0] & 0xff) == (crc & 0xff))) {
                 //mDevice.mActivity.incRxObjectsGood();
@@ -168,7 +168,7 @@ class FcUsbWaiterThread extends FcWaiterThread {
             try {
                 UAVTalkMessage msg = new UAVTalkMessage(bmsg, 0);
                 UAVTalkObject myObj =
-                        mDevice.mObjectTree.getObjectFromID(H.intToHex(msg.getObjectId()));
+                        mDevice.mObjectTree.getObjectFromID(Utils.intToHex(msg.getObjectId()));
                 UAVTalkObjectInstance myIns;
 
                 try {
