@@ -95,7 +95,7 @@ class FcUsbWaiterThread extends FcWaiterThread {
                 try {
                     pipe.open();
                     int received = pipe.syncSubmit(buffer);
-                    System.out.println(received + " bytes received");
+                    //System.out.println(received + " bytes received");
                 } catch (UsbException e) {
                     e.printStackTrace();
                 } finally {
@@ -167,10 +167,12 @@ class FcUsbWaiterThread extends FcWaiterThread {
 
             try {
                 UAVTalkMessage msg = new UAVTalkMessage(bmsg, 0);
-                UAVTalkObject myObj =
-                        mDevice.mObjectTree.getObjectFromID(Utils.intToHex(msg.getObjectId()));
-                UAVTalkObjectInstance myIns;
+                UAVTalkObject myObj = mDevice.mObjectTree.getObjectFromID(Utils.intToHex(msg.getObjectId()));
+                if(myObj == null) {
+                    continue;
+                }
 
+                UAVTalkObjectInstance myIns;
                 try {
                     myIns = myObj.getInstance(msg.getInstanceId());
                     myIns.setData(msg.getData());

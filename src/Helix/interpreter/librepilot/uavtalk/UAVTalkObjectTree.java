@@ -50,8 +50,8 @@ public class UAVTalkObjectTree {
             e.printStackTrace();
         }
 
-        for(UAVTalkXMLObject obj : xmlObjects.values()) {
-            objects.put(obj.getId(), new UAVTalkObject(obj.getId()));
+        for(UAVTalkXMLObject xmlObject : xmlObjects.values()) {
+            objects.put(xmlObject.getId(), new UAVTalkObject(xmlObject));
         }
     }
 
@@ -96,17 +96,22 @@ public class UAVTalkObjectTree {
     public UAVTalkObject getObjectFromID(String oID) {
         UAVTalkObject obj = objects.get(oID);
         if (obj == null) {
-            obj = new UAVTalkObject(oID);
+            for(UAVTalkXMLObject xmlObject : xmlObjects.values()) {
+                if(xmlObject.getId().equals(oID)) {
+                    obj = new UAVTalkObject(xmlObject);
+                }
+            }
         }
         return obj;
     }
 
     public UAVTalkObject getObjectFromName(String name) {
-        String oID = xmlObjects.get(name).getId();
+        UAVTalkXMLObject xmlObject = xmlObjects.get(name);
+        String oID = xmlObject.getId();
         UAVTalkObject obj = objects.get(oID);
         if (obj == null) {
             System.out.println("OFN: " + "CREATED NEW OBJECT! " + name + " " + oID);
-            obj = new UAVTalkObject(oID);
+            obj = new UAVTalkObject(xmlObject);
         }
         return obj;
     }
@@ -120,8 +125,6 @@ public class UAVTalkObjectTree {
         } catch (NullPointerException e) {
             System.out.println("WAR: " + "objects not initialized");
         }
-
-
     }
 
     public int getElementIndex(String objectname, String fieldname, String element) {
@@ -140,138 +143,6 @@ public class UAVTalkObjectTree {
             retval = 0;
         }
 
-        return retval;
-    }
-
-    public Object getData(String objectname, String fieldname)
-            throws UAVTalkMissingObjectException {
-        return getData(objectname, 0, fieldname, 0);
-    }
-
-    public Object getData(String objectname, String fieldname, String element)
-            throws UAVTalkMissingObjectException {
-        return getData(objectname, 0, fieldname, element);
-    }
-
-    public Object getData(String objectname, int instance, String fieldname, String elementname)
-            throws UAVTalkMissingObjectException {
-        return getData(objectname, instance, fieldname,
-                getElementIndex(objectname, fieldname, elementname));
-    }
-
-
-    public Object getData(String objectname, int instance, String fieldname, int element)
-            throws UAVTalkMissingObjectException {
-        UAVTalkXMLObject xmlobj = xmlObjects.get(objectname);
-        if (xmlobj == null) {
-            return "";
-        }
-        UAVTalkXMLObject.UAVTalkXMLObjectField xmlfield = xmlobj.getFields().get(fieldname);
-
-        UAVTalkObject obj = getObjectNoCreate(objectname);
-        if (obj == null) {
-            UAVTalkMissingObjectException e = new UAVTalkMissingObjectException(objectname+"."+instance+"."+fieldname+"."+element);
-            e.setInstance(instance);
-            e.setObjectname(objectname);
-            e.setIsSettings(xmlobj.isSettings());
-            throw e;
-        }
-
-        UAVTalkObjectInstance ins = obj.getInstance(instance);
-        if (ins == null) {
-            UAVTalkMissingObjectException e = new UAVTalkMissingObjectException(objectname+"."+instance+"."+fieldname+"."+element);
-            e.setInstance(instance);
-            e.setObjectname(objectname);
-            e.setIsSettings(xmlobj.isSettings());
-            throw e;
-        }
-
-        byte[] data = ins.getData();
-
-        int pos = xmlfield.mPos;
-
-        Object retval = null;
-        if (data != null) {
-            switch (xmlfield.mType) {
-                case (UAVTalkXMLObject.FIELDTYPE_ENUM): {
-                    byte[] fielddata = new byte[1];
-                    byte b = data[pos + element];
-                    fielddata[0] = b;
-                    try {
-                        retval = xmlfield.mOptions[Utils.toInt(b)];
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("AIOOBE: " + Utils.toInt(b) + " " + data.length + " " + b + " " +
-                                Utils.bytesToHex(fielddata) + " " + Utils.bytesToHex(data) + " " + pos +
-                                " " + element);
-                    }
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_FLOAT32): {
-                    byte[] fielddata = new byte[4];
-                    System.arraycopy(data, pos + element * 4, fielddata, 0, 4);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    float f = ByteBuffer.wrap(fielddata).order(ByteOrder.LITTLE_ENDIAN).getFloat();
-                    retval = f;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_UINT32): {
-                    byte[] fielddata = new byte[8]; //we need 8 bytes to get a long value
-                    System.arraycopy(data, pos + element * 4, fielddata, 0, 4);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    long l = ByteBuffer.wrap(fielddata).order(
-                            //set 4 higer bytes to zero (truncates sign)
-                            ByteOrder.LITTLE_ENDIAN).getLong() & 0xffffff;
-                    retval = l;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_INT32): {
-                    byte[] fielddata = new byte[4];
-                    System.arraycopy(data, pos, fielddata, 0, 4);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    int i = ByteBuffer.wrap(fielddata).order(ByteOrder.LITTLE_ENDIAN).getInt();
-                    retval = i;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_UINT16): {
-                    byte[] fielddata = new byte[4]; //we need four bytes to get an integer value
-                    System.arraycopy(data, pos + element * 2, fielddata, 0, 2);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    int i = ByteBuffer.wrap(fielddata).order(
-                            //set 2 higher bytes to zero (truncates sign)
-                            ByteOrder.LITTLE_ENDIAN).getInt() & 0xffff;
-                    retval = i;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_INT16): {
-                    byte[] fielddata = new byte[2];
-                    System.arraycopy(data, pos + element * 2, fielddata, 0, 2);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    int i = ByteBuffer.wrap(fielddata).order(ByteOrder.LITTLE_ENDIAN).getShort();
-                    retval = i;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_UINT8): {
-                    byte[] fielddata = new byte[1];
-                    System.arraycopy(data, pos + element, fielddata, 0, 1);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    int i = fielddata[0] & 0xff;
-                    retval = i;
-                    break;
-                }
-                case (UAVTalkXMLObject.FIELDTYPE_INT8): {
-                    byte[] fielddata = new byte[1];
-                    System.arraycopy(data, pos + element, fielddata, 0, 1);
-                    @SuppressWarnings("UnnecessaryLocalVariable")
-                    int i = fielddata[0];
-                    retval = i;
-                    break;
-                }
-                default: {
-                    retval = "Type not implemented";
-                    break;
-                }
-            }
-        }
         return retval;
     }
 

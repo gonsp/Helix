@@ -49,7 +49,7 @@ public class UAVTalkDeviceHelper {
 
         UAVTalkObject obj = oTree.getObjectNoCreate(objectName);
         if (obj == null) {
-            obj = new UAVTalkObject(xmlObj.getId());
+            obj = new UAVTalkObject(xmlObj);
             //return null;
         }
 
