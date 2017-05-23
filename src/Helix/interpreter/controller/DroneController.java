@@ -14,6 +14,21 @@ public abstract class DroneController {
         homeLocation = getGPS();
     }
 
+    public void lookAt(Position pos) {
+        //TODO implement this
+    }
+
+    public void setDirection(double degrees) {
+        roll(drone.direction - degrees);
+        drone.direction = degrees;
+    }
+
+    public void roll(double degrees) {
+        //TODO implement this
+        //FIXME be careful with the module and negative values
+        drone.direction += degrees%360;
+    }
+
     public void forward(double dist) {
         // TODO implement this
     }
