@@ -1,10 +1,11 @@
 package Helix.interpreter.simulation;
 
 import Helix.interpreter.DroneController;
-import Helix.Position;
+import Helix.interpreter.Position;
+
 import java.util.ArrayList;
 
-public class SimulationController extends DroneController implements PathPlannerListener {
+public class SimulationController extends DroneController {
 
     private ArrayList<Position> pathHistory;
 

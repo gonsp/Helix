@@ -3,11 +3,11 @@ package Helix.interpreter;
 
 public class Position {
 
-    public float lat;
-    public float lng;
-    public float alt;
+    public double lat;
+    public double lng;
+    public double alt;
     
-    public Position(float lat, float lng, float alt) {
+    public Position(double lat, double lng, double alt) {
         this.lat = lat;
         this.lng = lng;
         this.alt = alt;

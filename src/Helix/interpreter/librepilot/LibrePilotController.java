@@ -1,6 +1,7 @@
 package Helix.interpreter.librepilot;
 
 import Helix.interpreter.DroneController;
+import Helix.interpreter.Position;
 import Helix.interpreter.librepilot.uavtalk.UAVTalkXMLObject;
 import Helix.interpreter.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.librepilot.uavtalk.device.FcUsbDevice;
@@ -20,10 +21,15 @@ public class LibrePilotController extends DroneController implements PathPlanner
     }
 
     @Override
-    public void moveTo() {
+    public void moveTo(Position pos) {
         onAction = true;
 
         while(onAction);
+    }
+
+    @Override
+    public void land() {
+
     }
 
     @Override

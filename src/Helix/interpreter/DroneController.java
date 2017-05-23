@@ -9,6 +9,6 @@ public abstract class DroneController {
         drone = new Drone();
     }
 
-    public abstract void moveTo();
+    public abstract void moveTo(Position pos);
     public abstract void land();
 }
