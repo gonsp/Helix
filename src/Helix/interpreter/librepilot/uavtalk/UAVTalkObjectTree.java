@@ -61,7 +61,6 @@ public class UAVTalkObjectTree {
 
     public void setListener(String objName, UAVTalkObjectListener listener) {
         String id = xmlObjects.get(objName).getId();
-        System.out.println("HELLOOOOOOOOOOOO = " + id);
         objects.get(id).setListener(listener);
     }
 

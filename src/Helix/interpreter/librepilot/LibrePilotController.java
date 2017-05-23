@@ -9,6 +9,8 @@ public class LibrePilotController extends DroneController implements PathPlanner
 
     private PathPlannerManager pathPlannerManager;
 
+    volatile private boolean onAction;
+
     public LibrePilotController() {
         FcDevice device = new FcUsbDevice();
         device.start();
@@ -19,7 +21,9 @@ public class LibrePilotController extends DroneController implements PathPlanner
 
     @Override
     public void moveTo() {
+        onAction = true;
 
+        while(onAction);
     }
 
     @Override
@@ -29,11 +33,13 @@ public class LibrePilotController extends DroneController implements PathPlanner
 
     @Override
     public void onFinishPath() {
-
+        onAction = false;
     }
 
     @Override
     public void onError() {
-
+        onAction = false;
+        System.out.println("Error flying. Aborting");
+        System.exit(1);
     }
 }
