@@ -27,6 +27,8 @@ public class Main {
     private static boolean dotformat = false;
     /** Flag to indicate wether the program must be executed after parsing. */
     private static boolean execute = true;
+    /** Flag to indicate if the program is going to be simulated or just executed in a real drone. */
+    private static boolean simulation = false;
     /** Name of the file storing the trace of the program*/
     private static String tracefile = "trace32741329";
 
@@ -89,7 +91,7 @@ public class Main {
             Interpreter I = null;
             int linenumber = -1;
             try {
-                I = new Interpreter(t, tracefile);
+                I = new Interpreter(t, simulation, tracefile);
                 I.Run();
             } catch(RuntimeException e) {
                 if (I != null) {
@@ -123,6 +125,8 @@ public class Main {
                 infile = arg;
             } else if(arg.equals("-noexec")) {
                 execute = false;
+            } else if(arg.equals("-simulation")) {
+                simulation = true;
             } else {
                 System.out.println("Invalid argument: " + arg);
                 return false;

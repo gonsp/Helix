@@ -1,6 +1,7 @@
 package Helix.interpreter;
 
 import Helix.interpreter.librepilot.LibrePilotController;
+import Helix.interpreter.simulation.SimulationController;
 import Helix.parser.HelixLexer;
 
 import java.io.FileWriter;
@@ -24,9 +25,13 @@ public class Interpreter {
     private PrintWriter trace = null;
 
 
-    public Interpreter(HelixTree T, String tracefile) {
+    public Interpreter(HelixTree T, boolean simulation, String tracefile) {
         assert T != null;
-        droneController = new LibrePilotController();
+        if(!simulation) {
+            droneController = new LibrePilotController();
+        } else {
+            droneController = new SimulationController();
+        }
         mapFunctions(T);
         if (tracefile != null) {
             try {

@@ -10,4 +10,5 @@ public abstract class DroneController {
     }
 
     public abstract void moveTo();
+    public abstract void land();
 }
