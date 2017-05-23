@@ -81,10 +81,18 @@ public abstract class DroneController {
         drone.pos = pos;
     }
 
+    public void takeOff(double height) {
+        if(!drone.isLanded && height > 0) {
+            move(new Position(0, 0, height));
+            drone.isLanded = false;
+        }
+    }
+
     public void land() {
         if(!drone.isLanded) {
             sendLand();
             drone.isLanded = true;
+            drone.pos = getGPS().toRelative(homeLocation);
         }
     }
 
