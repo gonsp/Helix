@@ -14,6 +14,6 @@ public class Position {
     }
     
     public String toString() {
-        return "" + lat + ", " + lng + ", " + alt;
+        return "" + lat + "," + lng + "," + alt;
     }
 }

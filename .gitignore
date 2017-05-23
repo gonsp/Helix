@@ -37,3 +37,4 @@ src/Helix/parser/HelixParser.java
 *.dot
 *.pdf
 trace*
+path_simulation.kml

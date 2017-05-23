@@ -4,6 +4,9 @@ import Helix.interpreter.DroneController;
 import Helix.interpreter.Position;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.PrintWriter;
+import java.awt.Desktop;
 
 public class SimulationController extends DroneController {
 
@@ -18,6 +21,8 @@ public class SimulationController extends DroneController {
         pathHistory.add(new Position(-112.2608216347552, 36.08612634548589,  2357));
         pathHistory.add(new Position(-112.2644963846444, 36.08627897945274,  2350));
         pathHistory.add(new Position(-112.2656969554589, 36.08649599090644,  2340));
+        
+        land();
     }
 
     @Override
@@ -29,10 +34,28 @@ public class SimulationController extends DroneController {
     public void land() {
         String s = new String();
         for(Position pos : pathHistory) {
+            if(!s.isEmpty()) {
+                s += "\n            ";
+            }
             s += pos.toString();
         }
-        KML_TEMPLATE.replace("<-COORDINATES->", s);
-        System.out.println(KML_TEMPLATE);
+        String KML = KML_TEMPLATE.replace("<-COORDINATES->", s);
+        try {
+            PrintWriter out = new PrintWriter("path_simulation.kml");
+            out.print(KML);
+            out.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if(desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                File file = new File("path_simulation.kml");
+                desktop.browse(file.toURI());
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     private static String KML_TEMPLATE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
