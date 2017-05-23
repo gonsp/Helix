@@ -15,7 +15,7 @@
  */
 
 
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

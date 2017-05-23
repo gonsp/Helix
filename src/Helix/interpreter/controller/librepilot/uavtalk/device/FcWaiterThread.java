@@ -14,11 +14,11 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk.device;
+package Helix.interpreter.controller.librepilot.uavtalk.device;
 
 
-import Helix.interpreter.librepilot.uavtalk.Utils;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkObject;
+import Helix.interpreter.controller.librepilot.uavtalk.Utils;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
 
 public abstract class FcWaiterThread extends Thread {
     public final static byte MASK_TIMESTAMP = (byte) 0x80;

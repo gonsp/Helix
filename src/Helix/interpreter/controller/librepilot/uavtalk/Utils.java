@@ -1,4 +1,4 @@
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;

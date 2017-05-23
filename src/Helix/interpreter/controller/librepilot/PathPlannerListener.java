@@ -1,4 +1,4 @@
-package Helix.interpreter.librepilot;
+package Helix.interpreter.controller.librepilot;
 
 public interface PathPlannerListener {
 

@@ -14,7 +14,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

@@ -14,38 +14,38 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
-public class UAVTalkMissingObjectException extends Exception {
-    private int mInstance;
-    private boolean mIsSettings;
-    private String mObjectName;
+import java.util.SortedMap;
 
-    UAVTalkMissingObjectException(String message) {
-        super(message);
+public class UAVTalkObjectInstance {
+
+    private final int mId;
+    private byte[] mData;
+    private SortedMap<String, Object> mDecodedFields;
+
+    public UAVTalkObjectInstance(int id, byte[] data) {
+        this.mId = id;
+        this.mData = data;
     }
 
-    public int getInstance() {
-        return mInstance;
+    public byte[] getData() {
+        return mData;
     }
 
-    public void setInstance(int instance) {
-        this.mInstance = instance;
+    public SortedMap<String, Object> getFields() {
+        return this.mDecodedFields;
     }
 
-    public String getObjectname() {
-        return mObjectName;
+    public void setFields(SortedMap<String, Object> fields) {
+        this.mDecodedFields = fields;
     }
 
-    public void setObjectname(String objectname) {
-        this.mObjectName = objectname;
+    public void setData(byte[] data) {
+        this.mData = data;
     }
 
-    public boolean isSettings() {
-        return mIsSettings;
-    }
-
-    public void setIsSettings(boolean isSettings) {
-        this.mIsSettings = isSettings;
+    public int getId() {
+        return mId;
     }
 }

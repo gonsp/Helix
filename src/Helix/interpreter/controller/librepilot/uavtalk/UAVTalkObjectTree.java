@@ -14,14 +14,12 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
-import Helix.interpreter.librepilot.LibrePilotController;
+import Helix.interpreter.controller.librepilot.LibrePilotController;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.CodeSource;

@@ -14,13 +14,13 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk.device;
+package Helix.interpreter.controller.librepilot.uavtalk.device;
 
 
-import Helix.interpreter.librepilot.uavtalk.Utils;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkMessage;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkObject;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkObjectInstance;
+import Helix.interpreter.controller.librepilot.uavtalk.Utils;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMessage;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectInstance;
 
 import javax.usb.UsbEndpoint;
 import javax.usb.UsbException;

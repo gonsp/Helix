@@ -14,10 +14,10 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
 
-import Helix.interpreter.librepilot.uavtalk.device.FcWaiterThread;
+import Helix.interpreter.controller.librepilot.uavtalk.device.FcWaiterThread;
 
 public class UAVTalkMessage {
 

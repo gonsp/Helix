@@ -1,37 +1,44 @@
-package Helix.interpreter.simulation;
+package Helix.interpreter.controller.simulation;
 
-import Helix.interpreter.DroneController;
+import Helix.interpreter.controller.DroneController;
+import Helix.interpreter.GPSPosition;
 import Helix.interpreter.Position;
 
-import java.util.ArrayList;
+import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
-import java.awt.Desktop;
+import java.util.ArrayList;
 
 public class SimulationController extends DroneController {
 
-    private ArrayList<Position> pathHistory;
+    private ArrayList<GPSPosition> pathHistory;
+    private GPSPosition posGPS;
 
-    public SimulationController() {
+    public SimulationController(GPSPosition homeLocation) {
+        posGPS = homeLocation;
         pathHistory = new ArrayList<>();
-        
-        // Testing
-        pathHistory.add(new Position(-112.2550785337791, 36.07954952145647,  2357));
-        pathHistory.add(new Position(-112.2564540158376, 36.08395660588506,  2357));
-        pathHistory.add(new Position(-112.2608216347552, 36.08612634548589,  2357));
-        pathHistory.add(new Position(-112.2644963846444, 36.08627897945274,  2350));
-        pathHistory.add(new Position(-112.2656969554589, 36.08649599090644,  2340));
-        
-        land();
     }
 
     @Override
-    public void moveTo(Position pos) {
-        pathHistory.add(pos);
+    public GPSPosition getGPS() {
+        return posGPS;
     }
-    
+
     @Override
-    public void land() {
+    protected void sendMoveTo(GPSPosition pos) {
+        posGPS = pos;
+        pathHistory.add(pos);
+        showPath();
+    }
+
+    @Override
+    protected void sendLand() {
+        posGPS.alt = 0;
+        pathHistory.add(posGPS);
+        showPath();
+    }
+
+    private void showPath() {
         String s = new String();
         for(Position pos : pathHistory) {
             if(!s.isEmpty()) {
@@ -57,7 +64,7 @@ public class SimulationController extends DroneController {
             }
         }
     }
-    
+
     private static String KML_TEMPLATE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                                        + "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"
                                        + "<Document>\n"

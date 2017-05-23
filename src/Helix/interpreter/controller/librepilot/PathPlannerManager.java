@@ -1,9 +1,9 @@
-package Helix.interpreter.librepilot;
+package Helix.interpreter.controller.librepilot;
 
-import Helix.interpreter.librepilot.uavtalk.UAVTalkMissingObjectException;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkObject;
-import Helix.interpreter.librepilot.uavtalk.UAVTalkObjectListener;
-import Helix.interpreter.librepilot.uavtalk.device.FcDevice;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
+import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 
 public class PathPlannerManager implements UAVTalkObjectListener {
 
@@ -19,7 +19,7 @@ public class PathPlannerManager implements UAVTalkObjectListener {
 
     @Override
     public void onObjectUpdate(UAVTalkObject o) {
-        System.out.print("DATA UPDATED: ");
+        System.out.print("PATH UPDATED: ");
         try {
             System.out.println(o.getData(UAOV_NAME, "WaypointCount"));
         } catch (UAVTalkMissingObjectException e) {
