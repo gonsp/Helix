@@ -27,6 +27,8 @@ public class Interpreter {
 
     public Interpreter(HelixTree T, boolean simulation, String tracefile) {
         assert T != null;
+        // TODO remove this line
+        simulation = true;
         if(!simulation) {
             droneController = new LibrePilotController();
         } else {
@@ -64,7 +66,7 @@ public class Interpreter {
     }
 
 
-    public void Run() {
+    public void run() {
         wrttrace("Running");
         executeFunction("main", null);
     }

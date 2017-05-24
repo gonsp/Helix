@@ -19,6 +19,7 @@ MANIFEST 	= $(BINDIR)/Manifest.txt
 JARFILE 	= $(BINDIR)/helix_parser.jar
 
 EXAMPLESDIR	= $(ROOT)/examples
+ALLEXAMPLES	= $(shell find $(EXAMPLESDIR)/*.hx)
 
 JFLAGS		= -classpath $(CLASSPATH) -d $(CLASSDIR)
 
@@ -64,6 +65,12 @@ test: $(EXEC) $(EXAMPLESDIR)/$(filename).hx
 	rm $(EXAMPLESDIR)/$(filename).hx.dot
 	mv $(EXAMPLESDIR)/$(filename).hx.dot.pdf $(EXAMPLESDIR)/$(filename).pdf
 	display $(EXAMPLESDIR)/$(filename).pdf
+
+execall: $(EXEC)
+	for example in $(ALLEXAMPLES) ; do \
+		echo ; echo ; echo "$$example" ; echo ; \
+		$(EXEC) $$example ; \
+	done
 
 clean:
 	rm -rf $(BINDIR) $(PARSER_SRC)

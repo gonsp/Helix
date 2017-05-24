@@ -92,7 +92,7 @@ public class Main {
             int linenumber = -1;
             try {
                 I = new Interpreter(t, simulation, tracefile);
-                I.Run();
+                I.run();
             } catch(RuntimeException e) {
                 if (I != null) {
                     linenumber = I.getLinenumber();
