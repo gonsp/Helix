@@ -11,7 +11,7 @@ tokens {
     ASSIGN;     // Assignment instruction
     COORD;
     ACCESS;
-    PAIRACCESS;
+    COORDACCESS;
     PARAMS;     // List of parameters in the declaration of a function
     FUNCALL;    // Function call
     ARGLIST;    // List of arguments passed in a function call
@@ -123,14 +123,14 @@ atom    :   NUM
         |   '('! expr ')'!
         ;
 
-coord   : '[' n1=expr',' n2=expr']' -> ^(COORD $n1 $n2)
+coord   : '[' n1=expr ',' n2=expr ',' n3=expr ']' -> ^(COORD $n1 $n2 $n3)
         ;
 
 accessor    :	id_access
-            |   pair_access
+            |   coord_access
 	        ;
 
-pair_access :   '[' id1=id_access ',' id2=id_access ']' -> ^(PAIRACCESS $id1 $id2)
+coord_access :   '[' id1=id_access ',' id2=id_access ',' id3=id_access ']' -> ^(COORDACCESS $id1 $id2 $id3)
             ;
 
 id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?

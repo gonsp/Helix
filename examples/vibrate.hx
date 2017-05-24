@@ -13,6 +13,6 @@ def vibrate(amplitude) {
     }
 
     up(amplitude)
-    vibrate(-(amplitude / 1.5))
+    //vibrate(-(amplitude / 1.5))
 }
 
