@@ -18,11 +18,6 @@ public class Position {
         this.lng = lng;
         this.alt = alt;
     }
-    
-    public String toString() {
-        return "" + lat + "," + lng + "," + alt;
-    }
-
 
     public GPSPosition toGPS(GPSPosition homeLocation) {
         GPSPosition posGPS = new GPSPosition(homeLocation);
@@ -34,5 +29,15 @@ public class Position {
         lat += movement.lat;
         lng += movement.lng;
         alt += movement.alt;
+    }
+
+    public String toString(boolean inverse) {
+        String s;
+        if(inverse) {
+            s = "" + lng + "," + lat;
+        } else {
+            s = "" + lat + "," + lng;
+        }
+        return s + "," + alt;
     }
 }

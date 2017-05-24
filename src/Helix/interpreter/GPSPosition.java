@@ -12,6 +12,7 @@ public class GPSPosition extends Position {
 
     @Override
     public void move(Position movement) {
+        this.alt += movement.alt;
         // TODO implement this
     }
 

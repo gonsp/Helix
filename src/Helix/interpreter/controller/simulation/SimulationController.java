@@ -18,6 +18,7 @@ public class SimulationController extends DroneController {
         super(homeLocation);
         posGPS = homeLocation;
         pathHistory = new ArrayList<>();
+        pathHistory.add(posGPS);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class SimulationController extends DroneController {
             if(!s.isEmpty()) {
                 s += "\n            ";
             }
-            s += pos.toString();
+            s += pos.toString(true);
         }
         String KML = KML_TEMPLATE.replace("<-COORDINATES->", s);
         try {
@@ -89,7 +90,7 @@ public class SimulationController extends DroneController {
                                        + "    <styleUrl>#path</styleUrl>\n"
                                        + "    <LineString>\n"
                                        + "        <extrude>1</extrude>\n"
-                                       + "        <altitudeMode>absolute</altitudeMode>\n"
+                                       + "        <altitudeMode>relativeToGround</altitudeMode>\n"
                                        + "        <coordinates>\n"
                                        + "            <-COORDINATES->\n"
                                        + "        </coordinates>\n"

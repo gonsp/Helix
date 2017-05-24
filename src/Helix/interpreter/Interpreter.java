@@ -31,7 +31,7 @@ public class Interpreter {
         if(!simulation) {
             droneController = new LibrePilotController();
         } else {
-            droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 126));
+            droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0));
 
             // Testing
             droneController.takeOff(10);
