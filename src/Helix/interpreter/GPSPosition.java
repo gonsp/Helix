@@ -2,6 +2,9 @@ package Helix.interpreter;
 
 public class GPSPosition extends Position {
 
+    private static final double EARTH_RADIOUS = 6378000;
+
+
     public GPSPosition(Position pos) {
         super(pos);
     }
@@ -12,8 +15,9 @@ public class GPSPosition extends Position {
 
     @Override
     public void move(Position movement) {
-        this.alt += movement.alt;
-        // TODO implement this
+        lat += (movement.lat / EARTH_RADIOUS) * (180 / Math.PI);
+        lng += (movement.lng / EARTH_RADIOUS) * (180 / Math.PI) / Math.cos(lat * Math.PI/180);
+        alt += movement.alt;
     }
 
     @Override

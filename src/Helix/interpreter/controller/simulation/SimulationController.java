@@ -41,6 +41,11 @@ public class SimulationController extends DroneController {
     private void updatePath() {
         pathHistory.add(new GPSPosition(posGPS));
         showPath();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showPath() {
