@@ -1,43 +1,60 @@
-package Helix.interpreter.simulation;
+package Helix.interpreter.controller.simulation;
 
-import Helix.interpreter.DroneController;
+import Helix.interpreter.controller.DroneController;
+import Helix.interpreter.GPSPosition;
 import Helix.interpreter.Position;
 
-import java.util.ArrayList;
+import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
-import java.awt.Desktop;
+import java.util.ArrayList;
 
 public class SimulationController extends DroneController {
 
-    private ArrayList<Position> pathHistory;
+    private ArrayList<GPSPosition> pathHistory;
+    private GPSPosition posGPS;
 
-    public SimulationController() {
+    public SimulationController(GPSPosition homeLocation) {
+        super(homeLocation);
+        posGPS = homeLocation;
         pathHistory = new ArrayList<>();
-        
-        // Testing
-        pathHistory.add(new Position(-112.2550785337791, 36.07954952145647,  2357));
-        pathHistory.add(new Position(-112.2564540158376, 36.08395660588506,  2357));
-        pathHistory.add(new Position(-112.2608216347552, 36.08612634548589,  2357));
-        pathHistory.add(new Position(-112.2644963846444, 36.08627897945274,  2350));
-        pathHistory.add(new Position(-112.2656969554589, 36.08649599090644,  2340));
-        
-        land();
+        pathHistory.add(posGPS);
     }
 
     @Override
-    public void moveTo(Position pos) {
-        pathHistory.add(pos);
+    public GPSPosition getGPS() {
+        return new GPSPosition(posGPS);
     }
-    
+
     @Override
-    public void land() {
+    protected void sendMoveTo(GPSPosition pos) {
+        posGPS = pos;
+        updatePath();
+    }
+
+    @Override
+    protected void sendLand() {
+        posGPS.alt = 0;
+        updatePath();
+    }
+
+    private void updatePath() {
+        pathHistory.add(new GPSPosition(posGPS));
+        showPath();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showPath() {
         String s = new String();
         for(Position pos : pathHistory) {
             if(!s.isEmpty()) {
                 s += "\n            ";
             }
-            s += pos.toString();
+            s += pos.toString(true);
         }
         String KML = KML_TEMPLATE.replace("<-COORDINATES->", s);
         try {
@@ -57,7 +74,7 @@ public class SimulationController extends DroneController {
             }
         }
     }
-    
+
     private static String KML_TEMPLATE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                                        + "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n"
                                        + "<Document>\n"
@@ -78,7 +95,7 @@ public class SimulationController extends DroneController {
                                        + "    <styleUrl>#path</styleUrl>\n"
                                        + "    <LineString>\n"
                                        + "        <extrude>1</extrude>\n"
-                                       + "        <altitudeMode>absolute</altitudeMode>\n"
+                                       + "        <altitudeMode>relativeToGround</altitudeMode>\n"
                                        + "        <coordinates>\n"
                                        + "            <-COORDINATES->\n"
                                        + "        </coordinates>\n"

@@ -34,10 +34,10 @@
  * limitations under the License.
  */
 
-package Helix.interpreter.librepilot.uavtalk.device;
+package Helix.interpreter.controller.librepilot.uavtalk.device;
 
 
-import Helix.interpreter.librepilot.uavtalk.*;
+import Helix.interpreter.controller.librepilot.uavtalk.*;
 
 import javax.usb.*;
 import java.util.Arrays;

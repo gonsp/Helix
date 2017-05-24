@@ -18,6 +18,11 @@ public class BoolData extends Data {
     }
 
 
+    public BoolData(BoolData b) {
+        this.value = b.value;
+    }
+
+
     @Override
     public void evaluateArithmetic (int op, Data data) {
         BoolData d = (BoolData) data;

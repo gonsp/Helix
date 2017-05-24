@@ -18,6 +18,11 @@ public class IntData extends Data {
     }
 
 
+    public IntData(IntData i) {
+        this.value = i.value;
+    }
+
+
     @Override
     public void evaluateArithmetic (int op, Data data) {
         IntData d = (IntData) data;

@@ -1,7 +1,8 @@
 package Helix.interpreter;
 
-import Helix.interpreter.librepilot.LibrePilotController;
-import Helix.interpreter.simulation.SimulationController;
+import Helix.interpreter.controller.DroneController;
+import Helix.interpreter.controller.librepilot.LibrePilotController;
+import Helix.interpreter.controller.simulation.SimulationController;
 import Helix.parser.HelixLexer;
 
 import java.io.FileWriter;
@@ -32,7 +33,18 @@ public class Interpreter {
         if(!simulation) {
             droneController = new LibrePilotController();
         } else {
-            droneController = new SimulationController();
+            droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0));
+
+            // Testing
+            droneController.takeOff(10);
+            for(int i = 0; i < 4; ++i) {
+                droneController.north(10);
+                droneController.east(10);
+                droneController.south(10);
+                droneController.west(15);
+                droneController.up(5);
+            }
+            droneController.land();
         }
         mapFunctions(T);
         if (tracefile != null) {

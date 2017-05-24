@@ -19,6 +19,7 @@ public class Position extends Data {
 
 
     public Position(double lat, double lng, double alt) {
+        this.type = DataType.POSITION;
         this.lat = lat;
         this.lng = lng;
         this.alt = alt;

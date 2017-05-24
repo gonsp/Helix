@@ -1,4 +1,4 @@
-package Helix.interpreter.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot.uavtalk;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

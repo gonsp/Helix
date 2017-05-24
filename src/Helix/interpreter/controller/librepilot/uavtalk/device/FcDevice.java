@@ -14,9 +14,9 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package Helix.interpreter.librepilot.uavtalk.device;
+package Helix.interpreter.controller.librepilot.uavtalk.device;
 
-import Helix.interpreter.librepilot.uavtalk.*;
+import Helix.interpreter.controller.librepilot.uavtalk.*;
 
 import java.io.FileOutputStream;
 import java.util.Arrays;

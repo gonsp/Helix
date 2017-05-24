@@ -19,6 +19,11 @@ public class DecData extends Data {
     }
 
 
+    public DecData(DecData d) {
+        this.value = d.value;
+    }
+
+
     @Override
     public void evaluateArithmetic (int op, Data data) {
         DecData d = (DecData) data;
