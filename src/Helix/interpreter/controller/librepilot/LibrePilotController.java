@@ -8,27 +8,42 @@ import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcUsbDevice;
 
-public class LibrePilotController extends DroneController implements PathPlannerListener, UAVTalkObjectListener {
+public class LibrePilotController extends DroneController implements PathPlannerListener {
 
     private PathPlannerManager pathPlannerManager;
 
     volatile private GPSPosition posGPS;
     volatile private boolean onAction;
 
-    private static final String UAOV_NAME = "GPSPositionSensor";
+    private static final String UAOV_GPS_NAME = "GPSPositionSensor";
 
     public LibrePilotController() {
-        super();
         FcDevice device = new FcUsbDevice();
         device.start();
 
         pathPlannerManager = new PathPlannerManager(this, device);
+        UAVTalkObjectListener GPSListener = new UAVTalkObjectListener() {
+            @Override
+            public void onObjectUpdate(UAVTalkObject o) {
+                // TODO implement this
+                // FIXME use positionstate.xml + homeposition
+                // FIXME maybe is better to create a GPSManager (as PathPlanner)
+                System.out.print("GPS UPDATED: ");
+                try {
+                    System.out.println(o.getData(UAOV_GPS_NAME, "Latitude"));
+                    System.out.println(o.getData(UAOV_GPS_NAME, "Longitude"));
+                    System.out.println(o.getData(UAOV_GPS_NAME, "Altitude"));
+                } catch (UAVTalkMissingObjectException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        device.setListener(UAOV_GPS_NAME, GPSListener);
 
         // TODO Clear homelocation
         posGPS = null;
         while(posGPS == null);
         // TODO Wait for homelocation
-        super.homeLocation = new GPSPosition(posGPS);
     }
 
     @Override
@@ -67,20 +82,5 @@ public class LibrePilotController extends DroneController implements PathPlanner
         onAction = false;
         System.out.println("Error flying. Aborting");
         System.exit(1);
-    }
-
-    @Override
-    public void onObjectUpdate(UAVTalkObject o) {
-        // TODO implement this
-        // FIXME use positionstate.xml + homeposition
-        // FIXME maybe is better to create a GPSManager (as PathPlanner)
-        System.out.print("GPS UPDATED: ");
-        try {
-            System.out.println(o.getData(UAOV_NAME, "Latitude"));
-            System.out.println(o.getData(UAOV_NAME, "Longitude"));
-            System.out.println(o.getData(UAOV_NAME, "Altitude"));
-        } catch (UAVTalkMissingObjectException e) {
-            e.printStackTrace();
-        }
     }
 }

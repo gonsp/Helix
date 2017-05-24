@@ -9,13 +9,12 @@ public abstract class DroneController {
     private Drone drone;
     protected GPSPosition homeLocation;
 
-    protected DroneController(GPSPosition homeLocation) {
-        this();
-        this.homeLocation = homeLocation;
+    public DroneController() {
+        drone = new Drone();
     }
 
-    protected DroneController() {
-        drone = new Drone();
+    public void init() {
+        homeLocation = getGPS();
     }
 
     public void lookAt(Position pos) {
@@ -85,6 +84,7 @@ public abstract class DroneController {
     }
 
     public void takeOff(double height) {
+        // TODO add exceptions
         if(drone.isLanded && height > 0) {
             move(new Position(0, 0, height));
             drone.isLanded = false;

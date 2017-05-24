@@ -32,18 +32,18 @@ public class Interpreter {
             droneController = new LibrePilotController();
         } else {
             droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0));
-
-            // Testing
-            droneController.takeOff(10);
-            for(int i = 0; i < 4; ++i) {
-                droneController.north(10);
-                droneController.east(10);
-                droneController.south(10);
-                droneController.west(15);
-                droneController.up(5);
-            }
-            droneController.land();
         }
+        droneController.init();
+        // Testing
+        droneController.takeOff(10);
+        for(int i = 0; i < 4; ++i) {
+            droneController.north(10);
+            droneController.east(10);
+            droneController.south(10);
+            droneController.west(15);
+            droneController.up(5);
+        }
+        droneController.land();
         mapFunctions(T);
         if (tracefile != null) {
             try {
