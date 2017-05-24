@@ -28,12 +28,12 @@ public class LibrePilotController extends DroneController implements PathPlanner
         posGPS = null;
         while(posGPS == null);
         // TODO Wait for homelocation
-        super.homeLocation = posGPS;
+        super.homeLocation = new GPSPosition(posGPS);
     }
 
     @Override
     public GPSPosition getGPS() {
-        return posGPS;
+        return new GPSPosition(posGPS);
     }
 
     @Override

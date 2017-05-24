@@ -77,7 +77,6 @@ public abstract class DroneController {
         Position newPos = new Position(drone.pos);
         newPos.move(movement);
         moveTo(newPos);
-        drone.pos = newPos;
     }
 
     public void moveTo(Position pos) {
@@ -86,7 +85,7 @@ public abstract class DroneController {
     }
 
     public void takeOff(double height) {
-        if(!drone.isLanded && height > 0) {
+        if(drone.isLanded && height > 0) {
             move(new Position(0, 0, height));
             drone.isLanded = false;
         }

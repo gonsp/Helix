@@ -22,20 +22,23 @@ public class SimulationController extends DroneController {
 
     @Override
     public GPSPosition getGPS() {
-        return posGPS;
+        return new GPSPosition(posGPS);
     }
 
     @Override
     protected void sendMoveTo(GPSPosition pos) {
         posGPS = pos;
-        pathHistory.add(pos);
-        showPath();
+        updatePath();
     }
 
     @Override
     protected void sendLand() {
         posGPS.alt = 0;
-        pathHistory.add(posGPS);
+        updatePath();
+    }
+
+    private void updatePath() {
+        pathHistory.add(new GPSPosition(posGPS));
         showPath();
     }
 
