@@ -9,7 +9,8 @@ public class Drone {
     public boolean isLanded;
     public double direction; //0 -> 359
 
-    public Drone(Position homePosition) {
+    public Drone() {
+        pos = new Position(0, 0, 0);
         isLanded = true;
         direction = 0;
     }

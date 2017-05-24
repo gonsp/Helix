@@ -32,6 +32,12 @@ public class Interpreter {
             droneController = new LibrePilotController();
         } else {
             droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 126));
+
+            // Testing
+            droneController.takeOff(10);
+            droneController.north(100);
+            droneController.east(100);
+            droneController.land();
         }
         mapFunctions(T);
         if (tracefile != null) {

@@ -18,6 +18,7 @@ public class LibrePilotController extends DroneController implements PathPlanner
     private static final String UAOV_NAME = "GPSPositionSensor";
 
     public LibrePilotController() {
+        super();
         FcDevice device = new FcUsbDevice();
         device.start();
 
@@ -27,6 +28,7 @@ public class LibrePilotController extends DroneController implements PathPlanner
         posGPS = null;
         while(posGPS == null);
         // TODO Wait for homelocation
+        super.homeLocation = posGPS;
     }
 
     @Override

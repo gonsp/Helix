@@ -15,6 +15,7 @@ public class SimulationController extends DroneController {
     private GPSPosition posGPS;
 
     public SimulationController(GPSPosition homeLocation) {
+        super(homeLocation);
         posGPS = homeLocation;
         pathHistory = new ArrayList<>();
     }

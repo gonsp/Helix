@@ -7,11 +7,15 @@ import Helix.interpreter.Position;
 public abstract class DroneController {
 
     private Drone drone;
-    private GPSPosition homeLocation;
+    protected GPSPosition homeLocation;
+
+    protected DroneController(GPSPosition homeLocation) {
+        this();
+        this.homeLocation = homeLocation;
+    }
 
     protected DroneController() {
-        drone = new Drone(getGPS());
-        homeLocation = getGPS();
+        drone = new Drone();
     }
 
     public void lookAt(Position pos) {
