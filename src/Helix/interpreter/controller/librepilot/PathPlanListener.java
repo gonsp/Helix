@@ -1,6 +1,6 @@
 package Helix.interpreter.controller.librepilot;
 
-public interface PathPlannerListener {
+public interface PathPlanListener {
 
     public void onProgressUpdate(float progress);
 

@@ -7,7 +7,7 @@ import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 
 public class GPSManager implements UAVTalkObjectListener {
 
-    private static final String UAOV_NAME = "GPSPositionSensor";
+    private static final String UAVO_NAME = "GPSPositionSensor";
 
     private FcDevice device;
     private GPSListener listener;
@@ -19,12 +19,12 @@ public class GPSManager implements UAVTalkObjectListener {
         this.device = device;
         this.minSatellites = minSatellites;
         act_sat = 0;
-        device.requestObject(UAOV_NAME);
-        device.setListener(UAOV_NAME, this);
+        device.requestObject(UAVO_NAME);
+        device.setListener(UAVO_NAME, this);
     }
 
     void clearHomePosition() {
-//        while(act_sat < minSatellites);
+        while(act_sat < minSatellites);
         System.out.println("Min number satellites satisfied. Act sat: " + act_sat);
         byte[] data = new byte[1];
         data[0] = 0;
@@ -33,7 +33,6 @@ public class GPSManager implements UAVTalkObjectListener {
 
         String set;
         try {
-            device.requestObject("HomeLocation");
             set = (String) device.getObjectTree().getObjectFromName("HomeLocation").getData("Set");
             if(!set.equals("False")) {
                 System.err.println("HomeLocation not cleaned");
