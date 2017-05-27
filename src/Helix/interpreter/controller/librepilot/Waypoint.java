@@ -7,7 +7,6 @@ import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectInstance;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public class Waypoint extends Position {
 

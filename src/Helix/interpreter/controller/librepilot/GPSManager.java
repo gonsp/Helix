@@ -19,7 +19,7 @@ public class GPSManager implements UAVTalkObjectListener {
         this.device = device;
         this.minSatellites = minSatellites;
         act_sat = 0;
-        device.requestObject(UAVO_NAME);
+        //device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
     }
 

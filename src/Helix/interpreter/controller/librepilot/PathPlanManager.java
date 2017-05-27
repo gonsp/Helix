@@ -17,7 +17,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
         this.listener = listener;
         this.device = device;
         activeWaypoint = null;
-        device.requestObject(UAVO_NAME);
+        //device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
     }
 
