@@ -15,9 +15,15 @@ public class GPSPosition extends Position {
 
     @Override
     public void move(Position movement) {
+        double prev_lat = lat;
         lat += (movement.lat / EARTH_RADIOUS) * (180 / Math.PI);
-        lng += (movement.lng / EARTH_RADIOUS) * (180 / Math.PI) / Math.cos(lat * Math.PI/180);
+        lng += (movement.lng / EARTH_RADIOUS) * (180 / Math.PI) / Math.cos(prev_lat * Math.PI/180);
         alt += movement.alt;
+    }
+
+    @Override
+    public void negative_move(Position movement) {
+        move(new Position(-movement.lat, -movement.lng, -movement.alt));
     }
 
     @Override
@@ -26,7 +32,10 @@ public class GPSPosition extends Position {
     }
 
     public Position toRelative(GPSPosition homeLocation) {
-        // TODO implement this (maybe not necessary)
-        return null;
+        Position relative = new Position(this);
+        relative.negative_move(homeLocation);
+        relative.lat *= (EARTH_RADIOUS * Math.PI / 180);
+        relative.lng *= (EARTH_RADIOUS * Math.PI * Math.cos(homeLocation.lat * Math.PI/180) / 180);
+        return relative;
     }
 }

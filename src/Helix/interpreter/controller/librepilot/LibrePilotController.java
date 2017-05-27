@@ -1,12 +1,14 @@
 package Helix.interpreter.controller.librepilot;
 
 import Helix.interpreter.GPSPosition;
+import Helix.interpreter.Position;
 import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcUsbDevice;
+import javafx.geometry.Pos;
 
 public class LibrePilotController extends DroneController implements PathPlanListener, GPSListener, UAVTalkObjectListener {
 
@@ -27,12 +29,19 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
         device.setListener(UAVO_NAME, this);
         onAutomaticMode = false;
-        while(!onAutomaticMode);
+        //while(!onAutomaticMode);
         System.out.println("On automatic mode. Starting");
 
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
 
+
+        //Testing
+        GPSPosition homeLocation = new GPSPosition(41.466, 2.093, 170);
+        GPSPosition pos = new GPSPosition(homeLocation);
+        pos.move(new Position(0, 100, 0));
+        System.out.println("New Pos: " + pos.toString());
+        System.out.println("Relative pos: " + pos.toRelative(homeLocation).toString());
         pathPlanManager.sendMoveTo(new GPSPosition(10, 20, 30), new GPSPosition(0, 0, 0), DEFAULT_VELOCITY);
 
         posGPS = null;

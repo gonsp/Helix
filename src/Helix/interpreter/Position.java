@@ -1,10 +1,10 @@
 package Helix.interpreter;
 
-import Helix.parser.*;
+import Helix.parser.HelixLexer;
 
 public class Position extends Data {
     private static double epsilon = 0.005;
-    
+
     public double lat;
     public double lng;
     public double alt;
@@ -39,6 +39,9 @@ public class Position extends Data {
         alt += movement.alt;
     }
 
+    public void negative_move(Position movement) {
+        move(new Position(-movement.lat, -movement.lng, -movement.alt));
+    }
 
     @Override
     public void evaluateArithmetic (int op, Data data) {
