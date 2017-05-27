@@ -27,21 +27,17 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         FcDevice device = new FcUsbDevice();
         device.start();
 
+        device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
         onAutomaticMode = false;
-        //while(!onAutomaticMode);
-        System.out.println("On automatic mode. Starting");
+        while(!onAutomaticMode);
+        System.out.println("On automatic mode");
 
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
 
 
-        //Testing
-        GPSPosition homeLocation = new GPSPosition(41.466, 2.093, 170);
-        GPSPosition pos = new GPSPosition(homeLocation);
-        pos.move(new Position(0, 100, 0));
-        System.out.println("New Pos: " + pos.toString());
-        System.out.println("Relative pos: " + pos.toRelative(homeLocation).toString());
+        // Testing
         pathPlanManager.sendMoveTo(new GPSPosition(10, 20, 30), new GPSPosition(0, 0, 0), DEFAULT_VELOCITY);
 
         posGPS = null;

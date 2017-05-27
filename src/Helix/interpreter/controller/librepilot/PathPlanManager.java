@@ -17,7 +17,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
         this.listener = listener;
         this.device = device;
         activeWaypoint = null;
-        //device.requestObject(UAVO_NAME);
+        device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
     }
 
@@ -33,7 +33,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
     @Override
     public void onObjectUpdate(UAVTalkObject o) {
         if(activeWaypoint != null) {
-            System.out.print("PATH UPDATED: ");
+            System.out.println("PATH UPDATED: ");
 /*            if(ends) {
                 activeWaypoint.delete();
                 activeWaypoint = null;

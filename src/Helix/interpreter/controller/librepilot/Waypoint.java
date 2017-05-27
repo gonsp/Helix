@@ -19,30 +19,37 @@ public class Waypoint extends Position {
         progress = 0;
     }
 
+    public Waypoint(Waypoint waypoint) {
+        super(waypoint);
+        this.velocity = waypoint.velocity;
+        progress = 0;
+    }
+
     public void upload(FcDevice device) {
         upload(device, this, 0);
-        Position holdPos = new Position(this); // This is an auxiliar waypoint which will come after this one in order to detect when the original ends
+        Waypoint holdPos = new Waypoint(this); // This is an auxiliar waypoint which will come after this one in order to detect when the original ends
+        holdPos.velocity = 0;
         holdPos.move(new Position(10, 10, 10)); // To move it from the final position of the drone, so the progress won't be 100%
         upload(device, holdPos, 1);
     }
 
-    private void upload(FcDevice device, Position pos, int id) {
-        //Cloning the "default" data from the instance 1
-        byte data[] = device.getObjectTree().getObjectFromID("Waypoint").getInstance(0).getData().clone();
-        //Adding the new instance (or replacing the default one)
+    private void upload(FcDevice device, Waypoint waypoint, int id) {
+        byte data[] = new byte[device.getObjectTree().getXmlObjects().get("Waypoint").getLength()];
+        //Adding the new instance
         UAVTalkObjectInstance instance = new UAVTalkObjectInstance(id, data);
         UAVTalkObject waypoints = device.getObjectTree().getObjectFromName("Waypoint");
         waypoints.setInstance(instance);
-        //Setting the position of the new instance
 
-        sendPositionField(device, id, 0, super.lat);
-        sendPositionField(device, id, 1, super.lng);
-        sendPositionField(device, id, 2, -super.alt);
+        //Setting the position of the new instance
+        sendPositionField(device, id, "Position", 0, waypoint.lat);
+        sendPositionField(device, id, "Position", 1, waypoint.lng);
+        sendPositionField(device, id, "Position", 2, -waypoint.alt);
+        sendPositionField(device, id, "Velocity", 0, waypoint.velocity);
     }
 
-    private void sendPositionField(FcDevice device, int instanceID, int elementID, double value) {
+    private void sendPositionField(FcDevice device, int instanceID, String fieldName, int elementID, double value) {
         byte fieldData[] = ByteBuffer.allocate(4).putFloat((float) value).array();
-        device.sendSettingsObject("Waypoints", instanceID, "Position", elementID, fieldData);
+        device.sendSettingsObject("Waypoint", instanceID, fieldName, elementID, fieldData);
     }
 
 

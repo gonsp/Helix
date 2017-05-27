@@ -19,8 +19,6 @@ package Helix.interpreter.controller.librepilot.uavtalk;
 
 public class UAVTalkDeviceHelper {
 
-    private static final String TAG = UAVTalkDeviceHelper.class.getSimpleName();
-
     public static byte[] updateSettingsObject(
             UAVTalkObjectTree oTree, String objectName, int instance, String fieldName,
             String elementName, byte[] newFieldData) {
@@ -33,7 +31,7 @@ public class UAVTalkDeviceHelper {
                     oTree.getElementIndex(objectName, fieldName, elementName),
                     newFieldData);
         } catch (NullPointerException e) {
-            System.out.println(TAG + ": " + e.getMessage());
+            System.out.println(e.getMessage());
             return new byte[0];
         }
     }
