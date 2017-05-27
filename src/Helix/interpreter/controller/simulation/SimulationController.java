@@ -28,7 +28,7 @@ public class SimulationController extends DroneController {
     @Override
     protected void sendMoveTo(GPSPosition pos) {
         posGPS = pos;
-        updatePath();
+        //updatePath();
     }
 
     @Override

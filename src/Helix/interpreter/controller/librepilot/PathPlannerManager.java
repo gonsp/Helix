@@ -21,7 +21,7 @@ public class PathPlannerManager implements UAVTalkObjectListener {
     public void onObjectUpdate(UAVTalkObject o) {
         System.out.print("PATH UPDATED: ");
         try {
-            System.out.println(o.getData(UAOV_NAME, "WaypointCount"));
+            System.out.println(o.getData("WaypointCount"));
         } catch (UAVTalkMissingObjectException e) {
             e.printStackTrace();
         }

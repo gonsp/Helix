@@ -1,4 +1,8 @@
-package Helix.interpreter.controller.librepilot.uavtalk;
+package Helix.interpreter.controller.librepilot;
 
-public class GPSListener {
+import Helix.interpreter.GPSPosition;
+
+public interface GPSListener {
+
+    void onGPSUpdate(GPSPosition newPos);
 }

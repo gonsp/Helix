@@ -155,9 +155,9 @@ public class UAVTalkObject {
         return retval;
     }
 
-    public Object getData(String objectname, String fieldname)
+    public Object getData(String fieldname)
             throws UAVTalkMissingObjectException {
-        return getData(objectname, 0, fieldname, 0);
+        return getData(0, fieldname, 0);
     }
 
 
@@ -176,16 +176,15 @@ public class UAVTalkObject {
 */
 
 
-    public Object getData(String objectname, int instance, String fieldname, int element)
+    public Object getData(int instance, String fieldname, int element)
             throws UAVTalkMissingObjectException {
 
         UAVTalkXMLObject.UAVTalkXMLObjectField xmlfield = xmlObject.getFields().get(fieldname);
 
         UAVTalkObjectInstance ins = getInstance(instance);
         if (ins == null) {
-            UAVTalkMissingObjectException e = new UAVTalkMissingObjectException(objectname+"."+instance+"."+fieldname+"."+element);
+            UAVTalkMissingObjectException e = new UAVTalkMissingObjectException(instance+"."+fieldname+"."+element);
             e.setInstance(instance);
-            e.setObjectname(objectname);
             e.setIsSettings(xmlObject.isSettings());
             throw e;
         }

@@ -15,6 +15,7 @@ public abstract class DroneController {
 
     public void init() {
         homeLocation = getGPS();
+        System.out.println("DroneController initialized, with home position: " + homeLocation.toString());
     }
 
     public void lookAt(Position pos) {
@@ -44,16 +45,16 @@ public abstract class DroneController {
         // TODO implement this
     }
 
+    public void left(double dist) {
+        right(-dist);
+    }
+
     public void up(double dist) {
         move(new Position(0, 0, dist));
     }
 
     public void down(double dist) {
         up(-dist);
-    }
-
-    public void left(double dist) {
-        right(-dist);
     }
 
     public void north(double dist) {
@@ -83,9 +84,9 @@ public abstract class DroneController {
         drone.pos = pos;
     }
 
-    public void takeOff(double height) {
+    public void takeOff(double height) { //LibrePilot default take off is 2.5 m
         // TODO add exceptions
-        if(drone.isLanded && height > 0) {
+        if(drone.isLanded && height > 2.5) { //Security margin
             move(new Position(0, 0, height));
             drone.isLanded = false;
         }

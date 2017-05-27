@@ -1,54 +1,30 @@
 package Helix.interpreter.controller.librepilot;
 
-import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.GPSPosition;
-import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
-import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
-import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
+import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcUsbDevice;
 
-public class LibrePilotController extends DroneController implements PathPlannerListener {
+public class LibrePilotController extends DroneController implements PathPlannerListener, GPSListener {
 
     private PathPlannerManager pathPlannerManager;
+    private GPSManager gpsManager;
 
     volatile private GPSPosition posGPS;
     volatile private boolean onAction;
 
-    private static final String UAOV_GPS_NAME = "GPSPositionSensor";
+    private static final int MIN_SATELLITES = 16;
 
     public LibrePilotController() {
         FcDevice device = new FcUsbDevice();
         device.start();
 
         pathPlannerManager = new PathPlannerManager(this, device);
-        UAVTalkObjectListener GPSListener = new UAVTalkObjectListener() {
-            @Override
-            public void onObjectUpdate(UAVTalkObject o) {
-                // TODO implement this
-                // FIXME use positionstate.xml + homeposition
-                // FIXME maybe is better to create a GPSManager (as PathPlanner)
-                System.out.print("GPS UPDATED: ");
-                try {
-                    System.out.println(o.getData(UAOV_GPS_NAME, "Latitude"));
-                    System.out.println(o.getData(UAOV_GPS_NAME, "Longitude"));
-                    System.out.println(o.getData(UAOV_GPS_NAME, "Altitude"));
-                } catch (UAVTalkMissingObjectException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        device.setListener(UAOV_GPS_NAME, GPSListener);
+        gpsManager = new GPSManager(this, device, MIN_SATELLITES);
 
-        // TODO Clear homelocation
         posGPS = null;
         while(posGPS == null);
-        // TODO Wait for homelocation
-    }
-
-    @Override
-    public GPSPosition getGPS() {
-        return new GPSPosition(posGPS);
+        gpsManager.clearHomePosition();
     }
 
     @Override
@@ -65,11 +41,19 @@ public class LibrePilotController extends DroneController implements PathPlanner
         while(onAction);
     }
 
+    @Override
+    public GPSPosition getGPS() {
+        return new GPSPosition(posGPS);
+    }
 
+    @Override
+    public void onGPSUpdate(GPSPosition newPos) {
+        posGPS = newPos;
+    }
 
     @Override
     public void onProgressUpdate(float progress) {
-
+        System.out.println("Progress of actual instruction: " + progress*100 + "%");
     }
 
     @Override
@@ -83,4 +67,5 @@ public class LibrePilotController extends DroneController implements PathPlanner
         System.out.println("Error flying. Aborting");
         System.exit(1);
     }
+
 }
