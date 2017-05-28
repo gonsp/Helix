@@ -2,6 +2,7 @@ package Helix.interpreter.controller.librepilot;
 
 import Helix.interpreter.GPSPosition;
 import Helix.interpreter.Position;
+import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectInstance;
 import Helix.interpreter.controller.librepilot.uavtalk.Utils;
@@ -32,6 +33,7 @@ public class Waypoint extends Position {
         holdPos.velocity = 0;
         holdPos.move(new Position(10, 10, 10)); // To move it from the final position of the drone, so the progress won't be 100%
         uploadWaypoint(device, holdPos, 1);
+        System.out.println("Waypoint uploaded");
     }
 
     private void updatePathPlan(FcDevice device) {
@@ -44,6 +46,12 @@ public class Waypoint extends Position {
         UAVTalkObject pathPlan = device.getObjectTree().getObjectFromName("PathPlan");
         pathPlan.setInstance(instance);
         device.sendSettingsObject("PathPlan", 0);
+        try {
+            System.out.println("WAYPOINT COUNT: " + pathPlan.getData("WaypointCount"));
+        } catch (UAVTalkMissingObjectException e) {
+            e.printStackTrace();
+        }
+        device.sendSettingsObject("PathPlan", 0);
     }
 
     private void uploadPathAction(FcDevice device) {
@@ -52,30 +60,26 @@ public class Waypoint extends Position {
         UAVTalkObject pathActions = device.getObjectTree().getObjectFromName("PathAction");
         pathActions.setInstance(instance);
         device.sendSettingsObject("PathAction", 0);
-//        byte value[] = new byte[1];
-//        value[0] = 0;
-//        device.sendSettingsObject("PathAction", 0, "Mode", 0, value);
+        byte value[] = new byte[1];
+        value[0] = 5;
+        device.sendSettingsObject("PathAction", 0, "Mode", 0, value);
     }
 
     private void uploadWaypoint(FcDevice device, Waypoint waypoint, int id) {
         byte data[] = new byte[device.getObjectTree().getXmlObjects().get("Waypoint").getLength()];
+        data = fillField(data, waypoint.lat, 0);
+        data = fillField(data, waypoint.lng, 1);
+        data = fillField(data, -waypoint.alt, 2);
+        data = fillField(data, waypoint.velocity, 3);
         //Adding the new instance
         UAVTalkObjectInstance instance = new UAVTalkObjectInstance(id, data);
         UAVTalkObject waypoints = device.getObjectTree().getObjectFromName("Waypoint");
         waypoints.setInstance(instance);
-
-        //Setting the position of the new instance
-        sendField(device, id, "Position", 0, waypoint.lat);
-        sendField(device, id, "Position", 1, waypoint.lng);
-        sendField(device, id, "Position", 2, -waypoint.alt);
-        sendField(device, id, "Velocity", 0, waypoint.velocity);
-        byte action[] = new byte[1];
-        action[0] = 0;
-        device.sendSettingsObject("Waypoint", id, "Action", 0, action);
+        device.sendSettingsObject("Waypoint", id);
     }
 
-    private void sendField(FcDevice device, int instanceID, String fieldName, int elementID, double value) {
-        device.sendSettingsObject("Waypoint", instanceID, fieldName, elementID, Utils.floatToByteArrayRev((float) value));
+    private byte[] fillField(byte data[], double value, int pos) {
+        return Utils.writeInArray(Utils.floatToByteArrayRev((float) value), data, pos * 4);
     }
 
 

@@ -1,6 +1,7 @@
 package Helix.interpreter.controller.librepilot;
 
 import Helix.interpreter.GPSPosition;
+import Helix.interpreter.Position;
 import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
@@ -27,6 +28,22 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         FcDevice device = new FcUsbDevice();
         device.start();
 
+        pathPlanManager = new PathPlanManager(this, device);
+        gpsManager = new GPSManager(this, device, MIN_SATELLITES);
+
+        // TESTING
+        GPSPosition homeLocation = new GPSPosition(41.1, 2.1, 170);
+        Position pos = new Position(0, 0, 1000);
+        GPSPosition gpsPos = new GPSPosition(homeLocation);
+        gpsPos.move(pos);
+        pathPlanManager.sendMoveTo(gpsPos, homeLocation, 3);
+
+        posGPS = null;
+        System.out.println("Waiting to get a gps position");
+        while(posGPS == null);
+        System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
+        gpsManager.clearHomePosition();
+
         device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
         isArmed = false;
@@ -39,22 +56,6 @@ public class LibrePilotController extends DroneController implements PathPlanLis
             System.exit(0);
         }
 
-        pathPlanManager = new PathPlanManager(this, device);
-        gpsManager = new GPSManager(this, device, MIN_SATELLITES);
-
-
-/*        // TESTING
-        GPSPosition homeLocation = new GPSPosition(41.1, 2.1, 170);
-        Position pos = new Position(100, 100, 0);
-        GPSPosition gpsPos = new GPSPosition(homeLocation);
-        gpsPos.move(pos);
-        pathPlanManager.sendMoveTo(gpsPos, homeLocation, 3);*/
-
-        posGPS = null;
-        System.out.println("Waiting to get a gps position");
-        while(posGPS == null);
-        System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
-        gpsManager.clearHomePosition();
         System.out.println("LibrePilotController is ready");
     }
 
@@ -95,8 +96,8 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public void onError() {
         onAction = false;
-        //System.out.println("Error flying. Aborting");
-        //System.exit(1);
+        System.out.println("Error flying. Aborting");
+        System.exit(1);
     }
 
     @Override

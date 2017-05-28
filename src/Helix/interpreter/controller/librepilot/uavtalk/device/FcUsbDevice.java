@@ -224,7 +224,7 @@ public class FcUsbDevice extends FcDevice {
     @Override
     public boolean sendAck(String objectId, int instance) {
         byte[] send = mObjectTree.getObjectFromID(objectId).toMessage((byte) 0x23, instance, true);
-        System.out.println("SEND_ACK_USB: " + Utils.bytesToHex(send));
+        //System.out.println("SEND_ACK_USB: " + Utils.bytesToHex(send));
         if (send != null) {
             //mActivity.incTxObjects();
 
