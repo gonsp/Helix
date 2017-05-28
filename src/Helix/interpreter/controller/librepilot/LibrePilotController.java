@@ -1,26 +1,26 @@
 package Helix.interpreter.controller.librepilot;
 
 import Helix.interpreter.GPSPosition;
-import Helix.interpreter.Position;
 import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcUsbDevice;
-import javafx.geometry.Pos;
 
 public class LibrePilotController extends DroneController implements PathPlanListener, GPSListener, UAVTalkObjectListener {
 
     private PathPlanManager pathPlanManager;
     private GPSManager gpsManager;
 
-    volatile private boolean onAutomaticMode;
+    volatile private boolean onAutonomousMode;
+    volatile private boolean isArmed;
+
     volatile private GPSPosition posGPS;
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
-    private static final int MIN_SATELLITES = 14;
+    private static final int MIN_SATELLITES = 13;
     private static final double DEFAULT_VELOCITY = 3;
 
     public LibrePilotController() {
@@ -29,20 +29,33 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
         device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
-        onAutomaticMode = false;
-        while(!onAutomaticMode);
-        System.out.println("On automatic mode");
+        isArmed = false;
+        onAutonomousMode = false;
+        System.out.println("Waiting to enter en autonomous mode");
+        while(!onAutonomousMode);
+        System.out.println("On autonomous mode");
+        if(!isArmed) {
+            System.out.println("Drone is not armed. Aborting");
+            System.exit(0);
+        }
 
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
 
 
-        // Testing
-        pathPlanManager.sendMoveTo(new GPSPosition(10, 20, 30), new GPSPosition(0, 0, 0), DEFAULT_VELOCITY);
+/*        // TESTING
+        GPSPosition homeLocation = new GPSPosition(41.1, 2.1, 170);
+        Position pos = new Position(100, 100, 0);
+        GPSPosition gpsPos = new GPSPosition(homeLocation);
+        gpsPos.move(pos);
+        pathPlanManager.sendMoveTo(gpsPos, homeLocation, 3);*/
 
         posGPS = null;
+        System.out.println("Waiting to get a gps position");
         while(posGPS == null);
+        System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
         gpsManager.clearHomePosition();
+        System.out.println("LibrePilotController is ready");
     }
 
     @Override
@@ -82,27 +95,28 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public void onError() {
         onAction = false;
-        System.out.println("Error flying. Aborting");
-        System.exit(1);
+        //System.out.println("Error flying. Aborting");
+        //System.exit(1);
     }
 
     @Override
     public void onObjectUpdate(UAVTalkObject o) {
         //If the flight mode is not pathplanner, it means that the pilot has changed to manual control, so aborting program
-        String flightMode = null;
         try {
-            flightMode = (String) o.getData("FlightMode");
+            String flightMode = (String) o.getData("FlightMode");
             if(flightMode == null) {
                 System.exit(1);
             }
-            boolean isAutomatic = flightMode.equals("PathPlanner");
-            if(onAutomaticMode && !isAutomatic) {
-                onAutomaticMode = false;
-                System.err.println("Pilot has changed to manual control. Finishing program");
+            boolean isAutonomous = flightMode.equals("PathPlanner");
+            if(onAutonomousMode && !isAutonomous) {
+                onAutonomousMode = false;
+                System.err.println("Pilot has changed to " + flightMode + " (manual control). Finishing program");
                 System.exit(0);
             } else {
-                onAutomaticMode = isAutomatic;
+                onAutonomousMode = isAutonomous;
             }
+
+            isArmed = o.getData("Armed").equals("Armed");
         } catch (UAVTalkMissingObjectException e) {
             e.printStackTrace();
             System.exit(1);

@@ -39,31 +39,31 @@ public abstract class FcWaiterThread extends Thread {
             case (byte) 0x21:
             case (byte) 0xa1:
                 //handle request message, nobody should request from LP2Go (so we don't implement this)
-                System.out.println("UAVTalk: " + "Received Object Request, but won't send any " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received Object Request, but won't send any " + obj.getId());
                 break;
             case (byte) 0x22:
             case (byte) 0xa2:
                 //handle object with ACK REQ, means send ACK
                 mDevice.sendAck(obj.getId(), 0);
-                System.out.println("UAVTalk: " + "Received Object with ACK Request " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received Object with ACK Request " + obj.getId());
                 break;
             case (byte) 0x23:
             case (byte) 0xa3:
                 //handle received ACK, e.g. save in Object that it has been acknowledged
-                System.out.println("UAVTalk: " + "Received ACK Object " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received ACK Object " + obj.getId());
                 break;
             case (byte) 0x24:
             case (byte) 0xa4:
                 //handle NACK, show warning and add to request blacklist
                 mDevice.nackedObjects.add(obj.getId());
                 //mDevice.mActivity.incRxObjectsBad();
-                System.out.println("UAVTalk: " + "Received NACK Object " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received NACK Object " + obj.getId());
                 break;
             default:
                 //mDevice.mActivity.incRxObjectsBad();
                 byte[] b = new byte[1];
                 b[0] = msgType;
-                System.out.println("UAVTalk: " + "Received bad Object Type " + Utils.bytesToHex(b));
+                //System.out.println("UAVTalk: " + "Received bad Object Type " + Utils.bytesToHex(b));
                 return false;
         }
         return true;

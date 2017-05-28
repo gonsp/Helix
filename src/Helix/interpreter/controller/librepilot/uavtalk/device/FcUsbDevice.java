@@ -187,7 +187,11 @@ public class FcUsbDevice extends FcDevice {
         int toWrite = bytes.length;
         UsbPipe pipe = mEndpointOut.getUsbPipe();
         try {
-            pipe.open();
+            try {
+                pipe.open();
+            } catch (UsbException e) {
+                //e.printStackTrace();
+            }
             while (toWrite > 0) {
                 int sendlen = toWrite - psize > 0 ? psize : toWrite;
                 byte[] buffer = new byte[sendlen + 2];
@@ -210,7 +214,7 @@ public class FcUsbDevice extends FcDevice {
             try {
                 pipe.close();
             } catch (UsbException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
 
@@ -238,10 +242,8 @@ public class FcUsbDevice extends FcDevice {
         send = mObjectTree.getObjectFromName(objectName).toMessage((byte) 0x22, instance, false);
 
         if (send != null) {
-            //mActivity.incTxObjects();
 
             writeByteArray(send);
-
             requestObject(objectName, instance);
             return true;
         } else {

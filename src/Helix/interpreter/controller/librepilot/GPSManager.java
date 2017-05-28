@@ -19,7 +19,7 @@ public class GPSManager implements UAVTalkObjectListener {
         this.device = device;
         this.minSatellites = minSatellites;
         act_sat = 0;
-        //device.requestObject(UAVO_NAME);
+        device.requestObject(UAVO_NAME);
         device.setListener(UAVO_NAME, this);
     }
 
@@ -29,7 +29,7 @@ public class GPSManager implements UAVTalkObjectListener {
         byte[] data = new byte[1];
         data[0] = 0;
         device.sendSettingsObject("HomeLocation", 0, "Set", "0", data);
-        device.savePersistent("HomeLocation");
+        //device.savePersistent("HomeLocation");
 
         String set;
         try {
@@ -38,6 +38,7 @@ public class GPSManager implements UAVTalkObjectListener {
                 System.err.println("HomeLocation not cleaned");
                 System.exit(1);
             }
+            System.out.println("Waiting for HomeLocation reset");
             while(set == null || set.equals("False")) {
                 set = (String) device.getObjectTree().getObjectFromName("HomeLocation").getData("Set");
             }
