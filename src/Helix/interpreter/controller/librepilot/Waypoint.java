@@ -23,22 +23,24 @@ public class Waypoint extends Position {
     }
 
     public void upload(FcDevice device) {
-        byte total_data[] = new byte[0];
-        total_data = Utils.concatArray(total_data, uploadWaypoint(device, this, 0));
-        Waypoint holdPos = new Waypoint(this); // This is an auxiliar waypoint which will come after this one in order to detect when the original ends
-        holdPos.velocity = 0;
-        holdPos.move(new Position(10, 10, 10)); // To move it from the final position of the drone, so the progress won't be 100%
-        total_data  = Utils.concatArray(total_data, uploadWaypoint(device, holdPos, 1));
-
-        total_data = Utils.concatArray(total_data, uploadPathAction(device));
-
-        byte crc = (byte) Utils.crc8(total_data, 0, total_data.length);
-        updatePathPlan(device, crc);
-
-        System.out.println("Waypoint uploaded");
+        update(device, false);
     }
 
-    private byte[] uploadPathAction(FcDevice device) {
+    public void delete(FcDevice device) {
+        update(device, true);
+    }
+
+    private void update(FcDevice device, boolean clear) {
+        byte total_data[] = new byte[0];
+        total_data = Utils.concatArray(total_data, updateWaypoint(device, clear));
+        total_data = Utils.concatArray(total_data, updatePathAction(device, clear));
+
+        byte crc = (byte) Utils.crc8(total_data, 0, total_data.length);
+        updatePathPlan(device, clear, crc);
+        System.out.println("Waypoint updated");
+    }
+
+    private byte[] updatePathAction(FcDevice device, boolean clear) {
         byte data[] = new byte[device.getObjectTree().getXmlObjects().get("PathAction").getLength()];
         UAVTalkObjectInstance instance = new UAVTalkObjectInstance(0, data);
         UAVTalkObject pathActions = device.getObjectTree().getObjectFromName("PathAction");
@@ -47,17 +49,19 @@ public class Waypoint extends Position {
         return data;
     }
 
-    private byte[] uploadWaypoint(FcDevice device, Waypoint waypoint, int id) {
+    private byte[] updateWaypoint(FcDevice device, boolean clear) {
         byte data[] = new byte[device.getObjectTree().getXmlObjects().get("Waypoint").getLength()];
-        data = fillField(data, waypoint.lat, 0);
-        data = fillField(data, waypoint.lng, 1);
-        data = fillField(data, -waypoint.alt, 2);
-        data = fillField(data, waypoint.velocity, 3);
+        if(!clear) {
+            data = fillField(data, lat, 0);
+            data = fillField(data, lng, 1);
+            data = fillField(data, -alt, 2);
+            data = fillField(data, velocity, 3);
+        }
         //Adding the new instance
-        UAVTalkObjectInstance instance = new UAVTalkObjectInstance(id, data);
+        UAVTalkObjectInstance instance = new UAVTalkObjectInstance(0, data);
         UAVTalkObject waypoints = device.getObjectTree().getObjectFromName("Waypoint");
         waypoints.setInstance(instance);
-        device.sendSettingsObject("Waypoint", id);
+        device.sendSettingsObject("Waypoint", 0);
         return data;
     }
 
@@ -65,18 +69,20 @@ public class Waypoint extends Position {
         return Utils.writeInArray(Utils.floatToByteArrayRev((float) value), data, pos * 4);
     }
 
-    private void updatePathPlan(FcDevice device, byte crc) {
+    private void updatePathPlan(FcDevice device, boolean clear, byte crc) {
+        short waypointCount = 1;
+        short pathActionCount = 1;
+        if(clear) {
+            waypointCount = 0;
+            pathActionCount = 0;
+        }
         byte data[] = new byte[device.getObjectTree().getXmlObjects().get("PathPlan").getLength()];
-        data = Utils.writeInArray(Utils.toReversedBytes((short) 2), data, 0);
-        data = Utils.writeInArray(Utils.toReversedBytes((short) 1), data, 2);
+        data = Utils.writeInArray(Utils.toReversedBytes(waypointCount), data, 0);
+        data = Utils.writeInArray(Utils.toReversedBytes(pathActionCount), data, 2);
         data[4] = crc;
         UAVTalkObjectInstance instance = new UAVTalkObjectInstance(0, data);
         UAVTalkObject pathPlan = device.getObjectTree().getObjectFromName("PathPlan");
         pathPlan.setInstance(instance);
         device.sendSettingsObject("PathPlan", 0);
-    }
-
-    public void delete() {
-        // TODO delete waypoints from device
     }
 }

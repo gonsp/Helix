@@ -45,12 +45,12 @@ public abstract class FcWaiterThread extends Thread {
             case (byte) 0xa2:
                 //handle object with ACK REQ, means send ACK
                 mDevice.sendAck(obj.getId(), 0);
-                System.out.println("UAVTalk: " + "Received Object with ACK Request " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received Object with ACK Request " + obj.getId());
                 break;
             case (byte) 0x23:
             case (byte) 0xa3:
                 //handle received ACK, e.g. save in Object that it has been acknowledged
-                System.out.println("UAVTalk: " + "Received ACK Object " + obj.getId());
+                //System.out.println("UAVTalk: " + "Received ACK Object " + obj.getId());
                 break;
             case (byte) 0x24:
             case (byte) 0xa4:

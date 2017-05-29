@@ -21,7 +21,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
-    private static final int MIN_SATELLITES = 6;
+    private static final int MIN_SATELLITES = 14;
     private static final double DEFAULT_VELOCITY = 2;
 
     public LibrePilotController() {
@@ -93,6 +93,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public void onFinishPath() {
         onAction = false;
+        System.out.println("Waypoint reached--------------------");
     }
 
     @Override
