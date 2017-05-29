@@ -10,16 +10,17 @@ public class Waypoint extends Position {
     public double velocity;
     public double progress;
 
+    protected byte pathActionType;
+
     public Waypoint(GPSPosition pos, GPSPosition homePosition, double velocity) {
-        super(pos.toRelative(homePosition));
-        this.velocity = velocity;
-        progress = 0;
+        this(pos.toRelative(homePosition), velocity);
     }
 
-    public Waypoint(Waypoint waypoint) {
-        super(waypoint);
-        this.velocity = waypoint.velocity;
+    public Waypoint(Position pos, double velocity) {
+        super(pos);
+        this.velocity = velocity;
         progress = 0;
+        pathActionType = 0;
     }
 
     public void upload(FcDevice device) {
@@ -45,8 +46,13 @@ public class Waypoint extends Position {
         UAVTalkObjectInstance instance = new UAVTalkObjectInstance(0, data);
         UAVTalkObject pathActions = device.getObjectTree().getObjectFromName("PathAction");
         pathActions.setInstance(instance);
-        device.sendSettingsObject("PathAction", 0);
-        return data;
+        if(!clear) {
+            byte[] mode = {pathActionType};
+            device.sendSettingsObject("PathAction", 0, "Mode", 0, mode);
+        } else {
+            device.sendSettingsObject("PathAction", 0);
+        }
+        return pathActions.getInstance(0).getData();
     }
 
     private byte[] updateWaypoint(FcDevice device, boolean clear) {
@@ -70,12 +76,9 @@ public class Waypoint extends Position {
     }
 
     private void updatePathPlan(FcDevice device, boolean clear, byte crc) {
-        short waypointCount = 1;
-        short pathActionCount = 1;
-        if(clear) {
-            waypointCount = 0;
-            pathActionCount = 0;
-        }
+        short waypointCount = (short) (clear ? 0 : 1);
+        short pathActionCount = (short) (clear ? 0 : 1);
+
         byte data[] = new byte[device.getObjectTree().getXmlObjects().get("PathPlan").getLength()];
         data = Utils.writeInArray(Utils.toReversedBytes(waypointCount), data, 0);
         data = Utils.writeInArray(Utils.toReversedBytes(pathActionCount), data, 2);

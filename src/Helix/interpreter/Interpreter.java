@@ -39,9 +39,11 @@ public class Interpreter {
 
 
         //droneController.takeOff(5);
+        droneController.takeOff(10);
         droneController.east(5);
-        System.out.println("HELLOOOOOOOOOOOO");
-        System.exit(1000);
+        droneController.up(5);
+        droneController.south(5);
+        droneController.land();
         // Testing
 //        droneController.takeOff(10);
 //        for(int i = 0; i < 4; ++i) {

@@ -23,13 +23,19 @@ public class PathPlanManager implements UAVTalkObjectListener {
         device.setListener(PATH_STATUS, this);
     }
 
+    public void sendTakeOff(double height, double velocity) {
+        activeWaypoint = new TakeOffWaypoint(height, velocity);
+        activeWaypoint.upload(device);
+    }
+
     public void sendMoveTo(GPSPosition position, GPSPosition homeLocation, double velocity) {
         activeWaypoint = new Waypoint(position, homeLocation, velocity);
         activeWaypoint.upload(device);
     }
 
-    public void sendLand() {
-        //TODO implement this
+    public void sendLand(double velocity) {
+        activeWaypoint = new LandWaypoint(velocity);
+        activeWaypoint.upload(device);
     }
 
     @Override

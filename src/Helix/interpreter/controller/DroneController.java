@@ -82,12 +82,13 @@ public abstract class DroneController {
     public void moveTo(Position pos) {
         sendMoveTo(pos.toGPS(homeLocation));
         drone.pos = pos;
+        drone.isLanded = false;
     }
 
     public void takeOff(double height) { //LibrePilot default take off is 2.5 m
-        // TODO add exceptions
         if(drone.isLanded && height > 2.5) { //Security margin
-            move(new Position(0, 0, height));
+            sendTakeOff(height);
+            drone.pos = new Position(0, 0, height);
             drone.isLanded = false;
         }
     }
@@ -101,6 +102,7 @@ public abstract class DroneController {
     }
 
     public abstract GPSPosition getGPS();
+    protected abstract void sendTakeOff(double height);
     protected abstract void sendMoveTo(GPSPosition pos);
     protected abstract void sendLand();
 }

@@ -26,20 +26,27 @@ public class SimulationController extends DroneController {
     }
 
     @Override
+    protected void sendTakeOff(double height) {
+        GPSPosition pos = new GPSPosition(posGPS);
+        pos.move(new Position(0, 0, height));
+        sendMoveTo(pos);
+    }
+
+    @Override
     protected void sendMoveTo(GPSPosition pos) {
         posGPS = pos;
-        //updatePath();
+        updatePath();
     }
 
     @Override
     protected void sendLand() {
         posGPS.alt = 0;
         updatePath();
+        showPath();
     }
 
     private void updatePath() {
         pathHistory.add(new GPSPosition(posGPS));
-        showPath();
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

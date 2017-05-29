@@ -21,7 +21,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
-    private static final int MIN_SATELLITES = 14;
+    private static final int MIN_SATELLITES = 4;
     private static final double DEFAULT_VELOCITY = 2;
 
     public LibrePilotController() {
@@ -62,6 +62,13 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     }
 
     @Override
+    protected void sendTakeOff(double height) {
+        onAction = true;
+        pathPlanManager.sendTakeOff(height, DEFAULT_VELOCITY);
+        while(onAction);
+    }
+
+    @Override
     public void sendMoveTo(GPSPosition pos) {
         onAction = true;
         pathPlanManager.sendMoveTo(pos, super.homeLocation, DEFAULT_VELOCITY);
@@ -71,7 +78,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public void sendLand() {
         onAction = true;
-        pathPlanManager.sendLand();
+        pathPlanManager.sendLand(DEFAULT_VELOCITY);
         while(onAction);
     }
 
@@ -93,7 +100,9 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public void onFinishPath() {
         onAction = false;
-        System.out.println("Waypoint reached--------------------");
+        System.out.println("-----------------------");
+        System.out.println("Waypoint reached");
+        System.out.println("-----------------------");
     }
 
     @Override
