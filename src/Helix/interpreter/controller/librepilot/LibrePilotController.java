@@ -31,12 +31,14 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
 
-        // TESTING
+/*        // TESTING
         GPSPosition homeLocation = new GPSPosition(41.1, 2.1, 170);
         Position pos = new Position(0, 0, 1000);
         GPSPosition gpsPos = new GPSPosition(homeLocation);
         gpsPos.move(pos);
         pathPlanManager.sendMoveTo(gpsPos, homeLocation, 3);
+
+        System.exit(0);*/
 
         posGPS = null;
         System.out.println("Waiting to get a gps position");

@@ -190,7 +190,7 @@ public class FcUsbDevice extends FcDevice {
             try {
                 pipe.open();
             } catch (UsbException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
             while (toWrite > 0) {
                 int sendlen = toWrite - psize > 0 ? psize : toWrite;
@@ -214,7 +214,7 @@ public class FcUsbDevice extends FcDevice {
             try {
                 pipe.close();
             } catch (UsbException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
 
@@ -224,12 +224,9 @@ public class FcUsbDevice extends FcDevice {
     @Override
     public boolean sendAck(String objectId, int instance) {
         byte[] send = mObjectTree.getObjectFromID(objectId).toMessage((byte) 0x23, instance, true);
-        //System.out.println("SEND_ACK_USB: " + Utils.bytesToHex(send));
+        System.out.println("SEND_ACK_USB: " + Utils.bytesToHex(send));
         if (send != null) {
-            //mActivity.incTxObjects();
-
             writeByteArray(send);
-
             return true;
         } else {
             return false;
