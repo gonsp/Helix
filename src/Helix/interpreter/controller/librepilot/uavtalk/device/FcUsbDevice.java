@@ -42,6 +42,7 @@ import Helix.interpreter.controller.librepilot.uavtalk.*;
 import javax.usb.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class FcUsbDevice extends FcDevice {
 
@@ -50,6 +51,9 @@ public class FcUsbDevice extends FcDevice {
     private final UsbEndpoint mEndpointOut;
     private final FcWaiterThread mWaiterThread;
     private boolean connected = false;
+
+    private ConcurrentLinkedQueue<byte[]> pendingMessages;
+    private volatile boolean sending;
     //private UsbRequest mOutRequest = null;
 
     final static short vendorId = 0x20a0;
@@ -70,6 +74,8 @@ public class FcUsbDevice extends FcDevice {
     public FcUsbDevice() {
         super();
 
+        pendingMessages = new ConcurrentLinkedQueue<>();
+        sending = false;
         mObjectTree = new UAVTalkObjectTree();
 
         UsbEndpoint epOut = null;
@@ -181,6 +187,17 @@ public class FcUsbDevice extends FcDevice {
 
     @Override
     protected boolean writeByteArray(byte[] bytes) {
+        boolean writeFromQueue = false;
+        if(sending) {
+            writeFromQueue = true;
+            pendingMessages.offer(bytes);
+            while(sending);
+        }
+        sending = true;
+        if(writeFromQueue) {
+            bytes = pendingMessages.poll();
+        }
+
         boolean retval = false;
 
         int psize = mEndpointOut.getUsbEndpointDescriptor().wMaxPacketSize() -2; //62;//mEndpointOut.getMaxPacketSize() - 2;
@@ -218,6 +235,7 @@ public class FcUsbDevice extends FcDevice {
             }
         }
 
+        sending = false;
         return retval;
     }
 

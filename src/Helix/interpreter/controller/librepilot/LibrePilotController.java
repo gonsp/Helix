@@ -21,8 +21,8 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
-    private static final int MIN_SATELLITES = 13;
-    private static final double DEFAULT_VELOCITY = 3;
+    private static final int MIN_SATELLITES = 6;
+    private static final double DEFAULT_VELOCITY = 2;
 
     public LibrePilotController() {
         FcDevice device = new FcUsbDevice();
@@ -46,10 +46,10 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
         gpsManager.clearHomePosition();
 
-        device.requestObject(UAVO_NAME);
-        device.setListener(UAVO_NAME, this);
         isArmed = false;
         onAutonomousMode = false;
+        device.requestObject(UAVO_NAME);
+        device.setListener(UAVO_NAME, this);
         System.out.println("Waiting to enter en autonomous mode");
         while(!onAutonomousMode);
         System.out.println("On autonomous mode");

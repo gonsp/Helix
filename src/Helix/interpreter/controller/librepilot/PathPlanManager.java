@@ -45,8 +45,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
                     float progress = (float) o.getData("fractional_progress");
                     activeWaypoint.progress = progress;
                     listener.onProgressUpdate(progress);
-                    int error = (int) o.getData("Status");
-                    if(error != 3) {
+                    if(o.getData("Status").equals("Critical")) {
                         listener.onError();
                     }
                 } else {
@@ -60,6 +59,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
                         System.out.println("Waypoint: " + active_index);
                         System.out.println("----------------------------------------------");
                     }
+                    System.out.println("Waypoint: " + active_index);
                 }
             } catch (UAVTalkMissingObjectException e) {
                 e.printStackTrace();
