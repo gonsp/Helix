@@ -38,12 +38,14 @@ public class Interpreter {
 
 
 
-        //droneController.takeOff(5);
-        droneController.takeOff(10);
-        droneController.east(5);
-        droneController.up(5);
-        droneController.south(5);
+        droneController.takeOff(5);
+        droneController.west(10);
+        droneController.south(10);
         droneController.land();
+        System.exit(0);
+        //droneController.up(5);
+        //droneController.south(5);
+        //droneController.land();
         // Testing
 //        droneController.takeOff(10);
 //        for(int i = 0; i < 4; ++i) {

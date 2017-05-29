@@ -82,7 +82,7 @@ public abstract class DroneController {
     public void moveTo(Position pos) {
         sendMoveTo(pos.toGPS(homeLocation));
         drone.pos = pos;
-        drone.isLanded = false;
+        drone.isLanded = false; //If the autonomous flight starts in the middle of a fly, the drone is marked as "fliying"
     }
 
     public void takeOff(double height) { //LibrePilot default take off is 2.5 m
