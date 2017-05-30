@@ -6,21 +6,22 @@ import Helix.parser.*;
 public class DecData extends Data {
     private static double epsilon = 0.005;
 
-    private double value;
+    public double value;
 
 
     public DecData() {
-        this.value = 0.0;
+        this(0.0);
+    }
+
+
+    public DecData(DecData d) {
+        this(d.value);
     }
 
 
     public DecData(double value) {
         this.value = value;
-    }
-
-
-    public DecData(DecData d) {
-        this.value = d.value;
+        this.type = DataType.DECIMAL;
     }
 
 
@@ -53,6 +54,14 @@ public class DecData extends Data {
     }
 
 
+    @Override
+    public Data getCopy() {
+        DecData copy = new DecData(this.value);
+        return copy;
+    }
+
+
+    @Override
     public String toString() {
         return Double.toString(value);
     }

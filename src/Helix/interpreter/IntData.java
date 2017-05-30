@@ -9,17 +9,18 @@ public class IntData extends Data {
 
 
     public IntData() {
-        this.value = 0;
+        this(0);
+    }
+
+
+    public IntData(IntData i) {
+        this(i.value);
     }
 
 
     public IntData(int value) {
         this.value = value;
-    }
-
-
-    public IntData(IntData i) {
-        this.value = i.value;
+        this.type = DataType.INTEGER;
     }
 
 
@@ -53,6 +54,14 @@ public class IntData extends Data {
     }
 
 
+    @Override
+    public Data getCopy() {
+        IntData copy = new IntData(this.value);
+        return copy;
+    }
+
+
+    @Override
     public String toString() {
         return Integer.toString(value);
     }

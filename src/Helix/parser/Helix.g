@@ -10,7 +10,7 @@ tokens {
     DEFFUNC;
     ASSIGN;     // Assignment instruction
     COORD;
-    ACCESS;
+    ATTRIB;
     COORDACCESS;
     PARAMS;     // List of parameters in the declaration of a function
     FUNCALL;    // Function call
@@ -133,11 +133,12 @@ accessor    :	id_access
 coord_access :   '[' id1=id_access ',' id2=id_access ',' id3=id_access ']' -> ^(COORDACCESS $id1 $id2 $id3)
             ;
 
-id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ACCESS $id id_atr))?
+id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ATTRIB $id id_atr))?
             ;
 
 id_atr  :   LAT
         |   LNG
+        |   ALT
         ;
 
 // A function call has a lits of arguments in parenthesis (possibly empty)
@@ -206,6 +207,7 @@ TRUE    : 'true' ;
 FALSE   : 'false';
 LAT     : 'lat';
 LNG     : 'lng';
+ALT     : 'alt';
 ID  	:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 NUM     :	'0'..'9'+ ('.' '0'..'9'+|);
 

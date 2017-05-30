@@ -10,11 +10,13 @@ public class Position extends Data {
     public double alt;
 
 
+    public Position() {
+        this(0.0, 0.0, 0.0);
+    }
+
+
     public Position(Position pos) {
-        this.type = DataType.POSITION;
-        this.lat = pos.lat;
-        this.lng = pos.lng;
-        this.alt = pos.alt;
+        this(pos.lat, pos.lng, pos.alt);
     }
 
 
@@ -42,6 +44,7 @@ public class Position extends Data {
     public void negative_move(Position movement) {
         move(new Position(-movement.lat, -movement.lng, -movement.alt));
     }
+
 
     @Override
     public void evaluateArithmetic (int op, Data data) {
@@ -92,6 +95,13 @@ public class Position extends Data {
         }
         return null;
     }
+
+
+    @Override
+    public Data getCopy() {
+        Position copy = new Position(this);
+        return copy;
+    }
     
 
     public String toString(boolean inverse) {
@@ -105,6 +115,7 @@ public class Position extends Data {
     }
 
 
+    @Override
     public String toString() {
         return toString(false);
     }
