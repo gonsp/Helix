@@ -9,9 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Interpreter {
-    
+
     private DroneController droneController;
 
     private int indents = 0;
@@ -22,15 +23,15 @@ public class Interpreter {
     /* Stores the root of declared functions */
     private HashMap<String, HelixTree> functionTrees;
 
-    /* File to write the execution trace. */
-    private PrintWriter trace = null;
+    /* Stack */
+    private Stack stack;
 
 
     public Interpreter(HelixTree T, boolean simulation, String tracefile) {
         assert T != null;
         // TODO remove this line
         if(!simulation) {
-            droneController = new LibrePilotController();
+            //droneController = new LibrePilotController();
         } else {
             droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0));
         }
@@ -46,14 +47,9 @@ public class Interpreter {
         }
         droneController.land();
         mapFunctions(T);
-        if (tracefile != null) {
-            try {
-                trace = new PrintWriter(new FileWriter(tracefile));
-            } catch (IOException e) {
-                System.err.println(e);
-                System.exit(1);
-            }
-        }
+        //droneController.init();
+        mapFunctions(T);
+        stack = new Stack();
     }
 
 
@@ -101,64 +97,188 @@ public class Interpreter {
     }
 
 
-    private void executeFunction(String func_name, HelixTree args) {
+    private Data executeFunction(String func_name, HelixTree args) {
         ++indents;
+        wrttrace("Executing function: " + func_name);
+
         HelixTree f = functionTrees.get(func_name);
         if (f == null) {
             throw new RuntimeException("function " + func_name + " was not declared");
         }
-        wrttrace("Executing function: " + func_name);
+        ArrayList<Data> args_values = listArguments(f, args);
 
-        executeListInstructions(f.getChild(2));
-        
+        HelixTree p = f.getChild(1);
+        int nparam = p.getChildCount();
+
+        stack.pushActivationRecord();
+
+        for (int i = 0; i < nparam; ++i) {
+            String param_name = p.getChild(i).getText();
+            stack.defineVariable(param_name, args_values.get(i));
+        }
+
+        Data ret = executeListInstructions(f.getChild(2));
+        stack.popActivationRecord();
+
         --indents;
+        return ret;
     }
 
 
-    private void executeListInstructions(HelixTree list_instr) {
+    private Data executeListInstructions(HelixTree list_instr) {
+        assert list_instr.getType() == HelixLexer.LIST_INSTR;
         ++indents;
         wrttrace("Executing list of instructions");
-        assert list_instr.getType() == HelixLexer.LIST_INSTR;
+
+        Data ret = null;
         for (HelixTree instr : list_instr) {
-            executeInstruction(instr);
+            ret = executeInstruction(instr);
+            if (ret != null) return ret;
         }
+
         --indents;
+        return null;
     }
 
 
-    private void executeInstruction(HelixTree instr) {
+    private Data executeInstruction(HelixTree instr) {
         ++indents;
+
+        Data ret = null;
         switch (instr.getType()) {
+
             case HelixLexer.ASSIGN:
                 executeAssign(instr);
-                break;
+                return null;
+
             case HelixLexer.DEFFUNC:
-                executeDefaultFunction(instr);
-                break;
+                return executeDefaultFunction(instr);
+
             case HelixLexer.FUNCALL:
-                executeFunctionCall(instr);
-                break;
+                return executeFunctionCall(instr);
+
             case HelixLexer.RETURN:
-                executeReturn(instr);
-                break;
+                return executeReturn(instr);
+
             case HelixLexer.IF:
                 executeIf(instr);
-                break;
+                return null;
+
             case HelixLexer.WHILE:
                 executeWhile(instr);
-                break;
+                return null;
+
         }
         --indents;
+        return null;
     }
 
 
     private void executeAssign(HelixTree assign) {
         assert assign.getType() == HelixLexer.ASSIGN;
         wrttrace("Executing assign");
+
+        HelixTree access = assign.getChild(0);
+        HelixTree expr = assign.getChild(1);
+        switch (access.getType()) {
+            case HelixLexer.ID:
+                assignId(access, expr);
+                break;
+
+            case HelixLexer.ATTRIB:
+                assignAttrib(access, expr);
+                break;
+
+            case HelixLexer.COORDACCESS:
+                assignCoordAccess(access, expr);
+                break;
+        }
     }
 
 
-    private void executeDefaultFunction(HelixTree deffunc) {
+    private void assignIdAccess(HelixTree access, HelixTree expr) {
+        switch (access.getType()) {
+            case HelixLexer.ID:
+                assignId(access, expr);
+                break;
+
+            case HelixLexer.ATTRIB:
+                assignAttrib(access, expr);
+        }
+    }
+
+
+    private void assignId(HelixTree access, HelixTree expr) {
+        String id = access.getText();
+        Data dexpr = evaluateExpression(expr);
+        stack.defineVariable(id, dexpr);
+    }
+
+
+    private void assignAttrib(HelixTree access, HelixTree expr) {
+        DecData dexpr = (DecData) evaluateExpression(expr);
+        String id = access.getChild(0).getText();
+        Position a = (Position) stack.getVariable(id);
+        if (a == null) {
+            a = new Position();
+        }
+        switch (access.getChild(1).getType()) {
+            case HelixLexer.LAT:
+                a.lat = dexpr.value;
+                break;
+            case HelixLexer.LNG:
+                a.lng = dexpr.value;
+                break;
+            case HelixLexer.ALT:
+                a.alt = dexpr.value;
+                break;
+        }
+        stack.defineVariable(id, a);
+    }
+
+
+    private void assignAttrib(HelixTree access, double val) {
+        String id = access.getChild(0).getText();
+        Position a = (Position) stack.getVariable(id);
+        if (a == null) {
+            a = new Position();
+        }
+        switch (access.getChild(1).getType()) {
+            case HelixLexer.LAT:
+                a.lat = val;
+                break;
+            case HelixLexer.LNG:
+                a.lng = val;
+                break;
+            case HelixLexer.ALT:
+                a.alt = val;
+                break;
+        }
+        stack.defineVariable(id, a);
+    }
+
+
+    private void assignCoordAccess(HelixTree caccess, HelixTree cexpr) {
+        HelixTree a_lat, a_lng, a_alt;
+        a_lat = caccess.getChild(0);
+        a_lng = caccess.getChild(1);
+        a_alt = caccess.getChild(2);
+
+        if (cexpr.getType() == HelixLexer.COORD) {
+            assignIdAccess(a_lat, cexpr.getChild(0));
+            assignIdAccess(a_lng, cexpr.getChild(1));
+            assignIdAccess(a_alt, cexpr.getChild(2));
+        }
+        else {
+            Position pexpr = (Position) evaluateExpression(cexpr);
+            assignAttrib(a_lat, pexpr.lat);
+            assignAttrib(a_lng, pexpr.lng);
+            assignAttrib(a_alt, pexpr.lat);
+        }
+    }
+
+
+    private Data executeDefaultFunction(HelixTree deffunc) {
         assert deffunc.getType() == HelixLexer.DEFFUNC;
         HelixTree f = deffunc.getChild(0);
         wrttrace("Executing default function: " + f.getText());
@@ -192,19 +312,21 @@ public class Interpreter {
             default:
                 throw new RuntimeException("What did you do to trigger this????");
         }
+        return null;
     }
 
 
-    private void executeFunctionCall(HelixTree funcall) {
+    private Data executeFunctionCall(HelixTree funcall) {
         assert funcall.getType() == HelixLexer.FUNCALL;
         wrttrace("Executing function call");
-        executeFunction(funcall.getChild(0).getText(), funcall.getChild(1));
+        return executeFunction(funcall.getChild(0).getText(), funcall.getChild(1));
     }
 
 
-    private void executeReturn(HelixTree ret) {
+    private Data executeReturn(HelixTree ret) {
         assert ret.getType() == HelixLexer.RETURN;
         wrttrace("Executing return");
+        return null;
     }
 
 
@@ -218,4 +340,139 @@ public class Interpreter {
         assert whiletree.getType() == HelixLexer.WHILE;
         wrttrace("Executing while");
     }
+
+
+    private Data evaluateExpression(HelixTree expr) {
+        Data result = null;
+
+        wrttrace("Evaluating expre");
+        int type = expr.getType();
+        int nchild = expr.getChildCount();
+
+        if (nchild == 0) {
+            switch (type) {
+                case HelixLexer.NUM:
+                    result = new DecData(1.0);
+                    break;
+
+                case HelixLexer.BOOLEAN:
+                    result = new BoolData(false);
+                    break;
+
+                case HelixLexer.ID:
+                    break;
+
+            }
+        }
+
+        else if (nchild == 1) {
+            switch (type) {
+                case HelixLexer.NOT:
+                    break;
+
+                case HelixLexer.PLUS:
+                    break;
+
+                case HelixLexer.MINUS:
+                    break;
+            }
+        }
+
+        else /* if (nchild == 2) */ {
+            switch (type) {
+                case HelixLexer.OR:
+                    break;
+
+                case HelixLexer.AND:
+                    break;
+
+                case HelixLexer.EQUAL:
+                    break;
+
+                case HelixLexer.NOT_EQUAL:
+                    break;
+
+                case HelixLexer.LT:
+                    break;
+
+                case HelixLexer.LE:
+                    break;
+
+                case HelixLexer.GT:
+                    break;
+
+                case HelixLexer.GE:
+                    break;
+
+                case HelixLexer.PLUS:
+                    break;
+
+                case HelixLexer.MINUS:
+                    break;
+
+                case HelixLexer.MUL:
+                    break;
+
+                case HelixLexer.DIV:
+                    break;
+
+                case HelixLexer.MOD:
+                    break;
+
+                case HelixLexer.ATTRIB:
+                    break;
+
+                case HelixLexer.DEFFUNC:
+                    break;
+
+                case HelixLexer.FUNCALL:
+                    break;
+
+            }
+        }
+
+        if (nchild == 3) {
+            switch (type) {
+                case HelixLexer.COORD:
+                    break;
+
+                case HelixLexer.COORDACCESS:
+                    break;
+            }
+        }
+
+        return result;
+    }
+
+
+    private ArrayList<Data> listArguments(HelixTree f, HelixTree args) {
+        HelixTree pars = f.getChild(1);
+
+        ArrayList<Data> result = new ArrayList<Data>();
+        int n = pars.getChildCount();
+
+        int nargs = args == null ? 0 : args.getChildCount();
+        if (n != nargs) {
+            throw new RuntimeException(
+                    "Incorrect number of parameters calling function " + f.getChild(0).getText()
+                    );
+        }
+
+        for (int i = 0; i < n; ++i) {
+            HelixTree p = pars.getChild(i);
+            HelixTree a = args.getChild(i);
+            if (p.getType() == HelixLexer.PVALUE) {
+                result.add(i, evaluateExpression(a));
+            }
+            else {
+                if (a.getType() != HelixLexer.ID) {
+                    throw new RuntimeException("Wrong argument for pass by reference");
+                }
+            }
+        }
+        return result;
+    }
+
+
+
 }

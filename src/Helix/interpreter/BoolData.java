@@ -9,17 +9,18 @@ public class BoolData extends Data {
 
 
     public BoolData() {
-        this.value = false;
+        this(false);
+    }
+
+
+    public BoolData(BoolData b) {
+        this(b.value);
     }
 
 
     public BoolData(boolean value) {
         this.value = value;
-    }
-
-
-    public BoolData(BoolData b) {
-        this.value = b.value;
+        this.type = DataType.BOOL;
     }
 
 
@@ -51,6 +52,14 @@ public class BoolData extends Data {
     }
 
 
+    @Override
+    public Data getCopy() {
+        BoolData copy = new BoolData(this.value);
+        return copy;
+    }
+
+
+    @Override
     public String toString() {
         return value ? "true" : "false";
     }
