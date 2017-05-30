@@ -18,6 +18,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean isArmed;
 
     volatile private GPSPosition posGPS;
+    volatile private double direction;
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
@@ -36,6 +37,22 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         while(posGPS == null);
         System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
         gpsManager.clearHomePosition();
+
+        UAVTalkObjectListener listener = new UAVTalkObjectListener() {
+            @Override
+            public void onObjectUpdate(UAVTalkObject o) {
+                try {
+                    direction = (double) o.getData("Roll");
+                } catch (UAVTalkMissingObjectException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        device.setListener("AttitudeState", listener);
+        direction = -1;
+        System.out.println("Waiting to get initial direction");
+        while(direction == -1);
+        System.out.println("Done");
 
         isArmed = false;
         onAutonomousMode = false;
@@ -68,7 +85,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
     @Override
     protected void sendDirection(double direction) {
-
+        // TODO implement this
     }
 
     @Override
@@ -85,8 +102,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
     @Override
     public double getDirection() {
-        // TODO implement this
-        return 0;
+        return direction;
     }
 
     @Override
