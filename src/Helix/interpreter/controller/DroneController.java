@@ -34,7 +34,7 @@ public abstract class DroneController {
         setDirection(Math.toDegrees(Math.atan(pos.lng/pos.lat)));
     }
 
-    public void roll(double degrees) {
+    public void rotate(double degrees) {
         setDirection(drone.direction + degrees);
     }
 
