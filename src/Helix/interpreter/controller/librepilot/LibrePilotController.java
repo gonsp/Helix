@@ -21,8 +21,8 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean onAction;
 
     private static final String UAVO_NAME = "FlightStatus";
-    private static final int MIN_SATELLITES = 4;
-    private static final double DEFAULT_VELOCITY = 2;
+    private static final int MIN_SATELLITES = 14;
+    private static final double DEFAULT_VELOCITY = 1;
 
     public LibrePilotController() {
         FcDevice device = new FcUsbDevice();
