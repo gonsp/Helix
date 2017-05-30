@@ -48,13 +48,13 @@ public class Interpreter {
         }
         droneController.land();*/
 
-        droneController.takeOff(5);
-        for(int i = 0; i < 4*4; ++i) {
-            droneController.forward(10);
-            droneController.roll(-90);
-            droneController.up(1);
-        }
-        droneController.land();
+//        droneController.takeOff(5);
+//        for(int i = 0; i < 4*4; ++i) {
+//            droneController.forward(10);
+//            droneController.roll(-90);
+//            droneController.up(1);
+//        }
+//        droneController.land();
 
 //        droneController.takeOff(10);
 //        droneController.lookAt(new Position(1, 0, 0));
@@ -224,14 +224,17 @@ public class Interpreter {
 
 
     private void assignId(HelixTree access, HelixTree expr) {
+        ++indents;
         String id = access.getText();
+        wrttrace("Assigned variable " + id);
         Data dexpr = evaluateExpression(expr);
         stack.defineVariable(id, dexpr);
+        --indents;
     }
 
 
     private void assignAttrib(HelixTree access, HelixTree expr) {
-        DecData dexpr = (DecData) evaluateExpression(expr);
+        IntData dexpr = (IntData) evaluateExpression(expr);
         String id = access.getChild(0).getText();
         Position a = (Position) stack.getVariable(id);
         if (a == null) {
@@ -239,13 +242,13 @@ public class Interpreter {
         }
         switch (access.getChild(1).getType()) {
             case HelixLexer.LAT:
-                a.lat = dexpr.value;
+                a.lat = dexpr.toDouble();
                 break;
             case HelixLexer.LNG:
-                a.lng = dexpr.value;
+                a.lng = dexpr.toDouble();
                 break;
             case HelixLexer.ALT:
-                a.alt = dexpr.value;
+                a.alt = dexpr.toDouble();
                 break;
         }
         stack.defineVariable(id, a);
@@ -297,37 +300,165 @@ public class Interpreter {
         assert deffunc.getType() == HelixLexer.DEFFUNC;
         HelixTree f = deffunc.getChild(0);
         wrttrace("Executing default function: " + f.getText());
+        
+        ArrayList<Data> args_values = getArgList(deffunc.getChild(1));
+        int n_args = args_values.size();
         switch (f.getType()) {
             case HelixLexer.GET_GPS:
-                break;
+                assert n_args == 0;
+                return executeGetgps();
             case HelixLexer.MOVE:
+                assert n_args == 1;
+                executeMove(args_values.get(0));
                 break;
             case HelixLexer.FORWARD:
-                break;
-            case HelixLexer.ROTATE:
-                break;
-            case HelixLexer.TAKEOFF:
-                break;
-            case HelixLexer.LAND:
-                break;
-            case HelixLexer.SLEEP:
-                break;
-            case HelixLexer.UPF:
-                break;
-            case HelixLexer.DOWNF:
-                break;
-            case HelixLexer.RIGHT:
-                break;
-            case HelixLexer.LEFT:
+                assert n_args == 1;
+                executeForward(args_values.get(0));
                 break;
             case HelixLexer.BACKWARDS:
+                assert n_args == 1;
+                executeBackwards(args_values.get(0));
+                break;
+            case HelixLexer.RIGHT:
+                assert n_args == 1;
+                executeRight(args_values.get(0));
+                break;
+            case HelixLexer.LEFT:
+                assert n_args == 1;
+                executeLeft(args_values.get(0));
+                break;
+            case HelixLexer.ROTATE:
+                assert n_args == 1;
+                executeRotate(args_values.get(0));
+                break;
+            case HelixLexer.TAKEOFF:
+                assert n_args == 1;
+                executeTakeoff(args_values.get(0));
+                break;
+            case HelixLexer.LAND:
+                assert n_args == 0;
+                executeLand();
+                break;
+            case HelixLexer.SLEEP:
+                assert n_args == 1;
+                executeSleep(args_values.get(0));
+                break;
+            case HelixLexer.UPF:
+                assert n_args == 1;
+                executeUp(args_values.get(0));
+                break;
+            case HelixLexer.DOWNF:
+                assert n_args == 1;
+                executeDown(args_values.get(0));
                 break;
             case HelixLexer.LOOKAT:
+                assert n_args == 1;
+                executeLookat(args_values.get(0));
+                break;
+            case HelixLexer.PRINT:
+                assert n_args == 1;
+                executePrint(args_values.get(0));
                 break;
             default:
                 throw new RuntimeException("What did you do to trigger this????");
         }
         return null;
+    }
+
+
+    private Data executeGetgps (){
+        return droneController.getGPS();
+    }
+
+
+    private void executeMove (Data d) {
+        assert d.type == Data.DataType.POSITION;
+        droneController.moveTo((Position)d);
+    }
+
+
+    private void executeForward (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.forward(data.toDouble());
+    }
+
+
+    private void executeBackwards (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.backward(data.toDouble());
+    }
+
+
+    private void executeRight (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.right(data.toDouble());
+    }
+
+
+    private void executeLeft (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.left(data.toDouble());
+    }
+
+
+    private void executeRotate (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.roll(data.toDouble());
+    }
+
+
+    private void executeTakeoff (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.takeOff(data.toDouble());
+    }
+
+
+    private void executeLand () {
+        droneController.land();
+    }
+
+
+    private void executeSleep (Data d) {
+        // TODO
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        try {
+            Thread.sleep(data.value);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+
+    private void executeUp (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.up(data.toDouble());
+    }
+
+
+    private void executeDown (Data d) {
+        assert d.type == Data.DataType.INTEGER;
+        IntData data = (IntData) d;
+        droneController.down(data.toDouble());
+    }
+
+
+    private void executeLookat (Data d) {
+        assert d.type == Data.DataType.POSITION;
+        Position data = (Position) d;
+        droneController.lookAt(data);
+    }
+
+
+    private void executePrint(Data d) {
+        System.out.println("PRINT: " + d.toString());
     }
 
 
@@ -367,7 +498,7 @@ public class Interpreter {
         if (nchild == 0) {
             switch (type) {
                 case HelixLexer.NUM:
-                    result = new DecData(1.0);
+                    result = new IntData(expr.getNumValue());
                     break;
 
                 case HelixLexer.BOOLEAN:
@@ -375,8 +506,8 @@ public class Interpreter {
                     break;
 
                 case HelixLexer.ID:
-                    break;
-
+                    Data d = stack.getVariable(expr.getText());
+                    return d.getCopy();
             }
         }
 
@@ -483,11 +614,21 @@ public class Interpreter {
                 if (a.getType() != HelixLexer.ID) {
                     throw new RuntimeException("Wrong argument for pass by reference");
                 }
+                Data d = stack.getVariable(a.getText());
+                result.add(i, d);
             }
         }
         return result;
     }
 
 
+    private ArrayList<Data> getArgList(HelixTree args) {
+        ArrayList<Data> result = new ArrayList<Data>();
+        for (HelixTree c : args) {
+            Data d = evaluateExpression(c);
+            result.add(d);
+        }
+        return result;
+    }
 
 }

@@ -159,6 +159,7 @@ builtin :   GET_GPS
         |   LEFT
         |   BACKWARDS
         |   LOOKAT
+        |   PRINT
         ;
 
 // A list of expressions separated by commas
@@ -179,6 +180,7 @@ RIGHT   :   'right';
 LEFT    :   'left';
 BACKWARDS : 'backwards';
 LOOKAT  :   'look_at';
+PRINT   :   'print';
 
 // Default tokens
 NL  : '\n' '\n'*;

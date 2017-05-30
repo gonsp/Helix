@@ -3,7 +3,7 @@ package Helix.interpreter;
 import Helix.parser.*;
 
 public abstract class Data {
-    public enum DataType {VOID, BOOL, DECIMAL, POSITION, INTEGER};
+    public enum DataType {VOID, BOOL, POSITION, INTEGER};
 
     public DataType type;
 
