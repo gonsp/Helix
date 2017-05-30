@@ -5,7 +5,7 @@ import Helix.parser.*;
 
 public class IntData extends Data {
 
-    private int value;
+    public int value;
 
 
     public IntData() {
@@ -21,6 +21,12 @@ public class IntData extends Data {
     public IntData(int value) {
         this.value = value;
         this.type = DataType.INTEGER;
+    }
+
+
+    public double toDouble() {
+        double result = (double) value / 100.0;
+        return result;
     }
 
 
