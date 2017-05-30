@@ -58,7 +58,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
                         ended = true;
                     }
                 }
-                if(ended) {
+                if(progress > 0.9) {
                     activeWaypoint.delete(device);
                     activeWaypoint = null;
                     listener.onFinishPath();
