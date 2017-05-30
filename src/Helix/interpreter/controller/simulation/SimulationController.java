@@ -33,43 +33,53 @@ public class SimulationController extends DroneController {
     }
 
     @Override
-    protected void sendTakeOff(double height) {
+    public void sendTakeOff(double height) {
         GPSPosition pos = new GPSPosition(posGPS);
         pos.move(new Position(0, 0, height));
         sendMoveTo(pos);
     }
 
     @Override
-    protected void sendMoveTo(GPSPosition pos) {
+    public void sendMoveTo(GPSPosition pos) {
         posGPS = pos;
         updatePath();
     }
 
     @Override
-    protected void sendDirection(double direction) {
+    public void sendDirection(double direction) {
         dir = direction;
     }
 
     @Override
-    protected void sendLand() {
+    public void sendLand() {
         posGPS.alt = 0;
         updatePath();
         showPath();
+    }
+
+    public void addRealPath(ArrayList<GPSPosition> historyGPS) {
+        REAL_PATH_TEMPLATE = REAL_PATH_TEMPLATE.replace("<-COORDINATES->", pathToString(historyGPS));
+        KML_TEMPLATE = KML_TEMPLATE.replace("<-REAL-PATH->", REAL_PATH_TEMPLATE);
     }
 
     private void updatePath() {
         pathHistory.add(new GPSPosition(posGPS));
     }
 
-    private void showPath() {
+    private String pathToString(ArrayList<GPSPosition> path) {
         String s = new String();
-        for(Position pos : pathHistory) {
+        for(Position pos : path) {
             if(!s.isEmpty()) {
-                s += "\n            ";
+                s += "\n                ";
             }
             s += pos.toString(true);
         }
-        String KML = KML_TEMPLATE.replace("<-COORDINATES->", s);
+        return s;
+    }
+
+    private void showPath() {
+        String KML = KML_TEMPLATE.replace("<-COORDINATES->", pathToString(pathHistory));
+        KML = KML.replace("<-REAL-PATH->", "");
         try {
             PrintWriter out = new PrintWriter("path_simulation.kml");
             out.print(KML);
@@ -94,26 +104,49 @@ public class SimulationController extends DroneController {
                                        + "    <name>Drone path</name>\n"
                                        + "    <description>Simulated flight of a drone using the hardware-abstract high-level drone programming language \"Helix\"</description>+\n"
                                        + "    <Style id=\"path\">\n"
-                                       + "    <LineStyle>\n"
-                                       + "        <color>7f00ffff</color>\n"
-                                       + "        <width>4</width>\n"
-                                       + "    </LineStyle>\n"
-                                       + "    <PolyStyle>\n"
-                                       + "        <color>7f00ff00</color>\n"
-                                       + "    </PolyStyle>\n"
+                                       + "        <LineStyle>\n"
+                                       + "            <color>7f00ffff</color>\n"
+                                       + "            <width>4</width>\n"
+                                       + "        </LineStyle>\n"
+                                       + "        <PolyStyle>\n"
+                                       + "            <color>7f00ff00</color>\n"
+                                       + "        </PolyStyle>\n"
+                                       + "    </Style>\n"
+                                       + "    <Style id=\"real_path\">\n"
+                                       + "        <LineStyle>\n"
+                                       + "            <color>7fffff00</color>\n"
+                                       + "            <width>3</width>\n"
+                                       + "        </LineStyle>\n"
+                                       + "        <PolyStyle>\n"
+                                       + "            <color>7fff0000</color>\n"
+                                       + "        </PolyStyle>\n"
                                        + "    </Style>\n"
                                        + "    <Placemark>\n"
-                                       + "    <name>Path</name>\n"
-                                       + "    <description>Drone path</description>\n"
-                                       + "    <styleUrl>#path</styleUrl>\n"
-                                       + "    <LineString>\n"
-                                       + "        <extrude>1</extrude>\n"
-                                       + "        <altitudeMode>relativeToGround</altitudeMode>\n"
-                                       + "        <coordinates>\n"
-                                       + "            <-COORDINATES->\n"
-                                       + "        </coordinates>\n"
-                                       + "    </LineString>\n"
+                                       + "        <name>Path</name>\n"
+                                       + "        <description>Drone path</description>\n"
+                                       + "        <styleUrl>#real_path</styleUrl>\n"
+                                       + "        <LineString>\n"
+                                       + "            <extrude>1</extrude>\n"
+                                       + "            <altitudeMode>absolute</altitudeMode>\n"
+                                       + "            <coordinates>\n"
+                                       + "                <-COORDINATES->\n"
+                                       + "            </coordinates>\n"
+                                       + "        </LineString>\n"
                                        + "    </Placemark>\n"
+                                       + "    <-REAL-PATH->\n"
                                        + "</Document>\n"
                                        + "</kml>\n";
+
+    private static String REAL_PATH_TEMPLATE = "    <Placemark>\n"
+                                             + "        <name>Path</name>\n"
+                                             + "        <description>Drone real path</description>\n"
+                                             + "        <styleUrl>#real_path</styleUrl>\n"
+                                             + "        <LineString>\n"
+                                             + "            <extrude>1</extrude>\n"
+                                             + "            <altitudeMode>absolute</altitudeMode>\n"
+                                             + "            <coordinates>\n"
+                                             + "                <-COORDINATES->\n"
+                                             + "            </coordinates>\n"
+                                             + "        </LineString>\n"
+                                             + "    </Placemark>";
 }
