@@ -31,25 +31,36 @@ public class Interpreter {
         assert T != null;
         // TODO remove this line
         if(!simulation) {
-            //droneController = new LibrePilotController();
+            droneController = new LibrePilotController();
         } else {
-            droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0));
+            droneController = new SimulationController(new GPSPosition(41.463798, 2.090397, 0), 0);
         }
         droneController.init();
 
-        //droneController.up(5);
-        //droneController.south(5);
-        //droneController.land();
-        // Testing
-//        droneController.takeOff(10);
-//        for(int i = 0; i < 4; ++i) {
-//            droneController.north(10);
-//            droneController.east(10);
-//            droneController.south(10);
-//            droneController.west(15);
-//            droneController.up(5);
+        /*// Testing
+        droneController.takeOff(5);
+        for(int i = 0; i < 4; ++i) {
+            droneController.west(10);
+            droneController.south(10);
+            droneController.east(10);
+            droneController.north(10);
+            droneController.up(5);
+        }
+        droneController.land();*/
+
+//        droneController.takeOff(5);
+//        for(int i = 0; i < 4*4; ++i) {
+//            droneController.forward(10);
+//            droneController.roll(-90);
+//            droneController.up(1);
 //        }
 //        droneController.land();
+
+//        droneController.takeOff(10);
+//        droneController.lookAt(new Position(1, 0, 0));
+//        droneController.forward(100);
+//        droneController.land();
+
         mapFunctions(T);
         //droneController.init();
         mapFunctions(T);

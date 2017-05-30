@@ -13,8 +13,10 @@ public class SimulationController extends DroneController {
 
     private ArrayList<GPSPosition> pathHistory;
     private GPSPosition posGPS;
+    private double dir;
 
-    public SimulationController(GPSPosition homeLocation) {
+    public SimulationController(GPSPosition homeLocation, double direction) {
+        dir = direction;
         posGPS = homeLocation;
         pathHistory = new ArrayList<>();
         pathHistory.add(posGPS);
@@ -23,6 +25,11 @@ public class SimulationController extends DroneController {
     @Override
     public GPSPosition getGPS() {
         return new GPSPosition(posGPS);
+    }
+
+    @Override
+    public double getDirection() {
+        return dir;
     }
 
     @Override
@@ -39,6 +46,11 @@ public class SimulationController extends DroneController {
     }
 
     @Override
+    protected void sendDirection(double direction) {
+        dir = direction;
+    }
+
+    @Override
     protected void sendLand() {
         posGPS.alt = 0;
         updatePath();
@@ -47,11 +59,6 @@ public class SimulationController extends DroneController {
 
     private void updatePath() {
         pathHistory.add(new GPSPosition(posGPS));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private void showPath() {
