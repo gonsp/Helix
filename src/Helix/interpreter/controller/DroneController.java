@@ -15,26 +15,33 @@ public abstract class DroneController {
 
     public void init() {
         homeLocation = getGPS();
-        System.out.println("DroneController initialized, with home position: " + homeLocation.toString());
+        drone.direction = getDirection();
+        System.out.println("DroneController initialized, with home position: " + homeLocation.toString() + " and direction: " + drone.direction + "º");
+    }
+
+    public void setDirection(double direction) {
+        direction %= 360;
+        if(direction < 0) {
+            direction += 360;
+        }
+        sendDirection(direction);
+        drone.direction = direction;
     }
 
     public void lookAt(Position pos) {
-        //TODO implement this
-    }
-
-    public void setDirection(double degrees) {
-        roll(drone.direction - degrees);
-        drone.direction = degrees;
+        pos.move(drone.pos);
+        setDirection(Math.toDegrees(Math.atan(pos.lng/pos.lat)));
     }
 
     public void roll(double degrees) {
-        //TODO implement this
-        //FIXME be careful with the module and negative values
-        drone.direction += degrees%360;
+        setDirection(drone.direction + degrees);
     }
 
     public void forward(double dist) {
-        // TODO implement this
+        double radians = Math.toRadians(drone.direction);
+        double n = Math.cos(radians) * dist;
+        double e = Math.sin(radians) * dist;
+        move(new Position(n, e, 0));
     }
 
     public void backward(double dist) {
@@ -42,7 +49,10 @@ public abstract class DroneController {
     }
 
     public void right(double dist) {
-        // TODO implement this
+        double radians = Math.toRadians(drone.direction);
+        double n = Math.sin(radians) * dist;
+        double e = Math.cos(radians) * dist;
+        move(new Position(n, e, 0));
     }
 
     public void left(double dist) {
@@ -101,8 +111,10 @@ public abstract class DroneController {
         }
     }
 
-    public abstract GPSPosition getGPS();
+    public abstract GPSPosition getGPS(); //Returns de gps position of the drone
+    public abstract double getDirection(); //Returns de orientation in degrees of the drone. 0º is Nort, 180º is South, etc
     protected abstract void sendTakeOff(double height);
     protected abstract void sendMoveTo(GPSPosition pos);
+    protected abstract void sendDirection(double direction);
     protected abstract void sendLand();
 }

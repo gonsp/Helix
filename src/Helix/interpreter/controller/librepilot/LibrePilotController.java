@@ -67,6 +67,11 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     }
 
     @Override
+    protected void sendDirection(double direction) {
+
+    }
+
+    @Override
     public void sendLand() {
         onAction = true;
         pathPlanManager.sendLand(DEFAULT_VELOCITY);
@@ -76,6 +81,12 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     @Override
     public GPSPosition getGPS() {
         return new GPSPosition(posGPS);
+    }
+
+    @Override
+    public double getDirection() {
+        // TODO implement this
+        return 0;
     }
 
     @Override
