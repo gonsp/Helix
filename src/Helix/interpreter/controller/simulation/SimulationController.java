@@ -124,7 +124,7 @@ public class SimulationController extends DroneController {
                                        + "    <Placemark>\n"
                                        + "        <name>Path</name>\n"
                                        + "        <description>Drone path</description>\n"
-                                       + "        <styleUrl>#real_path</styleUrl>\n"
+                                       + "        <styleUrl>#path</styleUrl>\n"
                                        + "        <LineString>\n"
                                        + "            <extrude>1</extrude>\n"
                                        + "            <altitudeMode>absolute</altitudeMode>\n"

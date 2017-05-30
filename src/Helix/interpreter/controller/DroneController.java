@@ -3,6 +3,7 @@ package Helix.interpreter.controller;
 
 import Helix.interpreter.GPSPosition;
 import Helix.interpreter.Position;
+import org.omg.PortableServer.POA;
 
 public abstract class DroneController {
 
@@ -109,6 +110,10 @@ public abstract class DroneController {
             drone.isLanded = true;
             drone.pos = getGPS().toRelative(homeLocation);
         }
+    }
+
+    public Position getPos() {
+        return new Position(drone.pos);
     }
 
     public abstract GPSPosition getGPS(); //Returns de gps position of the drone

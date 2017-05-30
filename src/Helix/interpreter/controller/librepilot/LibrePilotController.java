@@ -34,8 +34,28 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         FcDevice device = new FcUsbDevice();
         device.start();
 
+        historyGPS = new ArrayList<>();
+
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
+        UAVTalkObjectListener listener = new UAVTalkObjectListener() {
+            @Override
+            public void onObjectUpdate(UAVTalkObject o) {
+                try {
+                    double yaw = (float) o.getData("Yaw");
+                    yaw %= 360;
+                    if(yaw < 0) {
+                        yaw += 360;
+                    }
+                    direction = yaw;
+                    System.out.println("Direction: " + direction);
+                } catch (UAVTalkMissingObjectException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        device.setListener("AttitudeState", listener);
+
 
         posGPS = null;
         System.out.println("Waiting to get a gps position");
@@ -43,17 +63,6 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
         gpsManager.clearHomePosition();
 
-        UAVTalkObjectListener listener = new UAVTalkObjectListener() {
-            @Override
-            public void onObjectUpdate(UAVTalkObject o) {
-                try {
-                    direction = (double) o.getData("Roll");
-                } catch (UAVTalkMissingObjectException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        device.setListener("AttitudeState", listener);
         direction = -1;
         System.out.println("Waiting to get initial direction");
         while(direction == -1);

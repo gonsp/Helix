@@ -37,29 +37,26 @@ public class Interpreter {
         }
         droneController.init();
 
-        /*// Testing
-        droneController.takeOff(5);
-        for(int i = 0; i < 4; ++i) {
-            droneController.west(10);
+        // Testing
+/*        droneController.takeOff(5);
+        for(int i = 0; i < 2; ++i) {
             droneController.south(10);
             droneController.east(10);
             droneController.north(10);
+            droneController.west(10);
             droneController.up(5);
         }
         droneController.land();*/
 
 //        droneController.takeOff(5);
-//        for(int i = 0; i < 4*4; ++i) {
+//        for(int i = 0; i < 2*4; ++i) {
 //            droneController.forward(10);
 //            droneController.roll(-90);
 //            droneController.up(1);
 //        }
 //        droneController.land();
-
-//        droneController.takeOff(10);
-//        droneController.lookAt(new Position(1, 0, 0));
-//        droneController.forward(100);
-//        droneController.land();
+//
+//        System.exit(0);
 
         mapFunctions(T);
         //droneController.init();
