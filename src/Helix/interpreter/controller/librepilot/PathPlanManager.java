@@ -48,17 +48,7 @@ public class PathPlanManager implements UAVTalkObjectListener {
                 if(o.getData("Status").equals("Critical")) {
                     listener.onError();
                 }
-                boolean ended = false;
-                if(activeWaypoint.pathActionType != 7) { //If it's landing, this won't work
-                    if(progress > 0.95) {
-                        ended = true;
-                    }
-                } else {
-                    if(o.getData("Status").equals("Completed")) {
-                        ended = true;
-                    }
-                }
-                if(progress > 0.9) {
+                if(progress > 0.85) {
                     activeWaypoint.delete(device);
                     activeWaypoint = null;
                     listener.onFinishPath();
