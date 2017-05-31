@@ -16,8 +16,6 @@ public class Interpreter {
 
     private DroneController droneController;
 
-    private int indents = 0;
-
     /* Line of the current statement. */
     private int linenumber = -1;
 
@@ -78,7 +76,6 @@ public class Interpreter {
             if (functionTrees.containsKey(func_name)) {
                 throw new RuntimeException("Multiple definitions of function " + func_name);
             }
-            System.out.println("DEFINED FUNCTION " + func_name);
             functionTrees.put(func_name, def);
         }
     }
@@ -90,7 +87,6 @@ public class Interpreter {
 
 
     public void run() {
-        wrttrace("Running");
         executeFunction("main", null);
     }
 
@@ -105,18 +101,7 @@ public class Interpreter {
     }
 
 
-    private void wrttrace(String msg) {
-        for (int i = 0; i < indents; ++i) {
-            System.out.print("   |");
-        }
-        System.out.println(msg);
-    }
-
-
     private Data executeFunction(String func_name, HelixTree args) {
-        ++indents;
-        wrttrace("Executing function: " + func_name);
-
         HelixTree f = functionTrees.get(func_name);
         if (f == null) {
             throw new RuntimeException("function " + func_name + " was not declared");
@@ -138,15 +123,12 @@ public class Interpreter {
         stack.popActivationRecord();
         copyRefArguments(f, args, pars_values);
 
-        --indents;
         return ret;
     }
 
 
     private Data executeListInstructions(HelixTree list_instr) {
         assert list_instr.getType() == HelixLexer.LIST_INSTR;
-        ++indents;
-        wrttrace("Executing list of instructions");
 
         Data ret = null;
         for (HelixTree instr : list_instr) {
@@ -154,13 +136,11 @@ public class Interpreter {
             if (ret != null) return ret;
         }
 
-        --indents;
         return null;
     }
 
 
     private Data executeInstruction(HelixTree instr) {
-        ++indents;
 
         Data ret = null;
         switch (instr.getType()) {
@@ -181,7 +161,6 @@ public class Interpreter {
                 }
                 ret = new IntData();
                 ret.type = Data.DataType.VOID;
-                System.out.println("return");
                 return ret;
 
             case HelixLexer.IF:
@@ -207,14 +186,12 @@ public class Interpreter {
                 }
 
         }
-        --indents;
         return null;
     }
 
 
     private void executeAssign(HelixTree assign) {
         assert assign.getType() == HelixLexer.ASSIGN;
-        wrttrace("Executing assign");
 
         HelixTree access = assign.getChild(0);
         HelixTree expr = assign.getChild(1);
@@ -249,7 +226,6 @@ public class Interpreter {
     private void assignId(HelixTree access, HelixTree expr) {
         String id = access.getText();
         Data dexpr = evaluateExpression(expr);
-        wrttrace("Assigned variable " + id + " value " + dexpr.toString());
         stack.defineVariable(id, dexpr);
     }
 
@@ -320,7 +296,6 @@ public class Interpreter {
     private Data executeDefaultFunction(HelixTree deffunc) {
         assert deffunc.getType() == HelixLexer.DEFFUNC;
         HelixTree f = deffunc.getChild(0);
-        wrttrace("Executing default function: " + f.getText());
 
         ArrayList<Data> args_values = listArguments(deffunc.getChild(1));
         int n_args = args_values.size();
@@ -433,7 +408,6 @@ public class Interpreter {
     private Data evaluateExpression(HelixTree expr) {
         Data result = null;
 
-        wrttrace("Evaluating expression " + expr.getText());
 
         int type = expr.getType();
         int nchild = expr.getChildCount();
