@@ -27,7 +27,7 @@ public class Stack {
 
 
     public void defineVariable(String name, Data data) {
-        currentAR.put(name, data.getCopy()); // TODO: Must be copy?
+        currentAR.put(name, data);
     }
 
 

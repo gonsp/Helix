@@ -18,6 +18,11 @@ public class IntData extends Data {
     }
 
 
+    public IntData(double value) {
+        this((new Double(value * 100)).intValue());
+    }
+
+
     public IntData(int value) {
         this.value = value;
         this.type = DataType.INTEGER;
@@ -45,7 +50,7 @@ public class IntData extends Data {
 
 
     @Override
-    public Data evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational (int op, Data data) {
         IntData d = (IntData) data;
         switch (op) {
             case HelixLexer.EQUAL: return new BoolData(value == d.value);
@@ -65,7 +70,6 @@ public class IntData extends Data {
         IntData copy = new IntData(this.value);
         return copy;
     }
-
 
     @Override
     public String toString() {

@@ -5,7 +5,7 @@ import Helix.parser.*;
 
 public class BoolData extends Data {
 
-    private boolean value;
+    public boolean value;
 
 
     public BoolData() {
@@ -20,7 +20,7 @@ public class BoolData extends Data {
 
     public BoolData(boolean value) {
         this.value = value;
-        this.type = DataType.BOOL;
+        this.type = DataType.BOOLEAN;
     }
 
 
@@ -37,7 +37,7 @@ public class BoolData extends Data {
 
 
     @Override
-    public Data evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational (int op, Data data) {
         BoolData d = (BoolData) data;
         switch (op) {
             case HelixLexer.EQUAL: return new BoolData(value == d.value);

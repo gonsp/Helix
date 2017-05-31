@@ -76,7 +76,7 @@ public class Position extends Data {
 
 
     @Override
-    public Data evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational (int op, Data data) {
         Position d = (Position) data;
         switch (op) {
             case HelixLexer.EQUAL: 
