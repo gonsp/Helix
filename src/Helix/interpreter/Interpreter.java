@@ -352,7 +352,7 @@ public class Interpreter {
                 assert n_args == 1;
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
-                droneController.roll(((IntData) d).toDouble());
+                droneController.rotate(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.TAKEOFF:
