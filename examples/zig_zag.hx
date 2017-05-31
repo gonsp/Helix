@@ -1,16 +1,16 @@
 def main() {
-    take_off()
+    takeOff()
     up(1)
-    zig_zag_to(get_gps() + [20, 20, 5], 10)
+    zig_zag_to(getPos() + [20, 20, 5], 10)
     land()
 }
 
 def zig_zag_to(destination, steps) {
-    current = get_gps()
+    current = getPos()
     inc_lat = (destination.lat - current.lat) / steps
     inc_lng = (destination.lng - current.lng) / steps
     
-    look_at(0)
+    lookAt(0)
     while (current != destination) {
         forward(inc_lat)
         right(inc_lng)

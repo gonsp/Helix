@@ -12,7 +12,7 @@ def spiral(level) {
 }
 
 def main() {
-    take_off(5)
+    takeOff(5)
     spiral(5)
     land()
 }

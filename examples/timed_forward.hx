@@ -1,5 +1,5 @@
 def main() {
-    take_off()
+    takeOff()
     timed_forward(10, 5)
     land()
 }

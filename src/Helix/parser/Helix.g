@@ -146,7 +146,7 @@ funcall :   builtin '(' expr_list? ')' -> ^(DEFFUNC builtin ^(ARGLIST expr_list?
         |   ID '(' expr_list? ')' -> ^(FUNCALL ID ^(ARGLIST expr_list?))
         ;
 
-builtin :   GET_GPS
+builtin :   GET_POS
         |   MOVE
         |   FORWARD
         |   ROTATE
@@ -160,6 +160,13 @@ builtin :   GET_GPS
         |   BACKWARDS
         |   LOOKAT
         |   PRINT
+        |   MOVETO 
+        |   SET_DIR
+        |   GET_DIR
+        |   NORTH  
+        |   SOUTH  
+        |   EAST   
+        |   WEST   
         ;
 
 // A list of expressions separated by commas
@@ -167,20 +174,28 @@ expr_list:  expr (','! expr)*
         ;
 
 // Built-in function tokens
-GET_GPS :   'get_gps';
+GET_POS :   'getPos';
 MOVE    :   'move';
 FORWARD :   'forward';
 ROTATE  :   'rotate';
-TAKEOFF :   'take_off';
+TAKEOFF :   'takeOff';
 LAND    :   'land';
 SLEEP   :   'sleep';
-UPF      :   'up';
-DOWNF    :   'down';
+UPF     :   'up';
+DOWNF   :   'down';
 RIGHT   :   'right';
 LEFT    :   'left';
 BACKWARDS : 'backwards';
-LOOKAT  :   'look_at';
+LOOKAT  :   'lookAt';
 PRINT   :   'print';
+
+MOVETO  :   'moveTo';
+SET_DIR :   'setDir';
+GET_DIR :   'getDir';
+NORTH   :   'north';
+SOUTH   :   'south';
+EAST    :   'east';
+WEST    :   'west';
 
 // Default tokens
 NL  : '\n' '\n'*;

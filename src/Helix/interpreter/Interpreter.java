@@ -276,7 +276,7 @@ public class Interpreter {
 
         switch (f.getType()) {
 
-            case HelixLexer.GET_GPS:
+            case HelixLexer.GET_POS:
                 assert n_args == 0;
                 return droneController.getPos();
 
@@ -369,6 +369,52 @@ public class Interpreter {
                 assert n_args == 1;
                 d = args_values.get(0);
                 System.out.println("PRINT: " + d.toString());
+                break;
+
+            case HelixLexer.MOVETO:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.POSITION);
+                droneController.moveTo((Position) d);
+                break;
+
+            case HelixLexer.SET_DIR:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.INTEGER);
+                droneController.setDirection(((IntData) d).toDouble());
+                break;
+
+            case HelixLexer.GET_DIR:
+                assert n_args == 0;
+                return new IntData(droneController.getDirection());
+
+            case HelixLexer.NORTH:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.INTEGER);
+                droneController.north(((IntData) d).toDouble());
+                break;
+
+            case HelixLexer.SOUTH:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.INTEGER);
+                droneController.south(((IntData) d).toDouble());
+                break;
+
+            case HelixLexer.EAST:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.INTEGER);
+                droneController.east(((IntData) d).toDouble());
+                break;
+
+            case HelixLexer.WEST:
+                assert n_args == 1;
+                d = args_values.get(0);
+                checkDataType(d, Data.DataType.INTEGER);
+                droneController.west(((IntData) d).toDouble());
                 break;
 
         }
