@@ -54,7 +54,7 @@ param   :   '&' id=ID -> ^(PREF[$id,$id.text])
 
 // A list of instructions, all of them gouped in a subtree
 block_instructions
-        :	 '{' instruction (instruction)* '}' NL
+        :	 '{' instruction (instruction)* '}' NL?
             -> ^(LIST_INSTR instruction+)
         ;
 
@@ -174,8 +174,8 @@ ROTATE  :   'rotate';
 TAKEOFF :   'take_off';
 LAND    :   'land';
 SLEEP   :   'sleep';
-UPF     :   'up';
-DOWNF   :   'down';
+UPF      :   'up';
+DOWNF    :   'down';
 RIGHT   :   'right';
 LEFT    :   'left';
 BACKWARDS : 'backwards';

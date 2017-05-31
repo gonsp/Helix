@@ -1,10 +1,11 @@
 def spiral(level) {
 	if level <= 0 {
-		move(0, 0, 5)
+		down(5)
+		forward(5)
     }
     else {
 		forward(10)
-		roll(-90)
+		rotate(-90)
 		up(1)
 		spiral(level-1)
 	}
