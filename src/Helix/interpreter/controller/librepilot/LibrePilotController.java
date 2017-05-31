@@ -1,13 +1,15 @@
 package Helix.interpreter.controller.librepilot;
 
 import Helix.interpreter.GPSPosition;
-import Helix.interpreter.Position;
 import Helix.interpreter.controller.DroneController;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkMissingObjectException;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObject;
 import Helix.interpreter.controller.librepilot.uavtalk.UAVTalkObjectListener;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcDevice;
 import Helix.interpreter.controller.librepilot.uavtalk.device.FcUsbDevice;
+import Helix.interpreter.controller.simulation.SimulationController;
+
+import java.util.ArrayList;
 
 public class LibrePilotController extends DroneController implements PathPlanListener, GPSListener, UAVTalkObjectListener {
 
@@ -18,24 +20,53 @@ public class LibrePilotController extends DroneController implements PathPlanLis
     volatile private boolean isArmed;
 
     volatile private GPSPosition posGPS;
+    volatile private double direction;
     volatile private boolean onAction;
+    volatile private ArrayList<GPSPosition> historyGPS;
+    private SimulationController simulation;
 
     private static final String UAVO_NAME = "FlightStatus";
     private static final int MIN_SATELLITES = 14;
     private static final double DEFAULT_VELOCITY = 1;
+    private static final boolean SIMULATION = true;
 
     public LibrePilotController() {
         FcDevice device = new FcUsbDevice();
         device.start();
 
+        historyGPS = new ArrayList<>();
+
         pathPlanManager = new PathPlanManager(this, device);
         gpsManager = new GPSManager(this, device, MIN_SATELLITES);
+        UAVTalkObjectListener listener = new UAVTalkObjectListener() {
+            @Override
+            public void onObjectUpdate(UAVTalkObject o) {
+                try {
+                    double yaw = (float) o.getData("Yaw");
+                    yaw %= 360;
+                    if(yaw < 0) {
+                        yaw += 360;
+                    }
+                    direction = yaw;
+                    System.out.println("Direction: " + direction);
+                } catch (UAVTalkMissingObjectException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        device.setListener("AttitudeState", listener);
+
 
         posGPS = null;
         System.out.println("Waiting to get a gps position");
         while(posGPS == null);
         System.out.println("Waiting to get a good enough gps position (" + MIN_SATELLITES + " satellites)");
         gpsManager.clearHomePosition();
+
+        direction = -1;
+        System.out.println("Waiting to get initial direction");
+        while(direction == -1);
+        System.out.println("Done");
 
         isArmed = false;
         onAutonomousMode = false;
@@ -49,6 +80,10 @@ public class LibrePilotController extends DroneController implements PathPlanLis
             System.exit(0);
         }
 
+        if(SIMULATION) {
+            simulation = new SimulationController(posGPS, direction);
+        }
+
         System.out.println("LibrePilotController is ready");
     }
 
@@ -57,6 +92,9 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         onAction = true;
         pathPlanManager.sendTakeOff(height, DEFAULT_VELOCITY);
         while(onAction);
+        if(SIMULATION) {
+            simulation.sendTakeOff(height);
+        }
     }
 
     @Override
@@ -64,11 +102,17 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         onAction = true;
         pathPlanManager.sendMoveTo(pos, super.homeLocation, DEFAULT_VELOCITY);
         while(onAction);
+        if(SIMULATION) {
+            simulation.sendMoveTo(pos);
+        }
     }
 
     @Override
     protected void sendDirection(double direction) {
-
+        // TODO implement this
+        if(SIMULATION) {
+            simulation.sendDirection(direction);
+        }
     }
 
     @Override
@@ -76,6 +120,10 @@ public class LibrePilotController extends DroneController implements PathPlanLis
         onAction = true;
         pathPlanManager.sendLand(DEFAULT_VELOCITY);
         while(onAction);
+        if(SIMULATION) {
+            simulation.addRealPath(historyGPS);
+            simulation.sendLand();
+        }
     }
 
     @Override
@@ -85,13 +133,13 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
     @Override
     public double getDirection() {
-        // TODO implement this
-        return 0;
+        return direction;
     }
 
     @Override
     public void onGPSUpdate(GPSPosition newPos) {
         posGPS = newPos;
+        historyGPS.add(new GPSPosition(newPos));
     }
 
     @Override

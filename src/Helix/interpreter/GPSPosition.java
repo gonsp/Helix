@@ -2,7 +2,7 @@ package Helix.interpreter;
 
 public class GPSPosition extends Position {
 
-    private static final double EARTH_RADIOUS = 6378000;
+    private static final double EARTH_RADIUS = 6378000;
 
 
     public GPSPosition(Position pos) {
@@ -16,8 +16,8 @@ public class GPSPosition extends Position {
     @Override
     public void move(Position movement) {
         double prev_lat = lat;
-        lat += (movement.lat / EARTH_RADIOUS) * (180 / Math.PI);
-        lng += (movement.lng / EARTH_RADIOUS) * (180 / Math.PI) / Math.cos(prev_lat * Math.PI/180);
+        lat += (movement.lat / EARTH_RADIUS) * (180 / Math.PI);
+        lng += (movement.lng / EARTH_RADIUS) * (180 / Math.PI) / Math.cos(prev_lat * Math.PI/180);
         alt += movement.alt;
     }
 
@@ -34,8 +34,8 @@ public class GPSPosition extends Position {
     public Position toRelative(GPSPosition homeLocation) {
         Position relative = new Position(this);
         relative.negative_move(homeLocation);
-        relative.lat *= (EARTH_RADIOUS * Math.PI / 180);
-        relative.lng *= (EARTH_RADIOUS * Math.PI * Math.cos(homeLocation.lat * Math.PI/180) / 180);
+        relative.lat *= (EARTH_RADIUS * Math.PI / 180);
+        relative.lng *= (EARTH_RADIUS * Math.PI * Math.cos(homeLocation.lat * Math.PI/180) / 180);
         return relative;
     }
 }

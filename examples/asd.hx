@@ -1,5 +1,5 @@
 def main() {
-    a = 100;
+    a = 10;
     take_off(a);
     right(a);
     land();
