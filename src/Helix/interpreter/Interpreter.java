@@ -28,7 +28,6 @@ public class Interpreter {
 
     public Interpreter(HelixTree T, boolean simulation, String tracefile) {
         assert T != null;
-        // TODO remove this line
         if(!simulation) {
             droneController = new LibrePilotController();
         } else {
@@ -36,32 +35,7 @@ public class Interpreter {
         }
         droneController.init();
 
-        /*// Testing
-          droneController.takeOff(5);
-          for(int i = 0; i < 4; ++i) {
-          droneController.west(10);
-          droneController.south(10);
-          droneController.east(10);
-          droneController.north(10);
-          droneController.up(5);
-          }
-          droneController.land();*/
-
-        //        droneController.takeOff(5);
-        //        for(int i = 0; i < 4*4; ++i) {
-        //            droneController.forward(10);
-        //            droneController.roll(-90);
-        //            droneController.up(1);
-        //        }
-        //        droneController.land();
-
-        //        droneController.takeOff(10);
-        //        droneController.lookAt(new Position(1, 0, 0));
-        //        droneController.forward(100);
-        //        droneController.land();
-
         mapFunctions(T);
-        //droneController.init();
         mapFunctions(T);
         stack = new Stack();
     }
@@ -264,20 +238,29 @@ public class Interpreter {
         checkDataType(d, Data.DataType.POSITION);
 
         Position p = (Position) d;
-        if (a_lat.getType() == HelixLexer.ID) {
-            assignId(a_lat, p.lat);
-        } else {
-            assignAttrib(a_lat, p.lat);
+
+        if (a_lat.getType() != HelixLexer.VOIDACCESS) {
+            if (a_lat.getType() == HelixLexer.ID) {
+                assignId(a_lat, p.lat);
+            } else {
+                assignAttrib(a_lat, p.lat);
+            }
         }
-        if (a_lng.getType() == HelixLexer.ID) {
-            assignId(a_lng, p.lng);
-        } else {
-            assignAttrib(a_lng, p.lng);
+
+        if (a_lng.getType() != HelixLexer.VOIDACCESS) {
+            if (a_lng.getType() == HelixLexer.ID) {
+                assignId(a_lng, p.lng);
+            } else {
+                assignAttrib(a_lng, p.lng);
+            }
         }
-        if (a_alt.getType() == HelixLexer.ID) {
-            assignId(a_alt, p.alt);
-        } else {
-            assignAttrib(a_alt, p.alt);
+
+        if (a_alt.getType() != HelixLexer.VOIDACCESS) {
+            if (a_alt.getType() == HelixLexer.ID) {
+                assignId(a_alt, p.alt);
+            } else {
+                assignAttrib(a_alt, p.alt);
+            }
         }
     }
 
@@ -397,7 +380,6 @@ public class Interpreter {
     private Data evaluateExpression(HelixTree expr) {
         Data result = null;
 
-
         int type = expr.getType();
         int nchild = expr.getChildCount();
 
@@ -419,7 +401,6 @@ public class Interpreter {
 
                 case HelixLexer.ID:
                     Data d = stack.getVariable(expr.getText());
-                    System.out.println("returning var with id: " + expr.getText());
                     return d.getCopy();
             }
         }

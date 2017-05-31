@@ -130,7 +130,7 @@ accessor    :	id_access
             |   coord_access
 	        ;
 
-coord_access :   '[' id1=id_access ',' id2=id_access ',' id3=id_access ']' -> ^(COORDACCESS $id1 $id2 $id3)
+coord_access :   '[' (id1=id_access | v1=VOIDACCESS) ',' (id2=id_access | v2=VOIDACCESS) ',' (id3=id_access | v3=VOIDACCESS) ']' -> ^(COORDACCESS $id1? $v1? $id2? $v2? $id3? $v3?)
             ;
 
 id_access   :	(id=ID -> $id) ('.' id_atr -> ^(ATTRIB $id id_atr))?
@@ -210,6 +210,7 @@ FALSE   : 'false';
 LAT     : 'lat';
 LNG     : 'lng';
 ALT     : 'alt';
+VOIDACCESS  : '_';
 ID  	:	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
 NUM     :	'0'..'9'+ ('.' '0'..'9'+|);
 
