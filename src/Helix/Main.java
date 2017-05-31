@@ -28,9 +28,9 @@ public class Main {
     /** Flag to indicate wether the program must be executed after parsing. */
     private static boolean execute = true;
     /** Flag to indicate if the program is going to be simulated or just executed in a real drone. */
-    private static boolean simulation = false;
+    private static boolean simulation = true;
     /** Name of the file storing the trace of the program*/
-    private static String tracefile = "trace32741329";
+    private static String tracefile = null;
 
     /** Main program that invokes the parser and the interpreter. */
     public static void main(String[] args) throws Exception {
@@ -98,10 +98,10 @@ public class Main {
                     linenumber = I.getLinenumber();
                 }
                 System.err.print("runtime error");
-                if (linenumber < 0) System.err.print(".");
+                if (linenumber < 0) System.err.print(": ");
                 else System.err.print(" (" + infile + ", line " + linenumber + "): ");
                 System.err.println(e.getMessage() + ".");
-                e.printStackTrace();
+                System.err.println(I.getStackTrace());
             } catch (StackOverflowError e) {
                 if (I != null) {
                     linenumber = I.getLinenumber();
@@ -109,7 +109,7 @@ public class Main {
                 System.err.print("stack overflow error");
                 if (linenumber < 0) System.err.print(".");
                 else System.err.print(" (" + infile + ", line " + linenumber + "): ");
-                e.printStackTrace();
+                System.err.format(I.getStackTrace(5));
             }
         }
 
@@ -127,6 +127,8 @@ public class Main {
                 execute = false;
             } else if(arg.equals("-simulation")) {
                 simulation = true;
+            } else if (arg.equals("-trace")) {
+                tracefile = "tracefile";
             } else {
                 System.out.println("Invalid argument: " + arg);
                 return false;

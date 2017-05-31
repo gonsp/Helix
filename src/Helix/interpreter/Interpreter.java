@@ -16,14 +16,18 @@ public class Interpreter {
 
     private DroneController droneController;
 
-    /* Line of the current statement. */
-    private int linenumber = -1;
-
     /* Stores the root of declared functions */
     private HashMap<String, HelixTree> functionTrees;
 
     /* Stack */
     private Stack stack;
+
+    /* Line number */
+    private int linenumber = -1;
+
+    private PrintWriter trace = null;
+
+    private int function_nesting = -1;
 
 
     public Interpreter(HelixTree T, boolean simulation, String tracefile) {
@@ -34,10 +38,17 @@ public class Interpreter {
             droneController = new SimulationController(new GPSPosition(41.387940, 2.113464, 90.5), 0);
         }
         droneController.init();
-
-        mapFunctions(T);
         mapFunctions(T);
         stack = new Stack();
+
+        if (tracefile != null) {
+            try {
+                trace = new PrintWriter(new FileWriter(tracefile));
+            } catch (IOException e) {
+                System.err.println(e);
+                System.exit(1);
+            }
+        }
     }
 
 
@@ -55,23 +66,18 @@ public class Interpreter {
     }
 
 
-    public int getLinenumber() {
-        return linenumber;
-    }
-
-
     public void run() {
         executeFunction("main", null);
     }
 
 
     public String getStackTrace() {
-        return "STACK TRACE";
+        return stack.getStackTrace(getLinenumber());
     }
 
 
     public String getStackTrace(int i) {
-        return "STACK TRACE " + (new Integer(i)).toString();
+        return stack.getStackTrace(getLinenumber(), i);
     }
 
 
@@ -80,10 +86,12 @@ public class Interpreter {
         if (f == null) {
             throw new RuntimeException("function " + func_name + " was not declared");
         }
-
         ArrayList<Data> args_values = listArguments(f, args);
 
-        stack.pushActivationRecord();
+        if (trace != null) traceFunctionCall(f, args_values);
+
+        stack.pushActivationRecord(func_name, getLinenumber());
+        setLinenumber(f);
 
         HelixTree p = f.getChild(1);
         int nparam = p.getChildCount();
@@ -93,7 +101,15 @@ public class Interpreter {
         }
 
         Data ret = executeListInstructions(f.getChild(2));
+        if (ret == null) {
+            ret = new IntData();
+            ret.type = Data.DataType.VOID;
+        }
+
         ArrayList<Data> pars_values = listParameters(f);
+        
+        if (trace != null) traceReturn(f, ret, args_values);
+
         stack.popActivationRecord();
         copyRefArguments(f, args, pars_values);
 
@@ -115,6 +131,8 @@ public class Interpreter {
 
 
     private Data executeInstruction(HelixTree instr) {
+        assert instr != null;
+        setLinenumber(instr);
 
         Data ret = null;
         switch (instr.getType()) {
@@ -166,7 +184,6 @@ public class Interpreter {
 
     private void executeAssign(HelixTree assign) {
         assert assign.getType() == HelixLexer.ASSIGN;
-        System.out.println("Assigning " + assign.getText());
 
         HelixTree access = assign.getChild(0);
         HelixTree expr = assign.getChild(1);
@@ -228,7 +245,6 @@ public class Interpreter {
 
 
     private void assignCoordAccess(HelixTree caccess, HelixTree cexpr) {
-        System.out.println("Assign coord access, " + cexpr.getText());
         HelixTree a_lat, a_lng, a_alt;
         a_lat = caccess.getChild(0);
         a_lng = caccess.getChild(1);
@@ -268,6 +284,7 @@ public class Interpreter {
     private Data executeDefaultFunction(HelixTree deffunc) {
         assert deffunc.getType() == HelixLexer.DEFFUNC;
         HelixTree f = deffunc.getChild(0);
+        String func_name = f.getText();
 
         ArrayList<Data> args_values = listArguments(deffunc.getChild(1));
         int n_args = args_values.size();
@@ -277,77 +294,77 @@ public class Interpreter {
         switch (f.getType()) {
 
             case HelixLexer.GET_POS:
-                assert n_args == 0;
+                checkNumArgs(n_args, 0, func_name);
                 return droneController.getPos();
 
             case HelixLexer.MOVE:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.POSITION);
                 droneController.moveTo((Position)d);
                 break;
 
             case HelixLexer.FORWARD:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.forward(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.BACKWARDS:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.backward(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.RIGHT:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.right(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.LEFT:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.left(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.ROTATE:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.rotate(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.TAKEOFF:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.takeOff(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.LAND:
+                checkNumArgs(n_args, 0, func_name);
                 droneController.land();
-                assert n_args == 0;
                 break;
 
             case HelixLexer.SLEEP:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 try {
                     TimeUnit.SECONDS.sleep(((IntData) d).value / 100);
                 }
                 catch (Exception e){
-                    System.out.println(e.toString());
+                    throw new RuntimeException(e);
                 }
                 break;
 
             case HelixLexer.UPF:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.up(((IntData) d).toDouble());
@@ -366,52 +383,52 @@ public class Interpreter {
                 break;
 
             case HelixLexer.PRINT:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                System.out.println("PRINT: " + d.toString());
+                System.out.println(d.toString());
                 break;
 
             case HelixLexer.MOVETO:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.POSITION);
                 droneController.moveTo((Position) d);
                 break;
 
             case HelixLexer.SET_DIR:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.setDirection(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.GET_DIR:
-                assert n_args == 0;
+                checkNumArgs(n_args, 0, func_name);
                 return new IntData(droneController.getDirection());
 
             case HelixLexer.NORTH:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.north(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.SOUTH:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.south(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.EAST:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.east(((IntData) d).toDouble());
                 break;
 
             case HelixLexer.WEST:
-                assert n_args == 1;
+                checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
                 droneController.west(((IntData) d).toDouble());
@@ -424,7 +441,12 @@ public class Interpreter {
 
 
     private Data evaluateExpression(HelixTree expr) {
+        assert expr != null;
+
         Data result = null;
+
+        int previous_line = getLinenumber();
+        setLinenumber(expr);
 
         int type = expr.getType();
         int nchild = expr.getChildCount();
@@ -437,17 +459,25 @@ public class Interpreter {
         Data r_data;
         Data a_data;
 
+        Data return_data = null;
+
         if (nchild == 0) {
             switch (type) {
                 case HelixLexer.NUM:
-                    return new IntData(expr.getNumValue());
+                    return_data = new IntData(expr.getNumValue());
+                    break;
 
                 case HelixLexer.BOOLEAN:
-                    return new BoolData(expr.getBoolValue());
+                    return_data = new BoolData(expr.getBoolValue());
+                    break;
 
                 case HelixLexer.ID:
                     Data d = stack.getVariable(expr.getText());
-                    return d.getCopy();
+                    if (d == null) {
+                        throw new RuntimeException("Variable not declared: " +  expr.getText());
+                    }
+                    return_data = d.getCopy();
+                    break;
             }
         }
 
@@ -457,19 +487,21 @@ public class Interpreter {
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);
                     ((BoolData) l_data).value = !((BoolData) l_data).value;
-                    return l_data;
+                    return_data = l_data;
+                    break;
 
                 case HelixLexer.PLUS:
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.INTEGER);
-                    return l_data;
+                    return_data = l_data;
+                    break;
 
                 case HelixLexer.MINUS:
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.INTEGER);
                     ((IntData) l_data).value = -((IntData) l_data).value;
-                    return l_data;
-
+                    return_data = l_data;
+                    break;
             }
         }
 
@@ -479,21 +511,25 @@ public class Interpreter {
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);
                     if (((BoolData) l_data).value) {
-                        return l_data;
+                        return_data = l_data;
+                        break;
                     }
                     r_data = evaluateExpression(r_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);
-                    return r_data;
+                    return_data = r_data;
+                    break;
 
                 case HelixLexer.AND:
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);
                     if (!((BoolData) l_data).value) {
-                        return l_data;
+                        return_data = l_data;
+                        break;
                     }
                     r_data = evaluateExpression(r_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);
-                    return r_data;
+                    return_data = r_data;
+                    break;
 
                 case HelixLexer.EQUAL:
                 case HelixLexer.NOT_EQUAL:
@@ -504,7 +540,8 @@ public class Interpreter {
                     l_data = evaluateExpression(l_child);
                     r_data = evaluateExpression(r_child);
                     checkDataType(l_data, r_data);
-                    return l_data.evaluateRelational(type, r_data);
+                    return_data = l_data.evaluateRelational(type, r_data);
+                    break;
 
                 case HelixLexer.PLUS:
                 case HelixLexer.MINUS:
@@ -515,25 +552,32 @@ public class Interpreter {
                     r_data = evaluateExpression(r_child);
                     checkDataType(l_data, r_data);
                     l_data.evaluateArithmetic(type, r_data);
-                    return l_data;
+                    return_data = l_data;
+                    break;
 
                 case HelixLexer.ATTRIB:
-                    l_data = stack.getVariable(l_child.getChild(0).getText()).getCopy();
+                    l_data = evaluateExpression(l_child).getCopy();
                     checkDataType(l_data, Data.DataType.POSITION);
                     switch (r_child.getType()) {
                         case HelixLexer.LAT:
-                            return new IntData(((Position) l_data).lat);
+                            return_data = new IntData(((Position) l_data).lat);
+                            break;
                         case HelixLexer.LNG:
-                            return new IntData(((Position) l_data).lat);
+                            return_data = new IntData(((Position) l_data).lat);
+                            break;
                         case HelixLexer.ALT:
-                            return new IntData(((Position) l_data).lat);
+                            return_data = new IntData(((Position) l_data).lat);
+                            break;
                     }
+                    break;
 
                 case HelixLexer.DEFFUNC:
-                    return executeDefaultFunction(expr);
+                    return_data = executeDefaultFunction(expr);
+                    break;
 
                 case HelixLexer.FUNCALL:
-                    return executeFunction(l_child.getText(), r_child);
+                    return_data = executeFunction(l_child.getText(), r_child);
+                    break;
 
             }
         }
@@ -551,15 +595,20 @@ public class Interpreter {
                     lat = ((IntData) l_data).toDouble();
                     lng = ((IntData) r_data).toDouble();
                     alt = ((IntData) a_data).toDouble();
-                    return new Position(lat, lng, alt);
+                    return_data = new Position(lat, lng, alt);
             }
         }
 
-        return null;
+        setLinenumber(previous_line);
+        return return_data;
     }
 
 
     private ArrayList<Data> listArguments(HelixTree func, HelixTree args) {
+        if (args != null) {
+            setLinenumber(args);
+        }
+
         HelixTree pars = func.getChild(1);
         int n = pars.getChildCount();
 
@@ -574,6 +623,7 @@ public class Interpreter {
         for (int i = 0; i < n; ++i) {
             HelixTree p = pars.getChild(i);
             HelixTree a = args.getChild(i);
+            setLinenumber(a);
             if (p.getType() == HelixLexer.PVALUE) {
                 result.add(i, evaluateExpression(a));
             }
@@ -590,8 +640,12 @@ public class Interpreter {
 
 
     private ArrayList<Data> listArguments (HelixTree args) {
+        if (args != null) {
+            setLinenumber(args);
+        }
         ArrayList<Data> result = new ArrayList<Data>();
         for (HelixTree c : args) {
+            setLinenumber(c);
             Data d = evaluateExpression(c);
             result.add(d);
         }
@@ -623,14 +677,82 @@ public class Interpreter {
 
 
     private void checkDataType(Data da, Data db) {
-        assert da.type == db.type;
+        if (da.type != da.type) {
+            throw new RuntimeException("Incompatible types");
+        }
     }
 
 
     private void checkDataType(Data data, Data.DataType type) {
-        assert data.type == type;
+        if (data.type != type) {
+            throw new RuntimeException("Unexpected type. Expected " + type.toString());
+        }
     }
 
 
+    private void checkNumArgs(int current, int expected, String func_name) {
+        if (current != expected) {
+            throw new RuntimeException(
+                    "Incorrect number of parameters calling function " + func_name
+                    );
+        }
+    }
+
+
+    public int getLinenumber() { 
+        return linenumber; 
+    }
+
+    
+    public void setLinenumber(HelixTree t) {
+        linenumber = t.getLine();
+    }
+
+
+    public void setLinenumber(int l) {
+        linenumber = l;
+    }
+
+
+    private void traceFunctionCall(HelixTree f, ArrayList<Data> arg_values) {
+        function_nesting++;
+        HelixTree params = f.getChild(1);
+        int nargs = params.getChildCount();
+        
+        for (int i=0; i < function_nesting; ++i) trace.print("|   ");
+
+        // Print function name and parameters
+        trace.print(f.getChild(0) + "(");
+        for (int i = 0; i < nargs; ++i) {
+            if (i > 0) trace.print(", ");
+            HelixTree p = params.getChild(i);
+            if (p.getType() == HelixLexer.PREF) trace.print("&");
+            trace.print(p.getText() + "=" + arg_values.get(i));
+        }
+        trace.print(") ");
+        
+        if (function_nesting == 0) trace.println("<entry point>");
+        else trace.println("<line " + getLinenumber() + ">");
+    }
+
+
+    private void traceReturn(HelixTree f, Data result, ArrayList<Data> arg_values) {
+        for (int i=0; i < function_nesting; ++i) trace.print("|   ");
+        function_nesting--;
+        trace.print("return");
+        if (result.type != Data.DataType.VOID) trace.print(" " + result);
+        
+        // Print the value of arguments passed by reference
+        HelixTree params = f.getChild(1);
+        int nargs = params.getChildCount();
+        for (int i = 0; i < nargs; ++i) {
+            HelixTree p = params.getChild(i);
+            if (p.getType() == HelixLexer.PVALUE) continue;
+            trace.print(", &" + p.getText() + "=" + arg_values.get(i));
+        }
+        
+        trace.println(" <line " + getLinenumber() + ">");
+        if (function_nesting < 0) trace.close();
+    }
 
 }

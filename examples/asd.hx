@@ -1,6 +1,6 @@
 def main() {
     takeOff(20)
-    pos_ini = getPos()
+    pos_ini = getPos(4)
     pos_diff = true
     while (pos_diff) {
         forward(2)
