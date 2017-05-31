@@ -60,7 +60,7 @@ helix: $(GRAMMAR) $(MAIN_SRC)
 
 # example call: make test filename=hello_helix
 test: $(EXEC) $(EXAMPLESDIR)/$(filename).hx
-	$(EXEC) -dot $(EXAMPLESDIR)/$(filename).hx
+	$(EXEC) -dot -trace $(EXAMPLESDIR)/$(filename).hx
 	dot -Tpdf -O $(EXAMPLESDIR)/$(filename).hx.dot
 	rm $(EXAMPLESDIR)/$(filename).hx.dot
 	mv $(EXAMPLESDIR)/$(filename).hx.dot.pdf $(EXAMPLESDIR)/$(filename).pdf
