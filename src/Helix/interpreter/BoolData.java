@@ -31,7 +31,7 @@ public class BoolData extends Data {
             case HelixLexer.PLUS: value = value || d.value; break;
             case HelixLexer.MINUS: value = d.value ? !value : value; break;
             case HelixLexer.MUL: value = value && d.value; break;
-            default: assert false;
+            default: operationNotSupported();
         }
     }
 
@@ -46,7 +46,7 @@ public class BoolData extends Data {
             case HelixLexer.LE: return new BoolData(!(value && !d.value));
             case HelixLexer.GT: return new BoolData(value && !d.value);
             case HelixLexer.GE: return new BoolData(!(!value && d.value));
-            default: assert false; 
+            default: operationNotSupported();
         }
         return null;
     }

@@ -11,4 +11,8 @@ public abstract class Data {
     public abstract BoolData evaluateRelational (int op, Data d);
     public abstract Data getCopy();
     public abstract String toString();
+
+    public void operationNotSupported() {
+        throw new RuntimeException("Operation not supported");
+    }
 }

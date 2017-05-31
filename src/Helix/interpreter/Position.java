@@ -70,7 +70,7 @@ public class Position extends Data {
                 lng /= d.lng;
                 alt /= d.alt;
                 break;
-            default: assert false;
+            default: operationNotSupported();
         }
     }
 
@@ -91,7 +91,7 @@ public class Position extends Data {
                         lng < d.lng - epsilon || lng > d.lng + epsilon ||
                         alt < d.alt - epsilon || alt > d.alt + epsilon
                 );
-            default: assert false; 
+            default: operationNotSupported(); 
         }
         return null;
     }

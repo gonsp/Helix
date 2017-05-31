@@ -30,7 +30,8 @@ public class IntData extends Data {
 
 
     public double toDouble() {
-        double result = (double) value / 100.0;
+        double result = (double) value;
+        result = result / 100D;
         return result;
     }
 
@@ -42,9 +43,9 @@ public class IntData extends Data {
             case HelixLexer.PLUS: value += d.value; break;
             case HelixLexer.MINUS: value -= d.value; break;
             case HelixLexer.MUL: value = (value * d.value) / 100; break;
-            case HelixLexer.DIV: value = (value / d.value) * 100; break;
+            case HelixLexer.DIV: value = new Double((this.toDouble() / d.toDouble()) * 100D).intValue(); break;
             case HelixLexer.MOD: value %= d.value; break;
-            default: assert false;
+            default: operationNotSupported();
         }
     }
 
@@ -59,7 +60,7 @@ public class IntData extends Data {
             case HelixLexer.LE: return new BoolData(value <= d.value);
             case HelixLexer.GT: return new BoolData(value > d.value);
             case HelixLexer.GE: return new BoolData(value >= d.value);
-            default: assert false; 
+            default: operationNotSupported();
         }
         return null;
     }
