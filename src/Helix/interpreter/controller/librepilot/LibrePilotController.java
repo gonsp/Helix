@@ -27,7 +27,7 @@ public class LibrePilotController extends DroneController implements PathPlanLis
 
     private static final String UAVO_NAME = "FlightStatus";
     private static final int MIN_SATELLITES = 14;
-    private static final double DEFAULT_VELOCITY = 1;
+    private static final double DEFAULT_VELOCITY = 2;
     private static final boolean SIMULATION = true;
 
     public LibrePilotController() {
@@ -48,7 +48,6 @@ public class LibrePilotController extends DroneController implements PathPlanLis
                         yaw += 360;
                     }
                     direction = yaw;
-                    System.out.println("Direction: " + direction);
                 } catch (UAVTalkMissingObjectException e) {
                     e.printStackTrace();
                 }
