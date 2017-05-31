@@ -311,7 +311,7 @@ public class Interpreter {
                 droneController.forward(((IntData) d).toDouble());
                 break;
 
-            case HelixLexer.BACKWARDS:
+            case HelixLexer.BACKWARD:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);

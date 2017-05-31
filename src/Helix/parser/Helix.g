@@ -185,7 +185,7 @@ UPF     :   'up';
 DOWNF   :   'down';
 RIGHT   :   'right';
 LEFT    :   'left';
-BACKWARDS : 'backwards';
+BACKWARD : 'backward';
 LOOKAT  :   'lookAt';
 PRINT   :   'print';
 
