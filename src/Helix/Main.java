@@ -121,14 +121,14 @@ public class Main {
                 printAST = true;
             } else if(!dotformat && arg.equals("-dot")) {
                 dotformat = true;
+            } else if(arg.equals("-trace")) {
+                tracefile = "tracefile";
             } else if(infile == null) {
                 infile = arg;
             } else if(arg.equals("-noexec")) {
                 execute = false;
             } else if(arg.equals("-simulation")) {
                 simulation = true;
-            } else if (arg.equals("-trace")) {
-                tracefile = "tracefile";
             } else {
                 System.out.println("Invalid argument: " + arg);
                 return false;

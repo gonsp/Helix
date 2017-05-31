@@ -677,7 +677,7 @@ public class Interpreter {
 
 
     private void checkDataType(Data da, Data db) {
-        if (da.type != da.type) {
+        if (da.type != db.type) {
             throw new RuntimeException("Incompatible types");
         }
     }
