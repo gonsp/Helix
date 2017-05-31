@@ -173,18 +173,38 @@ public class Interpreter {
                 return executeDefaultFunction(instr);
 
             case HelixLexer.FUNCALL:
-                return executeFunctionCall(instr);
+                return executeFunction(instr.getChild(0).getText(), instr.getChild(1));
 
             case HelixLexer.RETURN:
-                return executeReturn(instr);
+                if (instr.getChildCount() != 0) {
+                    return evaluateExpression(instr.getChild(0));
+                }
+                ret = new IntData();
+                ret.type = Data.DataType.VOID;
+                System.out.println("return");
+                return ret;
 
             case HelixLexer.IF:
-                executeIf(instr);
+                ret = evaluateExpression(instr.getChild(0));
+                checkDataType(ret, Data.DataType.BOOLEAN);
+                if (((BoolData) ret).value) {
+                    return executeListInstructions(instr.getChild(1));
+                }
+                if (instr.getChildCount() == 3) {
+                    return executeListInstructions(instr.getChild(2));
+                }
                 return null;
 
             case HelixLexer.WHILE:
-                executeWhile(instr);
-                return null;
+                while (true) {
+                    ret = evaluateExpression(instr.getChild(0));
+                    checkDataType(ret, Data.DataType.BOOLEAN);
+                    if (!((BoolData) ret).value) {
+                        return null;
+                    }
+                    ret = executeListInstructions(instr.getChild(1));
+                    if (ret != null) return ret;
+                }
 
         }
         --indents;
@@ -371,9 +391,8 @@ public class Interpreter {
                 assert n_args == 1;
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.INTEGER);
-                System.out.println("sleep for " + d.toString());
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(((IntData) d).value / 100);
                 }
                 catch (Exception e){
                     System.out.println(e.toString());
@@ -408,50 +427,6 @@ public class Interpreter {
         }
 
         return null;
-    }
-
-
-    private Data executeFunctionCall(HelixTree funcall) {
-        assert funcall.getType() == HelixLexer.FUNCALL;
-        wrttrace("Executing function call");
-        return executeFunction(funcall.getChild(0).getText(), funcall.getChild(1));
-    }
-
-
-    private Data executeReturn(HelixTree ret) {
-        assert ret.getType() == HelixLexer.RETURN;
-        wrttrace("Executing return");
-        return null;
-    }
-
-
-    private void executeIf(HelixTree iftree) {
-        assert iftree.getType() == HelixLexer.IF;
-        wrttrace("Executing if");
-        Data cond = evaluateExpression(iftree.getChild(0));
-        checkDataType(cond, Data.DataType.BOOLEAN);
-        HelixTree ins_if = iftree.getChild(1);
-        HelixTree ins_el = iftree.getChild(2);
-        if (((BoolData) cond).value) {
-            executeListInstructions(ins_if);
-        }
-        else if (ins_el != null) {
-            executeListInstructions(ins_el);
-        }
-    }
-
-
-    private void executeWhile(HelixTree whiletree) {
-        assert whiletree.getType() == HelixLexer.WHILE;
-        wrttrace("Executing while");
-        HelixTree ins = whiletree.getChild(1);
-        Data cond = evaluateExpression(whiletree.getChild(0));
-        checkDataType(cond, Data.DataType.BOOLEAN);
-        while (((BoolData) cond).value) {
-            executeListInstructions(ins);
-            cond = evaluateExpression(whiletree.getChild(0));
-            checkDataType(cond, Data.DataType.BOOLEAN);
-        }
     }
 
 
@@ -609,14 +584,12 @@ public class Interpreter {
             HelixTree p = pars.getChild(i);
             HelixTree a = args.getChild(i);
             if (p.getType() == HelixLexer.PVALUE) {
-                System.out.println("By value");
                 result.add(i, evaluateExpression(a));
             }
             else {
                 if (a.getType() != HelixLexer.ID) {
                     throw new RuntimeException("Wrong argument for pass by reference");
                 }
-                System.out.println("By ref");
                 Data d = stack.getVariable(a.getText());
                 result.add(i, d);
             }

@@ -41,8 +41,8 @@ public class IntData extends Data {
         switch (op) {
             case HelixLexer.PLUS: value += d.value; break;
             case HelixLexer.MINUS: value -= d.value; break;
-            case HelixLexer.MUL: value *= d.value; break;
-            case HelixLexer.DIV: value /= d.value; break;
+            case HelixLexer.MUL: value = (value * d.value) / 100; break;
+            case HelixLexer.DIV: value = (value / d.value) * 100; break;
             case HelixLexer.MOD: value %= d.value; break;
             default: assert false;
         }
@@ -73,7 +73,7 @@ public class IntData extends Data {
 
     @Override
     public String toString() {
-        return Integer.toString(value);
+        return Double.toString(((double) value) / 100D);
     }
 
 }
