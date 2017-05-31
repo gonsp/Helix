@@ -43,8 +43,16 @@ public class IntData extends Data {
             case HelixLexer.PLUS: value += d.value; break;
             case HelixLexer.MINUS: value -= d.value; break;
             case HelixLexer.MUL: value = (value * d.value) / 100; break;
-            case HelixLexer.DIV: value = new Double((this.toDouble() / d.toDouble()) * 100D).intValue(); break;
-            case HelixLexer.MOD: value %= d.value; break;
+            case HelixLexer.DIV: 
+                checkDivZero(d);
+                value = new Double((this.toDouble() / d.toDouble()) * 100D).intValue(); 
+                break;
+            case HelixLexer.MOD: 
+                checkInteger(this);
+                checkInteger(d);
+                checkDivZero(d);
+                value %= d.value;
+                break;
             default: operationNotSupported();
         }
     }
@@ -75,6 +83,20 @@ public class IntData extends Data {
     @Override
     public String toString() {
         return Double.toString(((double) value) / 100D);
+    }
+
+
+    private static void checkInteger(IntData d) {
+        if (d.value % 100 > 0) {
+            throw new RuntimeException("Integer operation on decimal data");
+        }
+    }
+
+
+    private static void checkDivZero(IntData d) {
+        if (d.value == 0) {
+            throw new RuntimeException("Division by zero");
+        }
     }
 
 }

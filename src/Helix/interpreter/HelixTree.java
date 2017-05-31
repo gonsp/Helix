@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class HelixTree extends CommonTree implements Iterable<HelixTree>{
 
-    private int numValue;
+    private double numValue;
 
     public HelixTree(Token t) {
         super(t);
@@ -23,7 +23,7 @@ public class HelixTree extends CommonTree implements Iterable<HelixTree>{
     private void setNodeValue() {
         switch(this.getType()) {
             case HelixLexer.NUM:
-                numValue = (new Double((Double.parseDouble(getText()) * 100))).intValue();
+                numValue = Double.parseDouble(getText());
                 break;
             case HelixLexer.BOOLEAN:
                 numValue = getText().equals("true") ? 1 : 0;
@@ -31,7 +31,7 @@ public class HelixTree extends CommonTree implements Iterable<HelixTree>{
         }
     }
 
-    public int getNumValue() {
+    public double getNumValue() {
         return numValue;
     }
 
