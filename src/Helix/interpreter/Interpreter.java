@@ -192,6 +192,7 @@ public class Interpreter {
 
     private void executeAssign(HelixTree assign) {
         assert assign.getType() == HelixLexer.ASSIGN;
+        System.out.println("Assigning " + assign.getText());
 
         HelixTree access = assign.getChild(0);
         HelixTree expr = assign.getChild(1);
@@ -211,18 +212,6 @@ public class Interpreter {
     }
 
 
-    private void assignIdAccess(HelixTree access, HelixTree expr) {
-        switch (access.getType()) {
-            case HelixLexer.ID:
-                assignId(access, expr);
-                break;
-
-            case HelixLexer.ATTRIB:
-                assignAttrib(access, expr);
-        }
-    }
-
-
     private void assignId(HelixTree access, HelixTree expr) {
         String id = access.getText();
         Data dexpr = evaluateExpression(expr);
@@ -230,25 +219,16 @@ public class Interpreter {
     }
 
 
+    private void assignId(HelixTree access, double val) {
+        String id = access.getText();
+        Data dexpr = new IntData(val);
+        stack.defineVariable(id, dexpr);
+    }
+
+
     private void assignAttrib(HelixTree access, HelixTree expr) {
         IntData dexpr = (IntData) evaluateExpression(expr);
-        String id = access.getChild(0).getText();
-        Position a = (Position) stack.getVariable(id);
-        if (a == null) {
-            a = new Position();
-        }
-        switch (access.getChild(1).getType()) {
-            case HelixLexer.LAT:
-                a.lat = dexpr.toDouble();
-                break;
-            case HelixLexer.LNG:
-                a.lng = dexpr.toDouble();
-                break;
-            case HelixLexer.ALT:
-                a.alt = dexpr.toDouble();
-                break;
-        }
-        stack.defineVariable(id, a);
+        assignAttrib(access, dexpr.toDouble());
     }
 
 
@@ -274,21 +254,30 @@ public class Interpreter {
 
 
     private void assignCoordAccess(HelixTree caccess, HelixTree cexpr) {
+        System.out.println("Assign coord access, " + cexpr.getText());
         HelixTree a_lat, a_lng, a_alt;
         a_lat = caccess.getChild(0);
         a_lng = caccess.getChild(1);
         a_alt = caccess.getChild(2);
 
-        if (cexpr.getType() == HelixLexer.COORD) {
-            assignIdAccess(a_lat, cexpr.getChild(0));
-            assignIdAccess(a_lng, cexpr.getChild(1));
-            assignIdAccess(a_alt, cexpr.getChild(2));
+        Data d = evaluateExpression(cexpr);
+        checkDataType(d, Data.DataType.POSITION);
+
+        Position p = (Position) d;
+        if (a_lat.getType() == HelixLexer.ID) {
+            assignId(a_lat, p.lat);
+        } else {
+            assignAttrib(a_lat, p.lat);
         }
-        else {
-            Position pexpr = (Position) evaluateExpression(cexpr);
-            assignAttrib(a_lat, pexpr.lat);
-            assignAttrib(a_lng, pexpr.lng);
-            assignAttrib(a_alt, pexpr.lat);
+        if (a_lng.getType() == HelixLexer.ID) {
+            assignId(a_lng, p.lng);
+        } else {
+            assignAttrib(a_lng, p.lng);
+        }
+        if (a_alt.getType() == HelixLexer.ID) {
+            assignId(a_alt, p.alt);
+        } else {
+            assignAttrib(a_alt, p.alt);
         }
     }
 
@@ -306,7 +295,7 @@ public class Interpreter {
 
             case HelixLexer.GET_GPS:
                 assert n_args == 0;
-                return droneController.getGPS();
+                return droneController.getPos();
 
             case HelixLexer.MOVE:
                 assert n_args == 1;
@@ -430,6 +419,7 @@ public class Interpreter {
 
                 case HelixLexer.ID:
                     Data d = stack.getVariable(expr.getText());
+                    System.out.println("returning var with id: " + expr.getText());
                     return d.getCopy();
             }
         }
