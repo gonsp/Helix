@@ -469,6 +469,11 @@ public class Interpreter {
                     return_data = new IntData(expr.getNumValue());
                     break;
 
+                case HelixLexer.STRING:
+                    String text = expr.getText();
+                    return_data = new StringData(text.substring(1, text.length() - 1));
+                    break;
+
                 case HelixLexer.BOOLEAN:
                     return_data = new BoolData(expr.getBoolValue());
                     break;
@@ -509,6 +514,12 @@ public class Interpreter {
 
         else if (nchild == 2) {
             switch (type) {
+                case HelixLexer.CONCAT:
+                    l_data = evaluateExpression(l_child);
+                    r_data = evaluateExpression(r_child);
+                    return_data = new StringData(l_data.toString() + r_data.toString());
+                    break;
+
                 case HelixLexer.OR:
                     l_data = evaluateExpression(l_child);
                     checkDataType(l_data, Data.DataType.BOOLEAN);

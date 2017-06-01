@@ -108,11 +108,11 @@ public class Position extends Data {
     public String toString(boolean inverse) {
         String s;
         if(inverse) {
-            s = "" + lng + "," + lat;
+            s = "[" + lng + ", " + lat;
         } else {
-            s = "" + lat + "," + lng;
+            s = "[" + lat + ", " + lng;
         }
-        return s + "," + alt;
+        return s + ", " + alt + "]";
     }
 
 

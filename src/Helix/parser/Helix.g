@@ -94,7 +94,10 @@ return_stmt	:	RETURN^ expr?
         ;
 
 // Grammar for expressions with boolean, relational and aritmetic operators
-expr    :   boolterm (OR^ boolterm)*
+expr    :   concat (CONCAT^ concat)*
+        ;
+
+concat  :   boolterm (OR^ boolterm)*
         ;
 
 boolterm:   boolfact (AND^ boolfact)*
@@ -112,6 +115,8 @@ term    :   factor ( (MUL^ | DIV^ | MOD^) factor)*
 factor  :   (NOT^ | PLUS^ | MINUS^)? atom
         ;
 
+
+
 // Atom of the expressions (variables, integer and boolean literals).
 // An atom can also be a function call or another expression
 // in parenthesis
@@ -121,6 +126,7 @@ atom    :   NUM
         |   (b=TRUE | b=FALSE)  -> ^(BOOLEAN[$b,$b.text])
         |   funcall
         |   '('! expr ')'!
+        |   STRING
         ;
 
 coord   : '[' n1=expr ',' n2=expr ',' n3=expr ']' -> ^(COORD $n1 $n2 $n3)
@@ -211,6 +217,7 @@ DIV	    : '/';
 MOD	    : '%' ;
 NOT	    : 'not';
 AND	    : 'and' ;
+CONCAT  : '|';
 OR	    : 'or' ;	
 IF  	: 'if' ;
 THEN	: 'then' ;
