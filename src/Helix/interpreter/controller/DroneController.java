@@ -50,9 +50,9 @@ public abstract class DroneController {
     }
 
     public void right(double dist) {
-        double radians = Math.toRadians(drone.direction);
-        double n = Math.sin(radians) * dist;
-        double e = Math.cos(radians) * dist;
+        double radians = Math.toRadians(drone.direction+90);
+        double n = Math.cos(radians) * dist;
+        double e = Math.sin(radians) * dist;
         move(new Position(n, e, 0));
     }
 
