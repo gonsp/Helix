@@ -37,6 +37,7 @@ public class Interpreter {
         } else {
             droneController = new SimulationController(new GPSPosition(41.387940, 2.113464, 90.5), 0);
         }
+
         droneController.init();
         mapFunctions(T);
         stack = new Stack();
@@ -145,7 +146,8 @@ public class Interpreter {
                 return executeDefaultFunction(instr);
 
             case HelixLexer.FUNCALL:
-                return executeFunction(instr.getChild(0).getText(), instr.getChild(1));
+                executeFunction(instr.getChild(0).getText(), instr.getChild(1));
+                return null;
 
             case HelixLexer.RETURN:
                 if (instr.getChildCount() != 0) {
