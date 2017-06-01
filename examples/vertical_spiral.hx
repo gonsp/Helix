@@ -16,6 +16,6 @@ def main() {
     right(5)
     forward(5)
     rotate(-90)
-    vertical_spiral(20)
+    vertical_spiral(15)
     land()
 }
