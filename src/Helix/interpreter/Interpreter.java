@@ -565,10 +565,10 @@ public class Interpreter {
                             return_data = new IntData(((Position) l_data).lat);
                             break;
                         case HelixLexer.LNG:
-                            return_data = new IntData(((Position) l_data).lat);
+                            return_data = new IntData(((Position) l_data).lng);
                             break;
                         case HelixLexer.ALT:
-                            return_data = new IntData(((Position) l_data).lat);
+                            return_data = new IntData(((Position) l_data).alt);
                             break;
                     }
                     break;
