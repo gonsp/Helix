@@ -103,7 +103,7 @@ public class Interpreter {
 
         Data ret = executeListInstructions(f.getChild(2));
         if (ret == null) {
-            ret = new IntData();
+            ret = new NumData();
             ret.type = Data.DataType.VOID;
         }
 
@@ -153,7 +153,7 @@ public class Interpreter {
                 if (instr.getChildCount() != 0) {
                     return evaluateExpression(instr.getChild(0));
                 }
-                ret = new IntData();
+                ret = new NumData();
                 ret.type = Data.DataType.VOID;
                 return ret;
 
@@ -214,13 +214,13 @@ public class Interpreter {
 
     private void assignId(HelixTree access, double val) {
         String id = access.getText();
-        Data dexpr = new IntData(val);
+        Data dexpr = new NumData(val);
         stack.defineVariable(id, dexpr);
     }
 
 
     private void assignAttrib(HelixTree access, HelixTree expr) {
-        IntData dexpr = (IntData) evaluateExpression(expr);
+        NumData dexpr = (NumData) evaluateExpression(expr);
         assignAttrib(access, dexpr.toDouble());
     }
 
@@ -309,43 +309,43 @@ public class Interpreter {
             case HelixLexer.FORWARD:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.forward(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.forward(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.BACKWARD:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.backward(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.backward(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.RIGHT:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.right(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.right(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.LEFT:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.left(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.left(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.ROTATE:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.rotate(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.rotate(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.TAKEOFF:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.takeOff(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.takeOff(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.LAND:
@@ -356,9 +356,9 @@ public class Interpreter {
             case HelixLexer.SLEEP:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
+                checkDataType(d, Data.DataType.NUMBER);
                 try {
-                    TimeUnit.SECONDS.sleep(((IntData) d).value / 100);
+                    TimeUnit.SECONDS.sleep(((NumData) d).value / 100);
                 }
                 catch (Exception e){
                     throw new RuntimeException(e);
@@ -368,14 +368,14 @@ public class Interpreter {
             case HelixLexer.UPF:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.up(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.up(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.DOWNF:
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.down(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.down(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.LOOKAT:
@@ -400,40 +400,40 @@ public class Interpreter {
             case HelixLexer.SET_DIR:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.setDirection(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.setDirection(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.GET_DIR:
                 checkNumArgs(n_args, 0, func_name);
-                return new IntData(droneController.getDirection());
+                return new NumData(droneController.getDirection());
 
             case HelixLexer.NORTH:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.north(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.north(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.SOUTH:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.south(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.south(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.EAST:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.east(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.east(((NumData) d).toDouble());
                 break;
 
             case HelixLexer.WEST:
                 checkNumArgs(n_args, 1, func_name);
                 d = args_values.get(0);
-                checkDataType(d, Data.DataType.INTEGER);
-                droneController.west(((IntData) d).toDouble());
+                checkDataType(d, Data.DataType.NUMBER);
+                droneController.west(((NumData) d).toDouble());
                 break;
 
         }
@@ -466,7 +466,7 @@ public class Interpreter {
         if (nchild == 0) {
             switch (type) {
                 case HelixLexer.NUM:
-                    return_data = new IntData(expr.getNumValue());
+                    return_data = new NumData(expr.getNumValue());
                     break;
 
                 case HelixLexer.STRING:
@@ -499,14 +499,14 @@ public class Interpreter {
 
                 case HelixLexer.PLUS:
                     l_data = evaluateExpression(l_child);
-                    checkDataType(l_data, Data.DataType.INTEGER);
+                    checkDataType(l_data, Data.DataType.NUMBER);
                     return_data = l_data;
                     break;
 
                 case HelixLexer.MINUS:
                     l_data = evaluateExpression(l_child);
-                    checkDataType(l_data, Data.DataType.INTEGER);
-                    ((IntData) l_data).value = -((IntData) l_data).value;
+                    checkDataType(l_data, Data.DataType.NUMBER);
+                    ((NumData) l_data).value = -((NumData) l_data).value;
                     return_data = l_data;
                     break;
             }
@@ -573,13 +573,13 @@ public class Interpreter {
                     checkDataType(l_data, Data.DataType.POSITION);
                     switch (r_child.getType()) {
                         case HelixLexer.LAT:
-                            return_data = new IntData(((Position) l_data).lat);
+                            return_data = new NumData(((Position) l_data).lat);
                             break;
                         case HelixLexer.LNG:
-                            return_data = new IntData(((Position) l_data).lng);
+                            return_data = new NumData(((Position) l_data).lng);
                             break;
                         case HelixLexer.ALT:
-                            return_data = new IntData(((Position) l_data).alt);
+                            return_data = new NumData(((Position) l_data).alt);
                             break;
                     }
                     break;
@@ -601,13 +601,13 @@ public class Interpreter {
                     l_data = evaluateExpression(l_child);
                     r_data = evaluateExpression(r_child);
                     a_data = evaluateExpression(a_child);
-                    checkDataType(l_data, Data.DataType.INTEGER);
-                    checkDataType(r_data, Data.DataType.INTEGER);
-                    checkDataType(a_data, Data.DataType.INTEGER);
+                    checkDataType(l_data, Data.DataType.NUMBER);
+                    checkDataType(r_data, Data.DataType.NUMBER);
+                    checkDataType(a_data, Data.DataType.NUMBER);
                     double lat, lng, alt;
-                    lat = ((IntData) l_data).toDouble();
-                    lng = ((IntData) r_data).toDouble();
-                    alt = ((IntData) a_data).toDouble();
+                    lat = ((NumData) l_data).toDouble();
+                    lng = ((NumData) r_data).toDouble();
+                    alt = ((NumData) a_data).toDouble();
                     return_data = new Position(lat, lng, alt);
             }
         }

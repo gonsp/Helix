@@ -3,31 +3,31 @@ package Helix.interpreter;
 import Helix.parser.*;
 
 
-public class IntData extends Data {
+public class NumData extends Data {
     private static long PREC_I = 1000;
     private static double PREC_D = PREC_I;
 
     public long value;
 
 
-    public IntData() {
+    public NumData() {
         this(0);
     }
 
 
-    public IntData(IntData i) {
+    public NumData(NumData i) {
         this(i.value);
     }
 
 
-    public IntData(double value) {
+    public NumData(double value) {
         this((new Double(value * PREC_D)).intValue());
     }
 
 
-    public IntData(int value) {
+    public NumData(int value) {
         this.value = value;
-        this.type = DataType.INTEGER;
+        this.type = DataType.NUMBER;
     }
 
 
@@ -40,7 +40,7 @@ public class IntData extends Data {
 
     @Override
     public void evaluateArithmetic(int op, Data data) {
-        IntData d = (IntData) data;
+        NumData d = (NumData) data;
         switch (op) {
             case HelixLexer.PLUS: value += d.value; break;
             case HelixLexer.MINUS: value -= d.value; break;
@@ -62,7 +62,7 @@ public class IntData extends Data {
 
     @Override
     public BoolData evaluateRelational(int op, Data data) {
-        IntData d = (IntData) data;
+        NumData d = (NumData) data;
         switch (op) {
             case HelixLexer.EQUAL: return new BoolData(value == d.value);
             case HelixLexer.NOT_EQUAL: return new BoolData(value != d.value);
@@ -78,7 +78,7 @@ public class IntData extends Data {
 
     @Override
     public Data getCopy() {
-        IntData copy = new IntData(this.value);
+        NumData copy = new NumData(this.value);
         return copy;
     }
 
@@ -88,14 +88,14 @@ public class IntData extends Data {
     }
 
 
-    private static void checkInteger(IntData d) {
+    private static void checkInteger(NumData d) {
         if (d.value % PREC_I > 0) {
             throw new RuntimeException("Integer operation on decimal data");
         }
     }
 
 
-    private static void checkDivZero(IntData d) {
+    private static void checkDivZero(NumData d) {
         if (d.value == 0) {
             throw new RuntimeException("Division by zero");
         }
