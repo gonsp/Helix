@@ -1,12 +1,13 @@
 def vertical_spiral(max_height) {
 	[_, _, height] = getPos()
-	print(height)
 	if height >= max_height {
 	    move([0, 0, height])
     } else {
 		forward(10)
 		rotate(-90)
 		up(1)
+		print("Vertex reached")
+	    print("Height: " | height)
 		vertical_spiral(max_height)
 	}
 }
