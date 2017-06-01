@@ -641,7 +641,7 @@ public class Interpreter {
     }
 
 
-    private ArrayList<Data> listArguments (HelixTree args) {
+    private ArrayList<Data> listArguments(HelixTree args) {
         if (args != null) {
             setLinenumber(args);
         }
@@ -655,7 +655,7 @@ public class Interpreter {
     }
 
 
-    private ArrayList<Data> listParameters (HelixTree f) {
+    private ArrayList<Data> listParameters(HelixTree f) {
         ArrayList<Data> result = new ArrayList<Data>();
         for (HelixTree param : f.getChild(1)) {
             result.add(stack.getVariable(param.getText()));

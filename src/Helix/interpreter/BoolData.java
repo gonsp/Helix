@@ -25,7 +25,7 @@ public class BoolData extends Data {
 
 
     @Override
-    public void evaluateArithmetic (int op, Data data) {
+    public void evaluateArithmetic(int op, Data data) {
         BoolData d = (BoolData) data;
         switch (op) {
             case HelixLexer.PLUS: value = value || d.value; break;
@@ -37,7 +37,7 @@ public class BoolData extends Data {
 
 
     @Override
-    public BoolData evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational(int op, Data data) {
         BoolData d = (BoolData) data;
         switch (op) {
             case HelixLexer.EQUAL: return new BoolData(value == d.value);
