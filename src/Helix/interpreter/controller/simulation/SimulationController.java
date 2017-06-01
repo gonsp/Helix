@@ -72,10 +72,16 @@ public class SimulationController extends DroneController {
             if(!s.isEmpty()) {
                 s += "\n                ";
             }
-            s += pos.toString(true);
+            s += getFormattedPosition(pos);
         }
         return s;
     }
+
+
+    private String getFormattedPosition(Position pos) {
+        return "" + pos.lng + "," + pos.lat + "," + pos.alt;
+    }
+
 
     private void showPath() {
         String KML = KML_TEMPLATE.replace("<-COORDINATES->", pathToString(pathHistory));
