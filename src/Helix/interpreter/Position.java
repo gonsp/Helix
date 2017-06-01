@@ -66,6 +66,7 @@ public class Position extends Data {
                 alt *= d.alt;
                 break;
             case HelixLexer.DIV:
+                checkDivZero(d);
                 lat /= d.lat;
                 lng /= d.lng;
                 alt /= d.alt;
@@ -118,5 +119,12 @@ public class Position extends Data {
     @Override
     public String toString() {
         return toString(false);
+    }
+
+
+    private static void checkDivZero(Position p) {
+        if (p.lat == 0 || p.lng == 0 || p.alt == 0) {
+            throw new RuntimeException("Division by zero");
+        }
     }
 }
