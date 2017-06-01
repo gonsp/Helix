@@ -1,0 +1,78 @@
+DESCRIPCIÓN DE LOS EJEMPLOS
+
+bar_fib.hx
+
+  Este ejemplo consiste en una trayectoria predefinida desde la plaza de la biblioteca de la FIB hasta el bar, 
+  usando únicamente funciones predeterminadas de movimiento.
+  
+  
+circle.hx
+  
+  En este ejemplo el dron recorre un circulo. Para esto se define una variable que guarda la posición inicial
+  del circulo mediante la función predeterminada getPos() y un bucle while que hace al dron avanzar y rotar 
+  con valores fijos en cada iteración, hasta que la posición actual es igual a la inicial.
+  
+  
+circular_spiral.hx
+
+  En circular_spiral definimos una función del mismo nombre que toma dos parámetros: el número de circulos a 
+  recorrer y un booleano que indica el sentido vertical de la spiral, usado en una instrucción if-else.
+  
+  La función traza el número de circulos indicados ascendiendo o descendiendo una altura fija.
+  
+  
+coord_access.hx
+
+  En coord_access se trazan una serie de movimientos a puntos relativos a la posición de las construcciones
+  inicial mediante las capacidades de las construcciones de coordenadas.
+  
+  
+cross.hx
+
+  En este ejemplo el dron hace un recorrido a traves de 4 puntos de una cruz definida en relación a la posición
+  inicial del dron, y se escribe a cada paso mediante la función print().
+  
+hello_helix.hx
+
+  Este código consiste únicamente en el despegue del dron, una espera de cinco segundos usando sleep(), y el aterrizaje.
+
+  
+hello_world.hx
+
+  Con una función que define la trayectoria a recorrer para cada letra, en este ejemplo el dron 
+  se mueve siguiendo el recorrido de la palabra "HELLO"
+
+
+horizontal_spiral.hx
+
+  Aquí se usa una función horizontal_spiral que genera el recorrido de una espiral cuadrada hacia dentro.
+  
+  Se usan varias funciones predeterminadas, assignación de coordenadas y construcciones if y while.
+  
+
+serralada.hx
+
+  En serralada.hx se define una función mountain que mueve el dron hasta una posición pasando por un punto intermedio
+  a cierta altura. La función serralada genera varias mountains hasta llegar a una coordenada destinación.
+  
+  Este ejemplo usa operaciones de suma, resta y división componente a componente entre coordenadas.
+
+
+strings.hx
+
+  En strings.hx el recorrido del dron consiste unícamente en ascender a 100 metros y aterrizar. Aquí se muestran
+  las posibilidades de los datos de tipo string y el operador de concatenación '|'.
+
+
+vertical_spiral.hx
+
+  vertical_spiral traza una spiral cuadrada mediante una función recursiva. A cada paso de la recursión el dron
+  avanza, rota noventa grados y asciende en una unidad. La recursividad se detiene cuando el dron alcanza una
+  altura máxima.
+
+
+vibrate.hx
+
+  Usando de nuevo recursividad, la función vibrate asciende el dron mediante el parámetro amplitude siempre que
+  este es mayor que 0.5 y menor que -0.5, el paramétro amplitude cambia de signo y se divide entre 1.1 a 
+  cada paso de la recursión.
