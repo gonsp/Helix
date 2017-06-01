@@ -1,8 +1,6 @@
 def main() {
     takeOff(20)
-    a = a()
-    b = b()
-    vibrate(a)
+    vibrate(20)
     land()
 }
 
@@ -12,15 +10,6 @@ def vibrate(amplitude) {
         return
     }
     up(amplitude)
-    forward(10)
-    vibrate(-(amplitude / 1.5))
-}
-
-
-def a() {
-    return 20
-}
-
-def b() {
-    return 50
+    forward(1)
+    vibrate(-(amplitude / 1.1))
 }

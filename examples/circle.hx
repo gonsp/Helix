@@ -6,7 +6,6 @@ def main() {
         forward(2)
         rotate(10)
         pos_diff = (pos_ini != getPos())
-        print(pos_diff);
     }
     land();
 
