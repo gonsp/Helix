@@ -4,7 +4,7 @@ import Helix.parser.*;
 
 
 public class NumData extends Data {
-    private static long PREC_I = 1000;
+    private static long PREC_I = 100;
     private static double PREC_D = PREC_I;
 
     public long value;
@@ -16,17 +16,12 @@ public class NumData extends Data {
 
 
     public NumData(NumData i) {
-        this(i.value);
+        this(i.toDouble());
     }
 
 
     public NumData(double value) {
-        this((new Double(value * PREC_D)).intValue());
-    }
-
-
-    public NumData(int value) {
-        this.value = value;
+        this.value = (new Double(value * PREC_D)).longValue();
         this.type = DataType.NUMBER;
     }
 
@@ -78,7 +73,7 @@ public class NumData extends Data {
 
     @Override
     public Data getCopy() {
-        NumData copy = new NumData(this.value);
+        NumData copy = new NumData(this.toDouble());
         return copy;
     }
 

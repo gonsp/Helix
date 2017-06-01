@@ -256,7 +256,6 @@ public class Interpreter {
         checkDataType(d, Data.DataType.POSITION);
 
         Position p = (Position) d;
-
         if (a_lat.getType() != HelixLexer.VOIDACCESS) {
             if (a_lat.getType() == HelixLexer.ID) {
                 assignId(a_lat, p.lat);
@@ -358,7 +357,7 @@ public class Interpreter {
                 d = args_values.get(0);
                 checkDataType(d, Data.DataType.NUMBER);
                 try {
-                    TimeUnit.SECONDS.sleep(((NumData) d).value / 100);
+                    TimeUnit.SECONDS.sleep(new Double(((NumData) d).toDouble()).longValue());
                 }
                 catch (Exception e){
                     throw new RuntimeException(e);
