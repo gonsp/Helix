@@ -4,10 +4,10 @@ import Helix.parser.*;
 
 
 public class IntData extends Data {
-    private static int PREC_I = 10000;
+    private static long PREC_I = 1000;
     private static double PREC_D = PREC_I;
 
-    public int value;
+    public long value;
 
 
     public IntData() {
@@ -47,7 +47,7 @@ public class IntData extends Data {
             case HelixLexer.MUL: value = (value * d.value) / PREC_I; break;
             case HelixLexer.DIV: 
                 checkDivZero(d);
-                value = new Double((this.toDouble() / d.toDouble()) * PREC_D).intValue(); 
+                value = new Double((this.toDouble() / d.toDouble()) * PREC_D).longValue(); 
                 break;
             case HelixLexer.MOD: 
                 checkInteger(this);
