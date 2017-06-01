@@ -28,7 +28,7 @@ public class Main {
     /** Flag to indicate wether the program must be executed after parsing. */
     private static boolean execute = true;
     /** Flag to indicate if the program is going to be simulated or just executed in a real drone. */
-    private static boolean simulation = true;
+    private static boolean simulation = false;
     /** Name of the file storing the trace of the program*/
     private static String tracefile = null;
 
