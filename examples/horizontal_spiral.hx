@@ -1,5 +1,5 @@
 def step(radius, height) {
-    [_, _, dist] = height - getPos()
+    [_, _, dist] = [0, 0, height] - getPos()
     up(dist)
     forward(radius/2)
     i = 4
@@ -16,6 +16,7 @@ def horizontal_spiral(radius) {
     i = 0
     while(i < 10) {
         step(2*i+radius, i+10)
+        print(1000)
         i = i+1
     }
 }
@@ -23,5 +24,6 @@ def horizontal_spiral(radius) {
 def main() {
     takeOff(5)
     horizontal_spiral(5)
+    print(9999)
     land()
 }

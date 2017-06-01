@@ -175,8 +175,10 @@ expr_list:  expr (','! expr)*
 
 // Built-in function tokens
 GET_POS :   'getPos';
+GET_DIR :   'getDir';
+SET_DIR :   'setDir';
 MOVE    :   'move';
-FORWARD :   'forward';
+MOVETO  :   'moveTo';
 ROTATE  :   'rotate';
 TAKEOFF :   'takeOff';
 LAND    :   'land';
@@ -185,13 +187,10 @@ UPF     :   'up';
 DOWNF   :   'down';
 RIGHT   :   'right';
 LEFT    :   'left';
-BACKWARD : 'backward';
+FORWARD :   'forward';
+BACKWARD:   'backward';
 LOOKAT  :   'lookAt';
 PRINT   :   'print';
-
-MOVETO  :   'moveTo';
-SET_DIR :   'setDir';
-GET_DIR :   'getDir';
 NORTH   :   'north';
 SOUTH   :   'south';
 EAST    :   'east';
