@@ -36,7 +36,7 @@ public class HelixTree extends CommonTree implements Iterable<HelixTree>{
     }
 
 
-    public boolean getBoolValue () {
+    public boolean getBoolValue() {
         return !(numValue == 0);
     }
 

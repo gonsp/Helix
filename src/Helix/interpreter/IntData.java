@@ -39,7 +39,7 @@ public class IntData extends Data {
 
 
     @Override
-    public void evaluateArithmetic (int op, Data data) {
+    public void evaluateArithmetic(int op, Data data) {
         IntData d = (IntData) data;
         switch (op) {
             case HelixLexer.PLUS: value += d.value; break;
@@ -61,7 +61,7 @@ public class IntData extends Data {
 
 
     @Override
-    public BoolData evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational(int op, Data data) {
         IntData d = (IntData) data;
         switch (op) {
             case HelixLexer.EQUAL: return new BoolData(value == d.value);

@@ -47,7 +47,7 @@ public class Position extends Data {
 
 
     @Override
-    public void evaluateArithmetic (int op, Data data) {
+    public void evaluateArithmetic(int op, Data data) {
         Position d = (Position) data;
         switch (op) {
             case HelixLexer.PLUS:
@@ -77,7 +77,7 @@ public class Position extends Data {
 
 
     @Override
-    public BoolData evaluateRelational (int op, Data data) {
+    public BoolData evaluateRelational(int op, Data data) {
         Position d = (Position) data;
         switch (op) {
             case HelixLexer.EQUAL: 

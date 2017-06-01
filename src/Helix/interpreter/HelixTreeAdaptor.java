@@ -12,7 +12,7 @@ public class HelixTreeAdaptor extends CommonTreeAdaptor {
         if (t == null) {
             return null;
         }
-        return create( ((HelixTree)t).token );
+        return create(((HelixTree)t).token );
     }
 
     public Object errorNode(TokenStream input, Token start, Token stop, RecognitionException e) {

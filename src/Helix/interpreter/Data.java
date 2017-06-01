@@ -7,8 +7,8 @@ public abstract class Data {
 
     public DataType type;
 
-    public abstract void evaluateArithmetic (int op, Data d);
-    public abstract BoolData evaluateRelational (int op, Data d);
+    public abstract void evaluateArithmetic(int op, Data d);
+    public abstract BoolData evaluateRelational(int op, Data d);
     public abstract Data getCopy();
     public abstract String toString();
 
