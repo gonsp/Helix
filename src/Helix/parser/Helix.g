@@ -157,7 +157,7 @@ builtin :   GET_POS
         |   DOWNF
         |   RIGHT
         |   LEFT
-        |   BACKWARDS
+        |   BACKWARD
         |   LOOKAT
         |   PRINT
         |   MOVETO 
