@@ -1,26 +1,22 @@
-Helix pretende ser un lenguaje de programación de alto nivel para drones que se abstrae del hardware específico.
+Helix is a hardware-abstract programming language for drones.
 
-Identificamos una serie de instrucciones que cualquier drone puede llegar a realizar. Estas son, por ejemplo: move(pos), up(meters), yaw(degrees), get_gps(), take_off(), etc. No importa el modelo, el controlador, los motores o cualquier otra componente de un drone, todos van a poder realizar de una u otra forma estas operaciones de alto nivel.
+If you want to write some code to be executed in an spefic drone, you will be very attached to its particular hardware, firmware and particularities.
+However, every drone has the same basic instructions like to move to a position, to rotate, or to land, etc.
 
-El objetivo de Helix es ofrecer un lenguaje de programación que se abstrae de las particularidades del drone. De esta forma, un "usuario" de nuestro lenguaje puede escribir un programa que representa el movimiento de un drone y ejecutarse de forma independiente en cualquier modelo, siempre y cuando su fabricante/comunidad haya hecho su implementación de nuestro "intérprete".
+Helix aims to be an abstraction for all those constraints, so as a programmer, you can write software that will be executed in any drone without needing to adapt it to a particular case.
 
-Ya habiendo aclarado la motivación del proyecto, vamos a definir cómo va a ser sintáctica y gramaticalmente Helix, y cómo estará estructurado.
+You will just need:
+- To write your code in a .hx file, following the Helix's grammar, using the drones' basic instructions. (You can check code examples in this project)
+- To have an implementation of Helix for your specific drone.
 
-Como ya hemos mencionado, básicamente habrá una serie de operaciones que permitirán el movimiento del drone en cualquier dirección, controlando la velocidad y posición. Estas operaciones utilizarán un sistema de referencia, el cual será el punto gps de inicio del programa. Es decir, en el momento en que el drone entra en modo "automático", empezando la ejecución del código de Helix, se obtendrá la posición gps inicial. Esa posición servirá a lo largo de toda la ejecución de sistema de referencia en un espacio tridimensional, centrando el (0, 0, 0) en ese punto. De esta forma, cualquier instrucción en la que se especifique cuánto tiene que desplazarse un drone, hacia dónde tiene que girar, hasta dónde tiene que moverse, etc serán en función de ese punto inicial. De esta forma, el programador de Helix se olvida de la difícil e incómoda representación de latitud y longitud para espacios tan pequeños.
+In order to write an implementation of Helix, so you can run Helix code in your specific drone, you just need to extend the DroneController class, implementing the required methods. You will also need to implement the comunication with the drone to send the basic instructions.
+The Helix's interpreter shouldn't be changed.
 
-Para controlar todo este movimiento y comportamiento del drone, Helix ofrece instrucciones de control de flujo como condicionales y bucles. También ofrece la definición de funciones para poder modularizar el código. De esta misma forma, la recursividad (pese a tal vez no ser muy útil en esta aplicación) también será posible. Con el objetivo de que Helix sea fácil de programar, también será de tipado dinámico. Los tipos disponibles serán: booleanos, enteros, reales, null y tuplas de reales para la posición gps. Aparte de las funciones descritas por defecto como el movimiento, rotación, etc, también habrá otras funciones que te permitan obtener datos de sensores del drone. Estas funciones pueden ser útiles para controlar el comportamiento del drone. Un ejemplo de estas instrucciones pueden ser: get_gps() o get_prox(), que te devuelven la tupla de (lat, lng) o la distancia de un sensor de proximidad en el caso en que el hardware del drone lo ofrezca.
+By now, there are two implementations already writen. One of them is for the LibrePilot's firmware (www.librepilot.org). The other is just a simulation of a flight, showing the simulated plath in Google Earth.
 
-La definición concreta de la sintaxis se puede consultar en Helix/parser/src/Helix.g y en los ejemplos en Helix/parser/examples.
+To run the interpreter, you just need the following commands:
 
-Aparte de definir el lenguaje de programación Helix, nuestro proyecto consiste en la implementación del mismo para un modelo de drone concreto. En este caso, es un drone montado por piezas con el controlador CC3D. Este drone funciona con el firmware de Librepilot, una comunidad de desarrolladores que mantiene este proyecto de código abierto. Tanto el firmware como la placa ofrecen un protocolo de comunicación basado en UAVObjects, que te permiten intercambiar todo tipo de ajustes, instrucciones y datos a través de varias interfaces. En nuestro caso, utilizaremos la interfaz série para comunicarnos con el drone. Así que trataremos el drone en sí como una caja negra, con la cual nos comunicaremos a través del puerto serie utilizando este protocolo (UAVTalk). Esto es una buena idea ya que modificar el firmware del drone es muy complicado y evita aún más la abstracción y modularización que estamos intentando conseguir con Helix. De esta forma, lo que realmente ejecutará el código en Helix será un pequeño arduino montado en el propio drone. Así que lo que haremos será preparar toda el core necesario para que el arduino interactúe con el drone (implementación de UAVTalk) y todo lo necesario para poder ejecutar el código Helix. También la interacción de los sensores extra (o del gps, el cual se considera necesario) siguiendo sus propios protocolos de comunicación.
-
-En resumen, el arduino será lo que realmente ejecute el código de Helix. El código se parsea, [compila], se carga, etc a través de un programa nuestro que hará todos los pasos necesarios para simplemente pasar el código de Helix al drone. La ejecución de Helix se podría hacer de dos formas:
-A - Nuestro programa parsea el código en Helix y genera el AST. Lo serializa en una string y se incluye en el código del arduino hardcodeado. El código del arduino contendrá un "des-serializador" para recuperar el AST y un intérprete que lo recorre y lo ejecuta.
-B - Nuestro programa parsea el código en Helix, genera el AST y lo pre-compila a un bytecode definido por nosotros mismos. El bytecode se carga hardcodeado en un array en el código del arduino. El arduino se encargará de traducir esas instrucciones en bytecode a instrucciones en c++ (lenguaje del arduino) y las ejecutará.
-
-Hemos optado por intentar la opción B inicialmente (pese a que parezca más complicada, es una solución más bonita que nos ayuda a optimizar la escasa memoria del arduino), de forma que definiremos nuestro propio bytecode que generará nuestro programa de ordenador y el arduino se encargará de ejecutarlo. Esquemáticamente:
-
-.hx (Hedix source) -> Helix2Librepilot ( -> parser (antlr) -> AST -> Bytecode -> Generation of C++ arduino code with the bytecode included -> Code compilation + upload to arduino) -> Arduino mounted in the drone <-> CC3D & GPS & sensors
-
-
-Ya para acabar, las tecnologías que usaremos son las que hemos mencionado: Antlr, Arduino, Librepilot, UAVTalk, GPS, etc...
+git clone https://github.com/GonMolon/Helix
+cd Helix
+make
+./bin/helix_parser examples/vertical_spiral.hx -simulation
